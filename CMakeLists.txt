@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   cv_bridge
   image_transport
   tf
+  actionlib_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -67,11 +68,11 @@ find_package (OpenCV REQUIRED)
 # )
 
 ## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
-#   Action1.action
+add_action_files(
+    FILES
+    ballTracking.action
 #   Action2.action
-# )
+)
 
 ## Generate added messages and services with any dependencies listed here
 #generate_messages(
@@ -167,7 +168,7 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
  install(PROGRAMS
-    scripts/ballDetection.py
+    scripts/ballDetection.py scripts/trackingBall.py scripts/cmdManager.py scripts/humanInterface.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
