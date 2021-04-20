@@ -18,7 +18,7 @@ class ballDetector():
 
         self.detectedBalls = []
         # Initialize the subscriber to the camera topic with the raw image
-        self.camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.find_ball, queue_size=1)
+        self.camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.ball_detection, queue_size=1)
 
 
     def color_detection(self, hsv_min, hsv_max, image_np):
@@ -36,7 +36,7 @@ class ballDetector():
             return True
 
 
-    def find_ball(self, ros_image):
+    def ball_detection(self, ros_image):
         #### Detect colors (balls) in the image using OpenCV ####
         ## @param image_np is the decompressed image and converted in OpenCv
         np_arr = np.fromstring(ros_image.data, np.uint8)
@@ -54,45 +54,51 @@ class ballDetector():
         blueUpper = (130, 255, 255)
         magentaLower = (125, 50, 50)
         magentaUpper = (150, 255, 255)
-
-	x = self.color_detection(blackLower, blackUpper, image_np)
+        # Color tests
+        x = self.color_detection(blackLower, blackUpper, image_np)
         if x == True:
             rospy.loginfo("DETECTED BLACK BALL")
-            if "black" not int self.detectedBalls
+            if "black" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("black")
-	x = self.color_detection(redLower, redUpper, image_np)
+
+	    x = self.color_detection(redLower, redUpper, image_np)
         if x == True:
             rospy.loginfo("DETECTED RED BALL")
-            if "red" not int self.detectedBalls
+            if "red" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("red")
-	x = self.color_detection(magentaLower, magentaUpper, image_np)
+
+	    x = self.color_detection(magentaLower, magentaUpper, image_np)
         if x == True:
             rospy.loginfo("DETECTED MAGENTA BALL")
-            if "magenta" not int self.detectedBalls
+            if "magenta" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("magenta")
-	x = self.color_detection(greenLower, greenUpper, image_np)
+
+	    x = self.color_detection(greenLower, greenUpper, image_np)
         if x == True:
             rospy.loginfo("DETECTED GREEN BALL")
-            if "green" not int self.detectedBalls
+            if "green" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("green")
-	x = self.color_detection(blueLower, blueUpper, image_np)
+
+	    x = self.color_detection(blueLower, blueUpper, image_np)
         if x == True:
             rospy.loginfo("DETECTED BLUE BALL")
-            if "blue" not int self.detectedBalls
+            if "blue" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("blue")
-	x = self.color_detection(yellowLower, yellowUpper, image_np)
+
+	    x = self.color_detection(yellowLower, yellowUpper, image_np)
         if x == True:
             rospy.loginfo("DETECTED YELLOW BALL")
-            if "yellow" not int self.detectedBalls
+            if "yellow" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("yellow")
+
 def main(args):
-    rd = ballDetector()
+    ball_detect = ballDetector()
     try:
         rospy.spin()
     except KeyboardInterrupt:
