@@ -2,8 +2,12 @@
 <robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- materials -->
- <xacro:include filename="$(find exp_assignment2)/urdf/materials.xacro" />
- <xacro:include filename="$(find exp_assignment2)/urdf/robot.gazebo" />
+ <xacro:include filename="$(find exp_assignment3)/urdf/materials.xacro" />
+ <xacro:include filename="$(find exp_assignment3)/urdf/robot.gazebo" />
+ <xacro:property name="chassis_length" value="0.5" />
+ <xacro:property name="chassis_width" value="0.3" />
+ <xacro:property name="chassis_height" value="0.07" />
+ <xacro:property name="chassis_mass" value="6" />
  <xacro:property name="length_wheel" value="0.04" />
  <xacro:property name="radius_wheel" value="0.10" /> 
  <xacro:property name="neck_length" value="0.1" />
@@ -24,41 +28,6 @@
                 iyy="${mass*(w*w+d*d)/12}" iyz = "0" izz="${mass*(w*w+h*h)/12}" /> 
  </xacro:macro>
 
- <!-- <xacro:macro name="link_ear" params="name">
-   <link name="${name}">
-            <inertial>
-              <mass value="0.1"/>
-              <origin rpy="0 0 0" xyz="0 0 0"/>
-              <inertia ixx="0.000526666666667" ixy="0" ixz="0" iyy="0.000526666666667" iyz="0" izz="0.001"/> 
-	      <xacro:box_inertia mass="0.1" w="0.05" h="0.03" d="0.034"/>
-            </inertial>
-            <collision name="${name}_collision">
-              <origin rpy="0 0 1.5708" xyz="0 0 0"/>
-              <geometry>
-                <box size="0.034 0.05 0.03"/>
-              </geometry>
-            </collision>
-            <visual name="${name}_visual">
-              <origin rpy="0 0 0" xyz="0 0 0"/>
-              <geometry>
-                <box size="0.034 0.05 0.03"/>
-              </geometry>
-		<material name="blue" />
-            </visual>
-        </link>
- </xacro:macro> 
-
-    <xacro:macro name="joint_ear" params="name child origin_xyz">
-      <joint name="${name}" type="fixed">
-        <origin rpy="0 0 0" xyz="${origin_xyz}"/>
-        <child link="${child}"/>
-        <parent link="head_link"/>
-        <axis rpy="0 0 0" xyz="0 0 1"/>
-        <limit effort="10000" velocity="1000"/>
-        <joint_properties damping="1.0" friction="1.0"/>
-      </joint>
-    </xacro:macro>
---> 
     <xacro:macro name="link_wheel" params="name">
         <link name="${name}">
             <inertial>
@@ -253,7 +222,7 @@
   <xacro:joint_ear name="joint_right_ear"  child="link_right_ear"  origin_xyz="0 0.08 0.08"  />
   <xacro:joint_ear name="joint_left_ear"   child="link_left_ear"   origin_xyz="0 -0.08 0.08"  /> -->
 
-<!-- transmission -->
+<!-- transmission 
 
 <transmission name="head_joint_trans">
 	<type>transmission_interface/SimpleTransmission</type>
@@ -264,6 +233,37 @@
 		<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
 		<mechanicalInterface>1</mechanicalInterface>
 	</actuator>
-</transmission>
+</transmission> -->
+
+<link name="hokuyo_link">
+	    <collision>
+	      <origin xyz="0 0 0.00125" rpy="0 0 0"/>
+	      <geometry>
+		<box size="0.025 0.025 0.025"/>
+	      </geometry>
+	    </collision>
+	    <visual>
+	      <origin xyz="0 0 0.0125" rpy="0 0 0"/>
+	      <geometry>
+		<box size="0.025 0.025 0.025"/>
+	      </geometry>
+	      <material name="red">
+		<color rgba="1 0 0 1"/>
+	      </material>
+	    </visual>
+	    <inertial>
+	      <mass value="1e-5" />
+	      <origin xyz="0 0 0" rpy="0 0 0"/>
+	      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+	    </inertial> 
+  </link>
+  
+  <joint name="hokuyo_joint" type="fixed">
+	    <axis xyz="0 1 0" />
+	    <origin xyz="0.27 0 0.025" rpy="0 0 0"/>
+	    <parent link="base_link"/>
+	    <child link="hokuyo_link"/> 
+	 </joint>
+
 
 </robot>

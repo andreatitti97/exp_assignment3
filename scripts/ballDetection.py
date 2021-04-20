@@ -1,19 +1,14 @@
 #!/usr/bin/env python
 import sys
 import time 
-
+import imutils
 import numpy as np
 from scipy.ndimage import filters
-
-import imutils
-
 # OpenCV
 import cv2
-
 # Ros libraries
 import roslib
 import rospy
-
 from sensor_msgs.msg import CompressedImage 
 
 class ballDetector():
@@ -21,7 +16,7 @@ class ballDetector():
 	''' INITIALIZE ROS NODE '''
         rospy.init_node('ball_detection', anonymous=True)
 
-        self.detectedRooms = ["Red", "Room2"]
+        self.detectedBalls = []
         # Initialize the subscriber to the camera topic with the raw image
         self.camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.find_ball, queue_size=1)
 
@@ -63,37 +58,49 @@ class ballDetector():
 	x = self.color_detection(blackLower, blackUpper, image_np)
         if x == True:
             rospy.loginfo("DETECTED BLACK BALL")
-        
+            if "black" not int self.detectedBalls
+                print("New Room detected")
+                self.detectedBalls.append("black")
 	x = self.color_detection(redLower, redUpper, image_np)
         if x == True:
             rospy.loginfo("DETECTED RED BALL")
-        
+            if "red" not int self.detectedBalls
+                print("New Room detected")
+                self.detectedBalls.append("red")
 	x = self.color_detection(magentaLower, magentaUpper, image_np)
         if x == True:
             rospy.loginfo("DETECTED MAGENTA BALL")
+            if "magenta" not int self.detectedBalls
+                print("New Room detected")
+                self.detectedBalls.append("magenta")
 	x = self.color_detection(greenLower, greenUpper, image_np)
-	
         if x == True:
             rospy.loginfo("DETECTED GREEN BALL")
-        
+            if "green" not int self.detectedBalls
+                print("New Room detected")
+                self.detectedBalls.append("green")
 	x = self.color_detection(blueLower, blueUpper, image_np)
         if x == True:
             rospy.loginfo("DETECTED BLUE BALL")
-        
+            if "blue" not int self.detectedBalls
+                print("New Room detected")
+                self.detectedBalls.append("blue")
 	x = self.color_detection(yellowLower, yellowUpper, image_np)
         if x == True:
             rospy.loginfo("DETECTED YELLOW BALL")
-
+            if "yellow" not int self.detectedBalls
+                print("New Room detected")
+                self.detectedBalls.append("yellow")
 def main(args):
     rd = ballDetector()
     try:
         rospy.spin()
     except KeyboardInterrupt:
-        print ("Shutting down ROS Image feature detector module")
+        print ("ROS image module terminated")
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     main(sys.argv)
 
-Toggle all file notes
-Toggle all file annotations
+#Toggle all file notes
+#Toggle all file annotations
