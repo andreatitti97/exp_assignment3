@@ -3,17 +3,10 @@
 	
 	<include file="$(find exp_assignment3)/launch/simulation.launch"></include>
 
-  <arg name="model" default="$(find exp_assignment3)/urdf/robot.xacro" />
-  <!-- Load the URDF into the ROS Parameter Server -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
-	
-	<param name="use_gui" value="True"/>
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
-	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /> 
-        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find urdf_tutorial)/urdf.rviz" />
+  	<include file="$(find exp_assignment3)/launch/gmapping.launch"></include>
+			
+	<include file="$(find exp_assignment3)/launch/move_base.launch"></include>
 
-	<node name="ballDetection" pkg="exp_assignment3" type="ballDetection.py" />
-
-	<node name="trackingBall" pkg="exp_assignment3" type="trackingBall.py" output="screen"/>
+	<node name="cmdManager" pkg="exp_assignment3" type="cmdManager.py" output="screen" />
 </launch>
 

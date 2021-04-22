@@ -168,7 +168,7 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
  install(PROGRAMS
-    scripts/ballDetection.py scripts/trackingBall.py scripts/cmdManager.py scripts/humanInterface.py scripts/actionServer.py
+    scripts/ballDetection.py scripts/trackingBall.py scripts/cmdManager.py scripts/humanInterface.py scripts/actionServer.py scripts/knowledgeRep.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
