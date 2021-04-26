@@ -1,35 +1,275 @@
 #!/usr/bin/env python
-import actionlib
-import rospy 
+
+## @file commandManager.py
+#  This node includes the subsription to State and GetPosition publishers,
+#  And implement a finite state machine 
+#  which manages the information coming from the two publisher and changes the state of the system in according to them.
+# \see getPosition.cpp
+# \see Navigation.cpp
+# \see State.cpp
+ 
+
+from __future__ import print_function
+
+import roslib
+import rospy
+import smach
+import smach_ros
+import time
+import random
+import sys
+import random 
 
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from std_msgs.msg import String
-from knowledgeRep import Rooms
+from Rooms import Rooms
 
-# initialize the environment 
+import smach_msgs.msg 
+
+
+# Action Server 
+import actionlib
+import actionlib.msg
+from final_assignment.msg import trackBallGoal, trackBallAction
+
+# Flag which notify when the user types 'play'
+PLAY = False
+
+# Contains the desired room entered by the user 
+TARGET_ROOM = "None"
+
+# Flag which notify when the command manager recives a new target room
+NEW_TR = False
+
+## init move_base client 
+client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
+
+# init the environment 
 rooms = Rooms()
-rooms.ROOMS[1]['detected'] = True
-   
 
-def HIcallback(data):
-    global rooms
-    msg = data.data
-    print("command received", msg)
 
-    if msg.startswith("GoTo"):
-         target_room = msg.strip("GoTo ")
-         if not rooms.check_visited(target_room):
-             print("ROOM not VISITED")
 
+def UIcallback(data):
+    global PLAY, TARGET_ROOM, NEW_TR, client
+    if data.data == "PLAY" :
+        rospy.loginfo("Recived a 'play' request...stop every move_base goal!!")
+        client.cancel_all_goals()
+        PLAY = True
+
+    elif data.data.startswith("GoTo"):
+        NEW_TR = True
+        TARGET_ROOM = data.data
+        rospy.loginfo("I recived the desired room: %s", TARGET_ROOM)
     else:
-         rospy.logerr("Parsing Error - No GoTo command ")
-          
+	rospy.logerr("[Syntax Error] the sent msg is wrong")
 
-if __name__ == '__main__':
+
+def newRoomDetected(color):
+    rospy.loginfo("[CmdMg] reach a new ball, start track it !")
+    goal = trackBallGoal()
+    goal.color = color.data
+
+    client = actionlib.SimpleActionClient('trackAction',trackBallAction)
+    client.wait_for_server()
+    rospy.loginfo("Track client creato")
+
+    client.send_goal(goal)
+    wait = client.wait_for_result()
+    if not wait:
+        rospy.logerr("Action server not available!")
+        rospy.signal_shutdown("Action server not available!")
+    else:
+        rospy.loginfo("Goal execution done!!!!")
+        result = client.get_result()
+        rospy.loginfo("la posizione attuale e':")
+    	rospy.loginfo(result.x)
+    	rospy.loginfo(result.y)
+
+
+ 
+
+class Normal(smach.State):
+    '''This class defines the NORMAL state of the FSM. In particular It sends random position to the navigation_action server
+    and it checks whether a ball is detected in order to move to PLAY state.
+    Otherwise after some iterations it goes in SLEEP mode '''
+    def __init__(self):
+        smach.State.__init__(self, 
+                             outcomes=['goToNormal','goToSleep','goToPlay'])
+
+        ## init move_base goal 
+        self.goal = MoveBaseGoal()
+        self.goal.target_pose.header.frame_id = "map"
+        self.goal.target_pose.header.stamp = rospy.Time.now()
+
+        self.rate = rospy.Rate(1)  # Loop at 200 Hz
+	## Counter variable to check the number of iteration of the NORMAL state in order to move to SLEEP state after a certain number 
+        self.counter = 0
+        
+    def execute(self,userdata):
+        global PLAY, client
+        
+        while not rospy.is_shutdown():  
+
+            if PLAY == True:
+                return 'goToPlay'
+            if self.counter == 4:
+                return 'goToSleep'           
+            # move in a random position using move_base
+
+
+
+
+            ## set the goal as a random position 
+            self.goal.target_pose.pose.position.x = random.randint(-5,5)
+            self.goal.target_pose.pose.position.y = random.randint(-5,5)
+	    self.goal.target_pose.pose.orientation.w = 1.0
+
+            rospy.loginfo("I'm going to position x = %d y = %d", self.goal.target_pose.pose.position.x, 	    self.goal.target_pose.pose.position.y)
+            client.send_goal(self.goal)
+            wait = client.wait_for_result()
+            if not wait:
+                rospy.logerr("Action server not available!")
+                rospy.signal_shutdown("Action server not available!")
+            else:
+                rospy.loginfo("Goal execution done!!!!")
+
+	        self.rate.sleep()
+            self.counter += 1
+            
+        return 'goToSleep' 
+        
+    
+
+
+class Sleep(smach.State):
+    '''It defines the SLEEP state which sleeps for a random period of time.
+    Then it makes a request to the Navigation service to go to the home location.
+    Finally it returns in the NORMAL state'''
+    def __init__(self):
+        smach.State.__init__(self, 
+                             outcomes=['goToNormal','goToSleep']) 
+                             
+        self.rate = rospy.Rate(200)  # Loop at 200 Hz
+
+    def execute(self, userdata): 
+        rospy.loginfo("I m in SLEEP mode")
+        # comeback to home      
+        userdata.rooms_in.go_to_room("Home")
+     
+	rospy.loginfo("Home reached")
+        # sleep for a random time period
+        time.sleep(random.randint(3,6))
+#        self.rate.sleep()
+        userdata.rooms_out = userdata.rooms_in
+        return 'goToNormal'
+
+
+class Play(smach.State):
+    '''Class that defines the PLAY state. 
+     It move the robot in X Y location and then asks to go back to the user.'''
+    def __init__(self):
+        smach.State.__init__(self, 
+                             outcomes=['goToNormal','goToPlay'])
+        
+        self.rate = rospy.Rate(200)
+        self.counter = 0
+	    
+
+    def execute(self, userdata):
+
+        rospy.loginfo("I m in PLAY mode")
+	global PLAY, rooms
+
+        
+
+        # go to the person
+        #userdata.rooms_in.go_to_room("Home")
+        rooms.go_to_room("Home")
+	rospy.loginfo("Home Reached!!!!")
+
+        while not rospy.is_shutdown():
+	    # we need to update them at each iteration 
+	    global TARGET_ROOM, NEW_TR
+
+            if self.counter <= 5:
+                if NEW_TR == True:
+                                        
+                    if TARGET_ROOM.startswith("GoTo"):
+                        TARGET_ROOM = TARGET_ROOM.strip("GoTo ")
+                        
+                        if not rooms.go_to_room(TARGET_ROOM):
+                            rospy.loginfo("That room has not yet been visited")                   
+
+                    else:
+                        rospy.logerr("[Sintax Error] no GoTo command typed!")
+
+                    # wait a few seconds 
+                    time.sleep(1)
+		    rospy.loginfo("homecoming...")
+                    # comebak to the person 
+                    rooms.go_to_room("Home")
+		    rospy.loginfo("Home Reached!!!!")
+		    NEW_TR = False
+                
+	        # wait a few seconds 
+                time.sleep(3)
+		rospy.loginfo("wait-..........")
+               	self.counter += 1
+                
+	    else:
+		self.counter = 0
+            	PLAY = False
+            	return 'goToNormal'
+
+
+
+	
+
+        
+def main():
+    
+    global client
     try:
-        rospy.init_node('movebase_client_py')
-        human_inteface = rospy.Subscriber("Interface_chatter", String, HIcallback)
-    	rospy.spin()
+        rospy.init_node('cmd_manager')
+        # move_base client
+        client.wait_for_server()
+        # Subscriber to the UIchatter topic
+        UIsubscriber = rospy.Subscriber("Interface_chatter", String, UIcallback)
+        # Subscriber to the newRoom topic 
+        #newRoomSub = rospy.Subscriber("newRoom", String, newRoomDetected)
+
+
+        
+        # Create a SMACH state machine
+        sm = smach.StateMachine(outcomes=['init'])
+    
+
+        # Open the container
+        with sm:
+            # Add states to the container
+            smach.StateMachine.add('NORMAL', Normal(), 
+                                transitions={'goToSleep':'SLEEP', 
+                                                'goToPlay':'PLAY',
+                                                'goToNormal':'NORMAL'})
+            smach.StateMachine.add('SLEEP', Sleep(), 
+                                transitions={'goToSleep':'SLEEP', 
+                                                'goToNormal':'NORMAL'})
+            smach.StateMachine.add('PLAY', Play(), 
+                                transitions={'goToNormal':'NORMAL',
+                                                'goToPlay':'PLAY'})
+
+
+        sis = smach_ros.IntrospectionServer('server_name', sm, '/SM_ROOT')
+        sis.start()
+
+        outcome = sm.execute()
+
+        rospy.spin()
+        sis.stop()
 
     except rospy.ROSInterruptException:
         rospy.loginfo("Navigation test finished.")
+
+
+if __name__ == '__main__':
+    main()

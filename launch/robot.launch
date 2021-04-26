@@ -7,6 +7,12 @@
 			
 	<include file="$(find exp_assignment3)/launch/move_base.launch"></include>
 
+	<node name="ballDetection" pkg="exp_assignment3" type="ballDetection.py" />
 	<node name="cmdManager" pkg="exp_assignment3" type="cmdManager.py" output="screen" />
+	<node name="trackingBall" pkg="exp_assignment3" type="trackingBall.py"/>
+	<arg name="use_rviz" default="false" />
+	<group if="$(arg use_rviz)">
+      		<node name="rviz" pkg="rviz" type="rviz" args="-d $(find exp_assignment3)/config/sim.rviz" />
+  	</group>
 </launch>
 

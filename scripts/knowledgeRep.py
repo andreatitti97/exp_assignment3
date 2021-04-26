@@ -34,16 +34,23 @@ class Rooms():
                     # go to the room position using the move_base action server
                     goal.target_pose.pose.position.x = room["x"]
                     goal.target_pose.pose.position.y = room["y"]
-                    goal.target_pose.pose.orientation.w = 1.0
+                    #goal.target_pose.pose.orientation.w = 1.0
                     # send goal to move_base 
-                    client.send_goal(goal)
-                    wait = client.wait_for_result()
+                    #client.send_goal(goal)
+                    #wait = client.wait_for_result()
                     if not wait:
                         rospy.logerr("Action server not available!")
                         rospy.signal_shutdown("Action server not available!")
                     else:
-                        rospy.loginfo("FINISHED")
+                        rospy.loginfo("REACHED: ",room['name'])
 
                     return True
         
         return False
+        
+    def add_new_room(self, color, x, y):
+        for room in self.ROOMS:
+            if color == room['color']:
+                room['detected'] = True
+                room['x'] = x
+                room['y'] = y

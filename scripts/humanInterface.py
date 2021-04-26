@@ -5,14 +5,16 @@ import time
 
 def humanInterface():
     rospy.init_node('Human Interface', anonymous=True)
-    publisher = rospy.Publisher('Interface_chatter',String,queue_size=20)
+    publisher = rospy.Publisher('Interface_chatter',String,queue_size=10)
     rate = rospy.Rate(10)
-    print("Interface for the robot \n\n Digit PLAY (switch play mode) \n followed by GoTo <room_name>")
 
-    while not rospy is_shutdown():
-        msg = raw_input("")
-        publisher.pub(msg)
+    while not rospy.is_shutdown():
+        msg = raw_input("Type PLAY")
+        publisher.publish(msg)
         rate.sleep()
+	msg = raw_input("Type GoTo <room_name>")
+	pub.publish(msg)
+	time.sleep(2)
 
 if __name__ == "__main__":
     try:

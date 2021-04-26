@@ -68,7 +68,7 @@ class TrackAction(object): # forse ci va il goal
     
     def __init__(self, name):
         self.action_name = name
-        self.act_server = actionlib.SimpleActionServer('reaching_ball', exp_assignment3.msg.ballTrackingAction(), self.track, auto_start=False)
+        self.act_server = actionlib.SimpleActionServer('trackAction', exp_assignment3.msg.ballTrackingAction(), self.track, auto_start=False)
         self.act_server.start()
         self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
         rate = rospy.Rate(20)

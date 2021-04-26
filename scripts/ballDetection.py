@@ -19,8 +19,8 @@ class ballDetector():
         self.detectedBalls = []
         # Initialize the subscriber to the camera topic with the raw image
         self.camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.ball_detection, queue_size=1)
-
-
+        self.room_pub = rospy.Publisher('new_room_found', String, queue_size=10)
+        self.rate = rospy.Rate(1)
     def color_detection(self, hsv_min, hsv_max, image_np):
         blurred = cv2.GaussianBlur(image_np, (11, 11), 0)
         hsv = cv2.cvtColor(blurred, cv2.COLOR_BGR2HSV)
