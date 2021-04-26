@@ -13,7 +13,7 @@ def humanInterface():
         publisher.publish(msg)
         rate.sleep()
 	msg = raw_input("Type GoTo <room_name>")
-	pub.publish(msg)
+	publisher.publish(msg)
 	time.sleep(2)
 
 if __name__ == "__main__":
