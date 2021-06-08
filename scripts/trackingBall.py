@@ -67,7 +67,7 @@ class TrackAction(object): # forse ci va il goal
     
     def __init__(self, name):
         self.action_name = name
-        self.act_s = actionlib.SimpleActionServer('trackAction', exp_assignment3.msg.ballTrackingAction(), self.track, auto_start=False)
+        self.act_s = actionlib.SimpleActionServer('trackAction', exp_assignment3.msg.ballTrackingAction, self.track, auto_start=False)
         self.act_s.start()
 	self.feedback = exp_assignment3.msg.ballTrackingFeedback()
 	self.result = exp_assignment3.msg.ballTrackingResult()
@@ -124,7 +124,8 @@ class TrackAction(object): # forse ci va il goal
                 # then update the list of tracked points
                 cv2.circle(image_np, (int(x), int(y)), int(radius), (0, 255, 255), 2)
                 cv2.circle(image_np, center, 5, (0, 0, 255), -1)
-
+		cv2.imshow('image',image_np)
+		cv2.waitkey(2)
                         # Setting the velocities to be applied to the robot
                 vel = Twist()
 		                # 400 is the center of the image 
@@ -163,7 +164,7 @@ class TrackAction(object): # forse ci va il goal
         # crate the subscriber to camera1 in order to recive and handle the images
         camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.go_to_ball, queue_size=1)
         sub_odom = rospy.Subscriber('odom', Odometry, odom_callback)
-        while not rospy.is_shutdown():
+        while not self.succes:
             if self.act_s.is_preempt_requested():
                 rospy.loginfo('Goal was preempted')
                 self.act_s.set_preempted()
