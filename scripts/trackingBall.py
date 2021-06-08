@@ -41,7 +41,7 @@ pose_ = Pose()
 def odom_callback(msg):
     global position_
     global pose_
-    global yaw_
+    #global yaw_
 
     # position
     position_ = msg.pose.pose.position
@@ -62,19 +62,19 @@ def odom_callback(msg):
 
 
 class TrackAction(object): # forse ci va il goal
-    feedback = exp_assignment3.msg.ballTrackingFeedback()
-    result = exp_assignment3.msg.ballTrackingResult()
+    
     ## Publisher to move the robot 
     
     def __init__(self, name):
         self.action_name = name
-        self.act_server = actionlib.SimpleActionServer('trackAction', exp_assignment3.msg.ballTrackingAction(), self.track, auto_start=False)
-        self.act_server.start()
-        self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
-        rate = rospy.Rate(20)
+        self.act_s = actionlib.SimpleActionServer('trackAction', exp_assignment3.msg.ballTrackingAction(), self.track, auto_start=False)
+        self.act_s.start()
+	self.feedback = exp_assignment3.msg.ballTrackingFeedback()
+	self.result = exp_assignment3.msg.ballTrackingResult()
 
-        while not rospy.is_shutdown():
-            rate.sleep()
+        self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
+	self.succes = False
+	self.unfound_ball_counter = 0
 
     def go_to_ball(self, ros_image):
         global position_, pose_
@@ -147,41 +147,52 @@ class TrackAction(object): # forse ci va il goal
                     #break
         else:
             rospy.loginfo("Ball not found")
-
-    def done(self):
-        twist_msg = Twist()
-        twist_msg.linear.x = 0
-        twist_msg.angular.z = 0
-        self.vel_pub.publish(twist_msg)
+	    vel = Twist()
+	    if self.unfounf_ball_counter <= 3:
+		vel.angular.z = 1.5
+		self.vel_pub.publish(vel)
+	    elif self.unfounf_ball_counter > 3:
+		vel.angular.z = -1.5
+		self.vel_pub.publish(vel)
+	    elif self.unfound_ball_counter == 9:
+		self.act_s.set_preempted()
+	    self.unfound_ball_counter += 1
 
     def track(self, goal):
         self.color = goal.color
         # crate the subscriber to camera1 in order to recive and handle the images
         camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.go_to_ball, queue_size=1)
-        
+        sub_odom = rospy.Subscriber('odom', Odometry, odom_callback)
         while not rospy.is_shutdown():
-            if self.act_server.is_preempt_requested():
+            if self.act_s.is_preempt_requested():
                 rospy.loginfo('Goal was preempted')
-                self.act_server.set_preempted()
-                success = False
+                self.act_s.set_preempted()
+                #success = False
                 break
-            elif self.state == 0:
+            else:
                 self.feedback = "Reaching the ball"
-            elif self.state == 1:
-                rospy.loginfo("goal reached!")
-                self.done()
-                break
-
+		self.act_s.publish_feedback(self.feedback)
+        rospy.loginfo("ACTION SERVER CLOSED")
+	self.act_s.set_succeeded(self.result)
+	camera_sub.unregister()
 
 
 
 def main():
-    rospy.init_node('ball_tracking')
+    try:
+	rospy.init_node('ball_tracking')
+	tracking = TrackAction('TrackAction')
+	
+	    # Odom sub to get and save the robot position when it reachs the ball 
+	    #subscriber = rospy.Subscriber('odom', Odometry, odom_callback)
 
-    # Odom sub to get and save the robot position when it reachs the ball 
-    subscriber = rospy.Subscriber('odom', Odometry, odom_callback)
-
-    tracking = TrackAction('TrackAction')
+	#tracking = TrackAction('TrackAction')
+	rate = rospy.Rate(20)
+	while not rospy.is_shutdown():
+		rate.sleep()
+    except rospy.ROSInterruptException:
+	print("SHUT DOWN TRACK SERVER")
+    cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     main()

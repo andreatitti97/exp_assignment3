@@ -11,12 +11,12 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-  geometry_msgs
+  #geometry_msgs
   sensor_msgs
   cv_bridge
   image_transport
   tf
-  actionlib_msgs
+  #actionlib_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -75,11 +75,12 @@ add_action_files(
 )
 
 ## Generate added messages and services with any dependencies listed here
-#generate_messages(
-#  DEPENDENCIES
-#  std_msgs  
-#  actionlib_msgs
-#)
+generate_messages(
+  DEPENDENCIES
+  std_msgs  
+  actionlib_msgs
+  geometry_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -170,7 +171,6 @@ include_directories(
  install(PROGRAMS
     scripts/ballDetection.py scripts/trackingBall.py scripts/cmdManager.py scripts/humanInterface.py scripts/actionServer.py scripts/knowledgeRep.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 
 ## Mark executables for installation
