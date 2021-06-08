@@ -119,7 +119,7 @@ class Normal(smach.State):
     Otherwise after some iterations it goes in SLEEP mode '''
     def __init__(self):
         smach.State.__init__(self, 
-                             outcomes=['goToNormal','goToSleep','goToPlay'])
+                             outcomes=['goToNormal','goToSleep','goToPlay','goToTrack'])
 
         ## init move_base goal 
         #self.goal = MoveBaseGoal()
@@ -141,9 +141,9 @@ class Normal(smach.State):
                 return 'goToPlay'
             elif self.counter == 4:
                 return 'goToSleep' 
-	        elif NEW_ROOM == True:
-		        return 'goToTrack'
-	        else:
+	    elif NEW_ROOM == True:
+		return 'goToTrack'
+	    else:
                 # move to rand position
                 rospy.loginfo("[CommandManager] generate a new random goal position")
                 pos = random_pos()                
@@ -169,16 +169,16 @@ class Sleep(smach.State):
 
     def execute(self, userdata): 
         global rooms
-	    rospy.loginfo("***********************************")
+	rospy.loginfo("***********************************")
         rospy.loginfo("[CommandManager] I m in SLEEP mode")
         # comeback to home      
         position = rooms.room_check("Home")
-	    move_base_go_to(position[0], position[1])
+	move_base_go_to(position[0], position[1])
      
-	    rospy.loginfo("[CommandManager] Home reached")
+	rospy.loginfo("[CommandManager] Home reached")
         # sleep for a random time period
-	    rospy.loginfo("[CommandManager] Sleeping...")
-	    time.sleep(random.randint(3,6))
+	rospy.loginfo("[CommandManager] Sleeping...")
+	time.sleep(random.randint(3,6))
 
         return 'goToNormal'
 
@@ -197,7 +197,7 @@ class Play(smach.State):
     def execute(self, userdata):
 
         rospy.loginfo("I m in PLAY mode")
-	    global PLAY, rooms
+	global PLAY, rooms
 
         
 
@@ -212,7 +212,7 @@ class Play(smach.State):
             global TARGET_ROOM, NEW_TR
 
             if self.counter <= 5:
-                if NEW_TR == True:
+		if NEW_TR == True:
                                         
                     if TARGET_ROOM.startswith("GoTo"):
                         TARGET_ROOM = TARGET_ROOM.strip("GoTo ")
@@ -222,7 +222,7 @@ class Play(smach.State):
                         else:
                             move_base_go_to(position[0], position[1])
                     else: 
-                    rospy.logerr("NO GoTo command typed")
+                    	rospy.logerr("NO GoTo command typed")
     
                     # wait a few seconds 
                     time.sleep(1)
@@ -251,8 +251,8 @@ class Track(smach.State):
 
     def execute(self, userdata):
         global rooms, NEW_ROOM, COLOR_ROOM
-	    rospy.loginfo("***********************************")
-	    rospy.loginfo("[CommandManager] I'm in TRACK state")
+	rospy.loginfo("***********************************")
+	rospy.loginfo("[CommandManager] I'm in TRACK state")
         goal = ballTrackingGoal()
         goal.color = COLOR_ROOM
 
