@@ -69,12 +69,12 @@ class TrackAction(object): # forse ci va il goal
         self.action_name = name
         self.act_s = actionlib.SimpleActionServer('trackAction', exp_assignment3.msg.ballTrackingAction, self.track, auto_start=False)
         self.act_s.start()
-	self.feedback = exp_assignment3.msg.ballTrackingFeedback()
-	self.result = exp_assignment3.msg.ballTrackingResult()
+	    self.feedback = exp_assignment3.msg.ballTrackingFeedback()
+	    self.result = exp_assignment3.msg.ballTrackingResult()
 
         self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
-	self.succes = False
-	self.unfound_ball_counter = 0
+	    self.succes = False
+	    self.unfound_ball_counter = 0
 
     def go_to_ball(self, ros_image):
         global position_, pose_
@@ -124,8 +124,8 @@ class TrackAction(object): # forse ci va il goal
                 # then update the list of tracked points
                 cv2.circle(image_np, (int(x), int(y)), int(radius), (0, 255, 255), 2)
                 cv2.circle(image_np, center, 5, (0, 0, 255), -1)
-		cv2.imshow('image',image_np)
-		cv2.waitkey(2)
+                cv2.imshow('image',image_np)
+                cv2.waitkey(2)
                         # Setting the velocities to be applied to the robot
                 vel = Twist()
 		                # 400 is the center of the image 
@@ -138,26 +138,21 @@ class TrackAction(object): # forse ci va il goal
                     rospy.loginfo("ballDetection --> BALL REACHED")
                     self.result.x = position_.x
                     self.result.y = position_.y
-                    rospy.loginfo("robot_position:")
-                    rospy.loginfo(self.result.x)
-                    rospy.loginfo(self.result.y)
-                    self.act_s.set_succeeded(self.result)
-                    # unregister from the camera topic in order to stop to track the ball
-                    self.camera_sub.unregister()
-                    self.state = 1
-                    #break
+                    self.succes = True
+        
         else:
             rospy.loginfo("Ball not found")
-	    vel = Twist()
-	    if self.unfounf_ball_counter <= 3:
-		vel.angular.z = 1.5
-		self.vel_pub.publish(vel)
-	    elif self.unfounf_ball_counter > 3:
-		vel.angular.z = -1.5
-		self.vel_pub.publish(vel)
-	    elif self.unfound_ball_counter == 9:
-		self.act_s.set_preempted()
-	    self.unfound_ball_counter += 1
+            vel = Twist()
+            if self.unfounf_ball_counter <= 3:
+                vel.angular.z = 1.5
+                self.vel_pub.publish(vel)
+            elif self.unfounf_ball_counter < 9:
+                vel.angular.z = -1.5
+                self.vel_pub.publish(vel)
+            elif self.unfound_ball_counter == 9:
+                self.unfound_ball_counter = 0
+                self.act_s.set_preempted()
+            self.unfound_ball_counter += 1
 
     def track(self, goal):
         self.color = goal.color
@@ -172,28 +167,28 @@ class TrackAction(object): # forse ci va il goal
                 break
             else:
                 self.feedback = "Reaching the ball"
-		self.act_s.publish_feedback(self.feedback)
+		        self.act_s.publish_feedback(self.feedback)
         rospy.loginfo("ACTION SERVER CLOSED")
-	self.act_s.set_succeeded(self.result)
-	camera_sub.unregister()
+        self.act_s.set_succeeded(self.result)
+        camera_sub.unregister()
 
 
 
 def main():
     try:
-	rospy.init_node('ball_tracking')
-	tracking = TrackAction('TrackAction')
-	
-	    # Odom sub to get and save the robot position when it reachs the ball 
-	    #subscriber = rospy.Subscriber('odom', Odometry, odom_callback)
+        rospy.init_node('ball_tracking')
+        tracking = TrackAction('TrackAction')
+        
+            # Odom sub to get and save the robot position when it reachs the ball 
+            #subscriber = rospy.Subscriber('odom', Odometry, odom_callback)
 
-	#tracking = TrackAction('TrackAction')
-	rate = rospy.Rate(20)
-	while not rospy.is_shutdown():
-		rate.sleep()
-    except rospy.ROSInterruptException:
-	print("SHUT DOWN TRACK SERVER")
-    cv2.destroyAllWindows()
+        #tracking = TrackAction('TrackAction')
+        rate = rospy.Rate(20)
+        while not rospy.is_shutdown():
+            rate.sleep()
+        except rospy.ROSInterruptException:
+        print("SHUT DOWN TRACK SERVER")
+        cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     main()

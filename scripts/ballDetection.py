@@ -22,6 +22,7 @@ class ballDetector():
         self.camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.ball_detection, queue_size=1)
         self.room_pub = rospy.Publisher('new_room_found', String, queue_size=10)
         self.rate = rospy.Rate(1)
+        self.ballDetected = False
 
     def color_detection(self, hsv_min, hsv_max, image_np):
         blurred = cv2.GaussianBlur(image_np, (11, 11), 0)
@@ -56,58 +57,59 @@ class ballDetector():
         blueUpper = (130, 255, 255)
         magentaLower = (125, 50, 50)
         magentaUpper = (150, 255, 255)
+        self.ballDetected = False
         # Color tests
-        x = self.color_detection(blackLower, blackUpper, image_np)
-        if x == True:
+        self.ballDetected = self.color_detection(blackLower, blackUpper, image_np)
+        if self.ballDetected == True:
             rospy.loginfo("DETECTED BLACK BALL")
             if "black" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("black")
-		self.room_pub.publish("black")
+		        self.room_pub.publish("black")
 
-	    x = self.color_detection(redLower, redUpper, image_np)
-        if x == True:
+	    self.ballDetected = self.color_detection(redLower, redUpper, image_np)
+        if self.ballDetected == True:
             rospy.loginfo("DETECTED RED BALL")
             if "red" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("red")
-		self.room_pub.publish("red")
+		        self.room_pub.publish("red")
 
-	    x = self.color_detection(magentaLower, magentaUpper, image_np)
-        if x == True:
+	    self.ballDetected = self.color_detection(magentaLower, magentaUpper, image_np)
+        if self.ballDetected == True:
             rospy.loginfo("DETECTED MAGENTA BALL")
             if "magenta" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("magenta")
-		self.room_pub.publish("magenta")
+		        self.room_pub.publish("magenta")
 
-	    x = self.color_detection(greenLower, greenUpper, image_np)
-        if x == True:
+	    self.ballDetected = self.color_detection(greenLower, greenUpper, image_np)
+        if self.ballDetected == True:
             rospy.loginfo("DETECTED GREEN BALL")
             if "green" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("green")
-		self.room_pub.publish("green")
-	    x = self.color_detection(blueLower, blueUpper, image_np)
-        if x == True:
+		        self.room_pub.publish("green")
+	    self.ballDetected = self.color_detection(blueLower, blueUpper, image_np)
+        if self.ballDetected == True:
             rospy.loginfo("DETECTED BLUE BALL")
             if "blue" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("blue")
-		self.room_pub.publish("blue")
-	    x = self.color_detection(yellowLower, yellowUpper, image_np)
-        if x == True:
+		        self.room_pub.publish("blue")
+	    self.ballDetected = self.color_detection(yellowLower, yellowUpper, image_np)
+        if self.ballDetected == True:
             rospy.loginfo("DETECTED YELLOW BALL")
             if "yellow" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("yellow")
-		self.room_pub.publish("yellow")
-	self.rate.sleep()
+		        self.room_pub.publish("yellow")
+
 def main(args):
     
     try:
-	time.sleep(15)#wait for cmdManager.py
-	ball_detect = ballDetector()
+        time.sleep(15)#wait for cmdManager.py
+        ball_detect = ballDetector()
         rospy.spin()
     except KeyboardInterrupt:
         print ("ROS image module terminated")
