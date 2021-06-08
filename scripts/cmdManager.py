@@ -68,7 +68,7 @@ def UIcallback(data):
         TARGET_ROOM = data.data
         rospy.loginfo("I recived the desired room: %s", TARGET_ROOM)
     else:
-	    rospy.logerr("[Syntax Error] the sent msg is wrong")
+        rospy.logerr("[Syntax Error] the sent msg is wrong")
 
 
 def newRoomDetected(color):
@@ -93,23 +93,23 @@ def move_base_go_to(x, y):
     goal.target_pose.pose.orientation.w = 2.0
 
     rospy.loginfo("[CommandManager] I'm going to position x = %d y = %d", x, y)
-    
+
     client.send_goal(goal)
     wait = client.wait_for_result()
-    
+
     if not wait:
         rospy.logerr("Action server not available!")
         rospy.signal_shutdown("Action server not available!")
     else:
         rospy.loginfo("[CommandManager] [Move Base] Action server closed. wait")
-	    time.sleep(3)
+        time.sleep(3)
 
 def random_pos():
-	while True:
-		tmpX = random.randint(-5,5)
-		tmpY = random.randint(-5,5)
-		if not (tmpX > 0 and tmpY > 3):
-			return [tmpX, tmpY]
+    while True:
+        tmpX = random.randint(-5,5)
+        tmpY = random.randint(-5,5)
+    if not (tmpX > 0 and tmpY > 3):
+        return [tmpX, tmpY]
 
  
 

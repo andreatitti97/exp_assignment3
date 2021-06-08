@@ -69,12 +69,12 @@ class TrackAction(object): # forse ci va il goal
         self.action_name = name
         self.act_s = actionlib.SimpleActionServer('trackAction', exp_assignment3.msg.ballTrackingAction, self.track, auto_start=False)
         self.act_s.start()
-	    self.feedback = exp_assignment3.msg.ballTrackingFeedback()
-	    self.result = exp_assignment3.msg.ballTrackingResult()
+        self.feedback = exp_assignment3.msg.ballTrackingFeedback()
+        self.result = exp_assignment3.msg.ballTrackingResult()
 
         self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
-	    self.succes = False
-	    self.unfound_ball_counter = 0
+        self.succes = False
+        self.unfound_ball_counter = 0
 
     def go_to_ball(self, ros_image):
         global position_, pose_
@@ -99,7 +99,7 @@ class TrackAction(object): # forse ci va il goal
             mask = cv2.inRange(hsv, blueLower, blueUpper)
         elif self.color == "magenta":
             mask = cv2.inRange(hsv, magentaLower, magentaUpper)
-        
+
         mask = cv2.erode(mask, None, iterations=2)
         mask = cv2.dilate(mask, None, iterations=2)
 
@@ -128,9 +128,9 @@ class TrackAction(object): # forse ci va il goal
                 cv2.waitkey(2)
                         # Setting the velocities to be applied to the robot
                 vel = Twist()
-		                # 400 is the center of the image 
+                        # 400 is the center of the image 
                 vel.angular.z = -0.002*(center[0]-400)
-			            # 150 is the radius that we want see in the image, which represent the desired disatance from the object 
+                        # 150 is the radius that we want see in the image, which represent the desired disatance from the object 
                 vel.linear.x = -0.01*(radius-150)
                 self.vel_publisher.publish(vel)
 
@@ -139,7 +139,7 @@ class TrackAction(object): # forse ci va il goal
                     self.result.x = position_.x
                     self.result.y = position_.y
                     self.succes = True
-        
+
         else:
             rospy.loginfo("Ball not found")
             vel = Twist()
@@ -167,7 +167,7 @@ class TrackAction(object): # forse ci va il goal
                 break
             else:
                 self.feedback = "Reaching the ball"
-		        self.act_s.publish_feedback(self.feedback)
+                self.act_s.publish_feedback(self.feedback)
         rospy.loginfo("ACTION SERVER CLOSED")
         self.act_s.set_succeeded(self.result)
         camera_sub.unregister()
@@ -178,7 +178,7 @@ def main():
     try:
         rospy.init_node('ball_tracking')
         tracking = TrackAction('TrackAction')
-        
+
             # Odom sub to get and save the robot position when it reachs the ball 
             #subscriber = rospy.Subscriber('odom', Odometry, odom_callback)
 
@@ -186,9 +186,9 @@ def main():
         rate = rospy.Rate(20)
         while not rospy.is_shutdown():
             rate.sleep()
-        except rospy.ROSInterruptException:
+    except rospy.ROSInterruptException:
         print("SHUT DOWN TRACK SERVER")
-        cv2.destroyAllWindows()
+    cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     main()
