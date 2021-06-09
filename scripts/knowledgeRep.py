@@ -23,7 +23,7 @@ class Rooms():
         for room in self.ROOMS:
             if target_room == room['name']:
                 if room['detected'] == True :
-                    print("ROOM ALREADY VISITED")
+                    print("[ROOMS] ALREADY VISITED")
 		    return [room["x"], room["y"]]
         return False
         
@@ -31,25 +31,13 @@ class Rooms():
         for room in self.ROOMS:
             if color == room['colour']:
                 room['detected'] = True
-                room['x'] = x
-                room['y'] = y
+                room['x'] = int(x)
+                room['y'] = int(y)
+		#name = to_string(room['name'])
 		print("[ROOMS] discovered room:",room['name'])
-
-    def move_to(self, x, y):
-    	goal = MoveBaseGoal()
-    	goal.target_pose.header.frame_id = "map"
-        goal.target_pose.header.stamp = rospy.Time.now()
-    	goal.target_pose.position.x = x
-	goal.target_pose.position.y = y
-	goal.target_pose.pose.orientation.w = 1.0
-	self.client.send_goal(goal)
-        wait = client.wait_for_result()
-        if not wait:
-        	rospy.logerr("Action server not available!")
-                rospy.signal_shutdown("Action server not available!")
-		return False
-	else:
-		rospy.loginfo("ROOM REACHED")
-		return True                    
-    def stop_moving(self):
-	self.client.cancel_all_goals()   	
+ 
+    def get_name_position(self, x, y):
+	for room in self.ROOMS:
+	    if (x == room['x'] and y == room['y']):
+		return room['name']
+	return False            	

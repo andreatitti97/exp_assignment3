@@ -9,7 +9,8 @@
 	<param name="des_pos_x" value="$(arg des_x)" />
 	<param name="des_pos_y" value="$(arg des_y)" />
 	<include file="$(find exp_assignment3)/launch/move_base.launch"></include>
-
+	<arg name= "ballDetection_info" default="false"/>
+	<arg name= "ballTracking_info" default="false"/>
 	<node name="ballDetection" pkg="exp_assignment3" type="ballDetection.py" />
 	<node name="cmdManager" pkg="exp_assignment3" type="cmdManager.py" output="screen" />
 	<node name="trackingBall" pkg="exp_assignment3" type="trackingBall.py" output="screen"/>
