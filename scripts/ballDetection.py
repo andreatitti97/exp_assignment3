@@ -63,49 +63,49 @@ class ballDetector():
         if self.ballDetected == True:
             rospy.loginfo("DETECTED BLACK BALL")
             if "black" not in self.detectedBalls:
-                print("New Room detected")
-                self.detectedBalls.append("black")
-		self.room_pub.publish("black")
+                    print("New Room detected")
+                    self.detectedBalls.append("black")
+                    self.room_pub.publish("black")
 
-	self.ballDetected = self.color_detection(redLower, redUpper, image_np)
+        self.ballDetected = self.color_detection(redLower, redUpper, image_np)
         if self.ballDetected == True:
             rospy.loginfo("DETECTED RED BALL")
             if "red" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("red")
-		self.room_pub.publish("red")
+                self.room_pub.publish("red")
 
-	self.ballDetected = self.color_detection(magentaLower, magentaUpper, image_np)
+        self.ballDetected = self.color_detection(magentaLower, magentaUpper, image_np)
         if self.ballDetected == True:
             rospy.loginfo("DETECTED MAGENTA BALL")
             if "magenta" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("magenta")
-		self.room_pub.publish("magenta")
+                self.room_pub.publish("magenta")
 
-	self.ballDetected = self.color_detection(greenLower, greenUpper, image_np)
+        self.ballDetected = self.color_detection(greenLower, greenUpper, image_np)
         if self.ballDetected == True:
             rospy.loginfo("DETECTED GREEN BALL")
             if "green" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("green")
-	        self.room_pub.publish("green")
+                self.room_pub.publish("green")
 
-	self.ballDetected = self.color_detection(blueLower, blueUpper, image_np)
+        self.ballDetected = self.color_detection(blueLower, blueUpper, image_np)
         if self.ballDetected == True:
             rospy.loginfo("DETECTED BLUE BALL")
             if "blue" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("blue")
-		self.room_pub.publish("blue")
+                self.room_pub.publish("blue")
 
-	self.ballDetected = self.color_detection(yellowLower, yellowUpper, image_np)
+        self.ballDetected = self.color_detection(yellowLower, yellowUpper, image_np)
         if self.ballDetected == True:
             rospy.loginfo("DETECTED YELLOW BALL")
             if "yellow" not in self.detectedBalls:
                 print("New Room detected")
                 self.detectedBalls.append("yellow")
-		self.room_pub.publish("yellow")
+                self.room_pub.publish("yellow")
 
 def main(args):
     
