@@ -130,29 +130,29 @@ class Normal(smach.State):
 	## Counter variable to check the number of iteration of the NORMAL state in order to move to SLEEP state after a certain number 
         self.counter = 0
         
-    def execute(self,userdata):
-        global PLAY, client, NEW_ROOM
-        rospy.loginfo("NORMAL STATE")
-        time.sleep(4)
-        self.counter = 0
-        while not rospy.is_shutdown():  
+def execute(self,userdata):
+    global PLAY, client, NEW_ROOM
+    rospy.loginfo("NORMAL STATE")
+    time.sleep(4)
+    self.counter = 0
+    while not rospy.is_shutdown():  
 
-            if PLAY == True:
-                return 'goToPlay'
-            elif self.counter == 4:
-                return 'goToSleep' 
-	    elif NEW_ROOM == True:
-		print("prova")
-		return 'goToTrack'
-	    else:
-                # move to rand position
-                rospy.loginfo("[CommandManager] generate a new random goal position")
-                pos = random_pos()                
-                move_base_go_to(pos[0], pos[1])
-                self.rate.sleep()
-        
-                self.counter += 1
-		print(counter)
+        if PLAY == True:
+            return 'goToPlay'
+        elif self.counter == 4:
+            return 'goToSleep' 
+        elif NEW_ROOM == True:
+            print("prova")
+            return 'goToTrack'
+        else:
+            # move to rand position
+            rospy.loginfo("[CommandManager] generate a new random goal position")
+            pos = random_pos()                
+            move_base_go_to(pos[0], pos[1])
+            self.rate.sleep()
+
+            self.counter += 1
+            print(counter)
             
         return 'goToSleep' 
         
