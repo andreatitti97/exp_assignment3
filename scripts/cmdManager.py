@@ -108,8 +108,8 @@ def random_pos():
     while True:
         tmpX = random.randint(-5,5)
         tmpY = random.randint(-5,5)
-    if not (tmpX > 0 and tmpY > 3):
-        return [tmpX, tmpY]
+    	if not (tmpX > 0 and tmpY > 3):
+            return [tmpX, tmpY]
 
  
 
@@ -142,7 +142,7 @@ class Normal(smach.State):
             elif self.counter == 4:
                 return 'goToSleep' 
             elif NEW_ROOM == True:
-                print("prova")
+                #print("prova")
                 return 'goToTrack'
             else:
                 # move to rand position
@@ -152,9 +152,9 @@ class Normal(smach.State):
                 self.rate.sleep()
 
                 self.counter += 1
-                print(counter)
+                #print(counter)
                 
-            return 'goToSleep' 
+        return 'goToSleep' 
         
     
 
@@ -258,7 +258,7 @@ class Track(smach.State):
         goal = ballTrackingGoal()
         goal.color = COLOR_ROOM
 
-        trackClient = actionlib.SimpleActionClient('trackAction',trackBallAction)
+        trackClient = actionlib.SimpleActionClient('trackAction',ballTrackingAction)
         trackClient.wait_for_server()
         rospy.loginfo("Track client creato")
 
