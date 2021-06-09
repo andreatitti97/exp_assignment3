@@ -75,7 +75,7 @@ class TrackAction(object): # forse ci va il goal
         self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
         self.succes = False
         self.unfound_ball_counter = 0
-	self.abort = False
+	    self.abort = False
 
     def go_to_ball(self, ros_image):
         global position_, pose_
@@ -145,18 +145,18 @@ class TrackAction(object): # forse ci va il goal
             rospy.loginfo("[trackingBall] Ball not found")
             vel = Twist()
             if self.unfound_ball_counter <= 6:
-		rospy.loginfo("[trackingBall] turn right")
+                rospy.loginfo("[trackingBall] turn right")
                 vel.angular.z = 1.5
                 self.vel_publisher.publish(vel)
             elif self.unfound_ball_counter < 12:
-		rospy.loginfo("[trackingBall] turn right")
+                rospy.loginfo("[trackingBall] turn right")
                 vel.angular.z = -1.5
                 self.vel_publisher.publish(vel)
             elif self.unfound_ball_counter == 12:
-		rospy.loginfo("[trackingBall] unable to find ball")
+                rospy.loginfo("[trackingBall] unable to find ball")
                 self.unfound_ball_counter = 0
                 #self.act_s.set_preempted()
-		self.abort = True
+                self.abort = True
             self.unfound_ball_counter += 1
 
     def track(self, goal):
@@ -190,7 +190,7 @@ class TrackAction(object): # forse ci va il goal
 def main():
     try:
         rospy.init_node('ball_tracking')
-        tracking = TrackAction('TrackAction')
+        track = TrackAction('TrackAction')
 
             # Odom sub to get and save the robot position when it reachs the ball 
             #subscriber = rospy.Subscriber('odom', Odometry, odom_callback)
