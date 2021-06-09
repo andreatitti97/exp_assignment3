@@ -29,10 +29,11 @@ class Rooms():
         
     def add_new_room(self, color, x, y):
         for room in self.ROOMS:
-            if color == room['color']:
+            if color == room['colour']:
                 room['detected'] = True
                 room['x'] = x
                 room['y'] = y
+		print("[ROOMS] discovered room:",room['name'])
 
     def move_to(self, x, y):
     	goal = MoveBaseGoal()

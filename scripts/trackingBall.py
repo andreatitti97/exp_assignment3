@@ -75,7 +75,7 @@ class TrackAction(object): # forse ci va il goal
         self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
         self.succes = False
         self.unfound_ball_counter = 0
-	    self.abort = False
+	self.abort = False
 
     def go_to_ball(self, ros_image):
         global position_, pose_
@@ -173,7 +173,7 @@ class TrackAction(object): # forse ci va il goal
             elif self.abort == True:
 		break
 	    else:
-                self.feedback = "Reaching the ball"
+                self.feedback.state = "Reaching the ball"
                 self.act_s.publish_feedback(self.feedback)
         #rospy.loginfo("[trackingBall] ACTION SERVER CLOSED")
         #self.act_s.set_succeeded(self.result)
@@ -189,7 +189,7 @@ class TrackAction(object): # forse ci va il goal
 
 def main():
     try:
-        rospy.init_node('ball_tracking')
+        rospy.init_node('Track')
         track = TrackAction('TrackAction')
 
             # Odom sub to get and save the robot position when it reachs the ball 
