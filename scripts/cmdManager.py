@@ -141,9 +141,10 @@ class Normal(smach.State):
                 return 'goToPlay'
             elif self.counter == 4:
                 return 'goToSleep' 
-	        elif NEW_ROOM == True:
-		        return 'goToTrack'
-	        else:
+	    elif NEW_ROOM == True:
+		print("prova")
+		return 'goToTrack'
+	    else:
                 # move to rand position
                 rospy.loginfo("[CommandManager] generate a new random goal position")
                 pos = random_pos()                
@@ -151,6 +152,7 @@ class Normal(smach.State):
                 self.rate.sleep()
         
                 self.counter += 1
+		print(counter)
             
         return 'goToSleep' 
         
