@@ -18,7 +18,6 @@ import smach_ros
 import time
 import random
 import sys
-import random 
 
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from std_msgs.msg import String
@@ -155,7 +154,7 @@ class Sleep(smach.State):
     Then it makes a request to the Navigation service to go to the home location.
     Finally it returns in the NORMAL state'''
     def __init__(self):
-        smach.State.__init__(self, outcomes=['goToNormal','goToSleep', 'goToFind']) 
+        smach.State.__init__(self, outcomes=['goToNormal','goToSleep']) 
 
         self.rate = rospy.Rate(200)  # Loop at 200 Hz
 
@@ -178,7 +177,7 @@ class Play(smach.State):
     '''Class that defines the PLAY state. 
     It move the robot in X Y location and then asks to go back to the user.'''
     def __init__(self):
-        smach.State.__init__(self, outcomes=['goToNormal','goToPlay'])
+        smach.State.__init__(self, outcomes=['goToNormal','goToPlay','goToFind'])
         self.rate = rospy.Rate(200)
         self.counter = 0
 
@@ -327,8 +326,8 @@ def main():
             # Add states to the container
             smach.StateMachine.add('NORMAL', Normal(), transitions={'goToSleep':'SLEEP','goToPlay':'PLAY','goToTrack' : 'TRACK','goToNormal':'NORMAL'})
             smach.StateMachine.add('SLEEP', Sleep(), transitions={'goToSleep':'SLEEP','goToNormal':'NORMAL'})
-            smach.StateMachine.add('PLAY', Play(), transitions={'goToNormal':'NORMAL','goToPlay':'PLAY'})
-            smach.StateMachine.add('TRACK', Track(), transitions={'goToNormal':'NORMAL','goToTrack':'TRACK'})
+            smach.StateMachine.add('PLAY', Play(), transitions={'goToNormal':'NORMAL','goToPlay':'PLAY','goToFind':'FIND'})
+            smach.StateMachine.add('TRACK', Track(), transitions={'goToNormal':'NORMAL','goToTrack':'TRACK','goToPlay':'PLAY','goToFind':'FIND'})
             smach.StateMachine.add('FIND', Find(), transitions={'goToTrack':'TRACK','goToPlay':'PLAY','goToFind':'FIND'})
 
         sis = smach_ros.IntrospectionServer('server_name', sm, '/SM_ROOT')

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import actionlib
 import rospy 
+import random
 
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
