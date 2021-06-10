@@ -47,6 +47,7 @@ RANDOM =  True
 
 COLOR_ROOM = "None"
 
+FIND_MODE = False
 ## init move_base client 
 client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
 
@@ -108,14 +109,6 @@ def move_base_go_to(x, y):
         else: 
             rospy.loginfo("[cmdManager]: REACHED THE %s . WAIT ...", name)            
         time.sleep(3)
-
-def random_pos():
-    while True:
-        tmpX = random.randint(-5,5)
-        tmpY = random.randint(-5,5)
-    	if not (tmpX > 0 and tmpY > 3):
-            return [tmpX, tmpY]
-
  
 
 class Normal(smach.State):
@@ -130,7 +123,7 @@ class Normal(smach.State):
         self.counter = 0
         
     def execute(self,userdata):
-        global PLAY, client, NEW_ROOM
+        global PLAY, client, NEW_ROOM, rooms
         rospy.loginfo("***************** NORMAL STATE **************")
         time.sleep(4)
         self.counter = 0
@@ -141,12 +134,11 @@ class Normal(smach.State):
             elif self.counter == 4:
                 return 'goToSleep' 
             elif NEW_ROOM == True:
-                #print("prova")
                 return 'goToTrack'
             else:
                 # move to rand position
                 rospy.loginfo("[cmdManager]: GENERATING A NEW RANDOM GOAL POSITION")
-                pos = random_pos()                
+                pos = rooms.random_pos()                
                 move_base_go_to(pos[0], pos[1])
                 self.rate.sleep()
 
@@ -163,7 +155,7 @@ class Sleep(smach.State):
     Then it makes a request to the Navigation service to go to the home location.
     Finally it returns in the NORMAL state'''
     def __init__(self):
-        smach.State.__init__(self, outcomes=['goToNormal','goToSleep']) 
+        smach.State.__init__(self, outcomes=['goToNormal','goToSleep', 'goToFind']) 
 
         self.rate = rospy.Rate(200)  # Loop at 200 Hz
 
@@ -210,6 +202,7 @@ class Play(smach.State):
                         position = rooms.get_room_position(TARGET_ROOM)
                         if not position:
                             rospy.loginfo("[cmdManager]: ROOM NOT VISITED YET")                   
+                            return 'goToFind'
                         else:
                             move_base_go_to(position[0], position[1])
                     else: 
@@ -238,10 +231,10 @@ class Track(smach.State):
     '''Class that defines the PLAY state. 
     It move the robot in X Y location and then asks to go back to the user.'''
     def __init__(self):
-        smach.State.__init__(self, outcomes=['goToNormal','goToTrack'])
+        smach.State.__init__(self, outcomes=['goToNormal','goToTrack','goToFind','goToPlay'])
 
     def execute(self, userdata):
-        global rooms, NEW_ROOM, COLOR_ROOM
+        global rooms, NEW_ROOM, COLOR_ROOM, NEW_TR, FIND_MODE
         rospy.loginfo("***************** TRACK STATE **************")
         goal = ballTrackingGoal()
         goal.color = COLOR_ROOM
@@ -263,13 +256,55 @@ class Track(smach.State):
             result = trackClient.get_result()
             if result.x != 0 and result.y != 0:
                 rospy.loginfo("[cmdManager]: NEW ROOM DISCOVERED")
-                rospy.loginfo("[CommandManager] I'M IN POSITION (%d,%d)",result.x,result.y)
+                rospy.loginfo("[cmdManager] I'M IN POSITION (%d,%d)",result.x,result.y)
                 rooms.add_new_room(COLOR_ROOM, result.x, result.y)
+                if FIND_MODE == True:
+                    if COLOR_ROOM == NEW_TR:
+                        FIND_MODE = False
+                        #return 'goToPlay'
+                        'goToPlay'
+                    else:
+                        #return 'goToFind'
+                        'goToFind'
             else: 
-                rospy.loginfo("[CommandManager] NOT ABLE TO FIND PREVIOUS ROOM DETECTED")
+                rospy.loginfo("[cmdManager] NOT ABLE TO FIND PREVIOUS ROOM DETECTED")
             ###### add the new room to the list ######
             NEW_ROOM = False
             return "goToNormal"
+
+class Find(smach.State):
+    '''Class that defines the PLAY state. 
+     It move the robot in X Y location and then asks to go back to the user.'''
+    def __init__(self):
+        smach.State.__init__(self, outcomes=['goToPlay','goToTrack','goToFind'])
+	    self.rate = rospy.Rate(1)  # Loop at 200 Hz
+
+    def execute(self, userdata):
+        global rooms, NEW_ROOM, COLOR_ROOM, FIND_MODE
+        rospy.loginfo("***************** TRACK STATE **************")
+        FIND_MODE = True
+        time.sleep(4)
+        self.counter = 0
+        
+        while not rospy.is_shutdown():  
+
+            if self.counter == 4:
+		        FIND_MODE = False
+                return 'goToPlay' 
+            elif NEW_ROOM == True:
+                return 'goToTrack'
+            else:
+                #move_base_go_to(-2, 8)
+
+                # move in a random position using move_base
+                rospy.loginfo("[cmdManager] EXPLORATION")
+                #move_base_go_to(random.randint(-5,5), random.randint(-5,5))
+                pos = rooms.explore()
+                move_base_go_to(pos[0], pos[1])
+                #rospy.loginfo("[CommandManager] position:( %d,%d) reached !!!", pos[0], pos[1])
+                self.rate.sleep()
+
+                self.counter += 1
 
 def main():
     
@@ -294,7 +329,7 @@ def main():
             smach.StateMachine.add('SLEEP', Sleep(), transitions={'goToSleep':'SLEEP','goToNormal':'NORMAL'})
             smach.StateMachine.add('PLAY', Play(), transitions={'goToNormal':'NORMAL','goToPlay':'PLAY'})
             smach.StateMachine.add('TRACK', Track(), transitions={'goToNormal':'NORMAL','goToTrack':'TRACK'})
-
+            smach.StateMachine.add('FIND', Find(), transitions={'goToTrack':'TRACK','goToPlay':'PLAY','goToFind':'FIND'})
 
         sis = smach_ros.IntrospectionServer('server_name', sm, '/SM_ROOT')
         sis.start()

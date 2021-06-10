@@ -39,11 +39,36 @@ class Rooms():
                 room['detected'] = True
                 room['x'] = int(x)
                 room['y'] = int(y)
-		#name = to_string(room['name'])
 		print("[ROOMS] discovered room:",room['name'])
  
     def get_name_position(self, x, y):
         for room in self.ROOMS:
             if (x == room['x'] and y == room['y']):
                 return room['name']
-        return False            	
+        return False    
+
+    def random_pos(self):
+        while True:
+            tmpX = random.randint(-5,5)
+            tmpY = random.randint(-5,5)
+            if not (tmpX > 0 and tmpY > 3):
+                return [tmpX, tmpY]
+    def mrange(self, a):
+        minA = a - 3
+        r = []
+        for i in range(0,7):
+            r.append(minA + i)
+        return r
+
+    def explore(self):
+        while True:
+            ok = True
+            pos = self.random_pos()
+            for room in self.ROOMS:
+                if room['detected'] == True:
+                    rx = self.mrange(room['x'])
+                    ry = self.mrange(room['y'])
+                    if (pos[0] in rx and pos[1] in ry):
+                        ok = False
+            if ok:
+                return pos
