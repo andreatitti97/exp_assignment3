@@ -274,10 +274,10 @@ class Track(smach.State):
 
 class Find(smach.State):
     '''Class that defines the PLAY state. 
-     It move the robot in X Y location and then asks to go back to the user.'''
+    It move the robot in X Y location and then asks to go back to the user.'''
     def __init__(self):
         smach.State.__init__(self, outcomes=['goToPlay','goToTrack','goToFind'])
-	    self.rate = rospy.Rate(1)  # Loop at 200 Hz
+        self.rate = rospy.Rate(1)  # Loop at 200 Hz
 
     def execute(self, userdata):
         global rooms, NEW_ROOM, COLOR_ROOM, FIND_MODE
