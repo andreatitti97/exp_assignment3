@@ -289,7 +289,7 @@ class Find(smach.State):
         while not rospy.is_shutdown():  
 
             if self.counter == 4:
-		        FIND_MODE = False
+                FIND_MODE = False
                 return 'goToPlay' 
             elif NEW_ROOM == True:
                 return 'goToTrack'
