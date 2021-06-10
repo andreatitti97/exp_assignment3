@@ -9,15 +9,15 @@ def humanInterface():
     rate = rospy.Rate(10)
 
     while not rospy.is_shutdown():
-        msg = raw_input("Type PLAY")
-	if msg == 'PLAY':        
-		publisher.publish(msg)
-		rate.sleep()
-		msg = raw_input("Type GoTo <room_name>")
-		publisher.publish(msg)
-		time.sleep(5)
-	else:
-		rospy.logger("wrong digit of PLAY")
+        msg = raw_input("Type PLAY    ")
+        if msg == 'PLAY':        
+            publisher.publish(msg)
+            rate.sleep()
+            msg = raw_input("Type GoTo <room_name>    ")
+            publisher.publish(msg)
+            time.sleep(5)
+        else:
+            rospy.logger("wrong digit of PLAY")
 
 if __name__ == "__main__":
     try:

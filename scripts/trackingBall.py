@@ -62,9 +62,9 @@ def odom_callback(msg):
 
 
 class TrackAction(object): # forse ci va il goal
-    
+
     ## Publisher to move the robot 
-    
+
     def __init__(self, name):
         self.action_name = name
         self.act_s = actionlib.SimpleActionServer('trackAction', exp_assignment3.msg.ballTrackingAction, self.track, auto_start=False)
@@ -75,7 +75,7 @@ class TrackAction(object): # forse ci va il goal
         self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
         self.succes = False
         self.unfound_ball_counter = 0
-	self.abort = False
+        self.abort = False
 
     def go_to_ball(self, ros_image):
         global position_, pose_
@@ -142,18 +142,18 @@ class TrackAction(object): # forse ci va il goal
                     self.succes = True
 
         else:
-            rospy.loginfo("[trackingBall] Ball not found")
+            rospy.loginfo("[trackingBall]: BALL NOT FOUND")
             vel = Twist()
             if self.unfound_ball_counter <= 6:
-                rospy.loginfo("[trackingBall] turn right")
+                rospy.loginfo("[trackingBall]: TURN RIGHT SEARCHING THE BALL")
                 vel.angular.z = 1.5
                 self.vel_publisher.publish(vel)
             elif self.unfound_ball_counter < 12:
-                rospy.loginfo("[trackingBall] turn right")
+                rospy.loginfo("[trackingBall]: TURN LEFT SEARCHING THE BALL")
                 vel.angular.z = -1.5
                 self.vel_publisher.publish(vel)
             elif self.unfound_ball_counter == 12:
-                rospy.loginfo("[trackingBall] unable to find ball")
+                rospy.loginfo("[trackingBall]: UNABLE TO FIND BALL")
                 self.unfound_ball_counter = 0
                 #self.act_s.set_preempted()
                 self.abort = True
@@ -166,36 +166,30 @@ class TrackAction(object): # forse ci va il goal
         sub_odom = rospy.Subscriber('odom', Odometry, odom_callback)
         while not self.succes:
             if self.act_s.is_preempt_requested():
-                rospy.loginfo('Goal was preempted')
+                rospy.loginfo('[trackingBall]: Goal was preempted')
                 self.act_s.set_preempted()
-                #success = False
                 break
             elif self.abort == True:
-		break
-	    else:
+                rospy.loginfo("[trackingBall]: MISSION ABORTED")
+                break
+            else:
                 self.feedback.state = "Reaching the ball"
                 self.act_s.publish_feedback(self.feedback)
-        #rospy.loginfo("[trackingBall] ACTION SERVER CLOSED")
-        #self.act_s.set_succeeded(self.result)
-        camera_sub.unregister()
-	if not self.abort == True:
-	    self.act_s.set_succeeded(self.result)
-	    self.success = False
-	else:
-	    self.abort == False
-	    self.act_s.set_preempted()
-	rospy.loginfo("[trackingBall] ACTION SERVER CLOSED")		
+            camera_sub.unregister() #unregister from camera topic
+            sub_odom.unregister()
+            if not self.abort == True:
+                self.act_s.set_succeeded(self.result)
+            else:
+                self.act_s.set_preempted()
+            self.abort == False
+            self.success = False
+            rospy.loginfo("[trackingBall] ACTION SERVER CLOSED")		
 
 
 def main():
     try:
         rospy.init_node('Track')
         track = TrackAction('TrackAction')
-
-            # Odom sub to get and save the robot position when it reachs the ball 
-            #subscriber = rospy.Subscriber('odom', Odometry, odom_callback)
-
-        #tracking = TrackAction('TrackAction')
         rate = rospy.Rate(20)
         while not rospy.is_shutdown():
             rate.sleep()
