@@ -72,8 +72,8 @@ def UIcallback(data):
 
 
 def newRoomDetected(color):
-    global NEW_ROOM, COLOR_ROOM, client, rooms,
-    if not rooms.room_check(color.data)
+    global NEW_ROOM, COLOR_ROOM, client, rooms
+    if not rooms.room_check(color.data):
         rospy.loginfo("[cmdManager]: NEW BALL DETECTED: %s COLOR", color.data)
         NEW_ROOM = True
         COLOR_ROOM = color.data

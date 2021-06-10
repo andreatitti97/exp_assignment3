@@ -19,16 +19,16 @@ class Rooms():
 
     
 # check if the room contained in msg is already visited, if so then the robot will move to that position 
-    def room_check(self, target_room):
+    def room_check(self, color):
         for room in self.ROOMS:
-            if color == room['color']
+            if color == room['color']:
                 if room['detected'] == True:
                     return True
         return False
     
     def get_room_position(self, target_room):
         for room in self.ROOMS:
-            if target_room = room['name']:
+            if target_room == room['name']:
                 if room['detected'] == True:
                     return [room["x"], room["y"]]
         return False

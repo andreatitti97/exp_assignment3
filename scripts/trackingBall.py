@@ -175,15 +175,15 @@ class TrackAction(object): # forse ci va il goal
             else:
                 self.feedback.state = "Reaching the ball"
                 self.act_s.publish_feedback(self.feedback)
-            camera_sub.unregister() #unregister from camera topic
-            sub_odom.unregister()
-            if not self.abort == True:
-                self.act_s.set_succeeded(self.result)
-            else:
-                self.act_s.set_preempted()
-            self.abort == False
-            self.success = False
-            rospy.loginfo("[trackingBall] ACTION SERVER CLOSED")		
+        camera_sub.unregister() #unregister from camera topic
+        sub_odom.unregister()
+        if not self.abort == True:
+            self.act_s.set_succeeded(self.result)
+        else:
+            self.act_s.set_preempted()
+        self.abort == False
+        self.success = False
+        rospy.loginfo("[trackingBall] ACTION SERVER CLOSED")		
 
 
 def main():
