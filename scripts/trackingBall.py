@@ -47,16 +47,6 @@ def odom_callback(msg):
     position_ = msg.pose.pose.position
     pose_ = msg.pose.pose
 
-    '''
-    # yaw
-    TO BE IMPLEMENTED
-    quaternion = (
-        msg.pose.pose.orientation.x,
-        msg.pose.pose.orientation.y,
-        msg.pose.pose.orientation.z,
-        msg.pose.pose.orientation.w)
-    euler = transformations.euler_from_quaternion(quaternion)
-    yaw_ = euler[2]'''
 
 
 
@@ -72,7 +62,7 @@ class TrackAction(object): # forse ci va il goal
         self.feedback = exp_assignment3.msg.ballTrackingFeedback()
         self.result = exp_assignment3.msg.ballTrackingResult()
 
-        self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
+        #self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
         self.succes = False
         self.unfound_ball_counter = 0
         self.abort = False
@@ -132,7 +122,7 @@ class TrackAction(object): # forse ci va il goal
                         # 400 is the center of the image 
                 vel.angular.z = -0.002*(center[0]-400)
                         # 150 is the radius that we want see in the image, which represent the desired disatance from the object 
-                vel.linear.x = -0.01*(radius-150)
+                vel.linear.x = -0.07*(radius-150)
                 self.vel_publisher.publish(vel)
 
                 if (radius>=148) and abs(center[0]-400)<5: #Condition for considering the ball as reached
@@ -144,15 +134,15 @@ class TrackAction(object): # forse ci va il goal
         else:
             rospy.loginfo("[trackingBall]: BALL NOT FOUND")
             vel = Twist()
-            if self.unfound_ball_counter <= 6:
+            if self.unfound_ball_counter <= 10:
                 rospy.loginfo("[trackingBall]: TURN RIGHT SEARCHING THE BALL")
                 vel.angular.z = 1.5
                 self.vel_publisher.publish(vel)
-            elif self.unfound_ball_counter < 12:
+            elif self.unfound_ball_counter < 20:
                 rospy.loginfo("[trackingBall]: TURN LEFT SEARCHING THE BALL")
                 vel.angular.z = -1.5
                 self.vel_publisher.publish(vel)
-            elif self.unfound_ball_counter == 12:
+            elif self.unfound_ball_counter == 20:
                 rospy.loginfo("[trackingBall]: UNABLE TO FIND BALL")
                 self.unfound_ball_counter = 0
                 #self.act_s.set_preempted()
@@ -162,8 +152,10 @@ class TrackAction(object): # forse ci va il goal
     def track(self, goal):
         self.color = goal.color
         # crate the subscriber to camera1 in order to recive and handle the images
-        camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.go_to_ball, queue_size=1)
+        
         sub_odom = rospy.Subscriber('odom', Odometry, odom_callback)
+        self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
+        camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.go_to_ball, queue_size=1)
         while not self.succes:
             if self.act_s.is_preempt_requested():
                 rospy.loginfo('[trackingBall]: Goal was preempted')
@@ -177,6 +169,7 @@ class TrackAction(object): # forse ci va il goal
                 self.act_s.publish_feedback(self.feedback)
         camera_sub.unregister() #unregister from camera topic
         sub_odom.unregister()
+        self.vel_publisher.unregister()
         if not self.abort == True:
             self.act_s.set_succeeded(self.result)
         else:

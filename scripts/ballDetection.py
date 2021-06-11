@@ -20,7 +20,7 @@ class ballDetector():
         #self.detectedBalls = []
         self.detectedBalls = 'None'
         # Initialize the subscriber to the camera topic with the raw image
-        self.camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.ball_detection, queue_size=1)
+        #self.camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.ball_detection, queue_size=1)
         self.room_pub = rospy.Publisher('new_room_found', String, queue_size=10)
         self.rate = rospy.Rate(1)
         self.ballDetected = False
@@ -36,7 +36,7 @@ class ballDetector():
                                 cv2.CHAIN_APPROX_SIMPLE)
         cnts = imutils.grab_contours(cnts)
 
-        if len(cnts) > 0:
+        if len(cnts) > 0.5:
             return True
 
 
@@ -109,12 +109,28 @@ class ballDetector():
                     self.room_pub.publish("yellow")
         #cv2.imshow('window',image_np)
         #cv2.waitkey(2)
+    def startDetection(self):
+        self.camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.find_ball, queue_size=1)
+        rospy.loginfo("camera started")
+
+    def stopDetection(self):
+        self.camera_sub.unregister()
+
+def detectionState(state, rd):
+    #rd = args[0]
+    if state.data:
+        rd.startDetection()
+	    rospy.loginfo("[roomDetector] start detecting ")
+    else:
+        rd.stopDetection()
+	    rospy.loginfo("[roomDetector] stop detecting ")
 
 def main(args):
     
     try:
-        time.sleep(15)#wait for cmdManager.py
+        #time.sleep(15)#wait for cmdManager.py
         ball_detect = ballDetector()
+        cmdSub = rospy.Subscriber("room_detection", Bool, ball_detect)
         rospy.spin()
     except KeyboardInterrupt:
         print ("ROS image module terminated")

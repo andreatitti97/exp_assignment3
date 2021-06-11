@@ -50,15 +50,16 @@ class Rooms():
 
     def get_color_room(self, name):
         for room in self.ROOMS:
-            if (x == room['x'] and y == room['y']):
-                return room['name']
+            if name == room['name']:
+                return room['color']
 
     def random_pos(self):
         while True:
             tmpX = random.randint(-5,5)
-            tmpY = random.randint(-5,5)
-            if not (tmpX > 0 and tmpY > 3):
+            tmpY = random.randint(-8,5)
+            if not (3 > tmpX > 0 and tmpY > 0) or not(tmpX < 0 and tempY < -5)
                 return [tmpX, tmpY]
+                
     def mrange(self, a):
         minA = a - 3
         r = []
