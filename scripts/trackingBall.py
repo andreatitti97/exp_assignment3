@@ -33,24 +33,6 @@ blueUpper = (130, 255, 255)
 magentaLower = (125, 50, 50)
 magentaUpper = (150, 255, 255)
 
-
-position_ = Point()
-pose_ = Pose()
-
-## Odom sub callback
-def odom_callback(msg):
-    global position_
-    global pose_
-    #global yaw_
-
-    # position
-    position_ = msg.pose.pose.position
-    pose_ = msg.pose.pose
-
-
-
-
-
 class TrackAction(object): # forse ci va il goal
 
     ## Publisher to move the robot 
@@ -61,14 +43,28 @@ class TrackAction(object): # forse ci va il goal
         self.act_s.start()
         self.feedback = exp_assignment3.msg.ballTrackingFeedback()
         self.result = exp_assignment3.msg.ballTrackingResult()
-
+        self.regions = {
+            'right':0,
+            'fright':0,
+            'front':0,
+            'fleft':0,
+            'left':0,
+        }
         #self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
         self.succes = False
         self.unfound_ball_counter = 0
         self.abort = False
+        self.radius = 0
+        self.vel_publisher = 0
+        self.position = Point()
+        self.pose = Pose()
+    
+    def odom_clbk(self, msg):
+        self.pose = msg.pose.pose
+        self.position = msg.pose.position
 
     def go_to_ball(self, ros_image):
-        global position_, pose_
+
         #### direct conversion to CV2 ####
         ## @param image_np is the image decompressed and converted in OpendCv
         np_arr = np.fromstring(ros_image.data, np.uint8)
@@ -110,52 +106,105 @@ class TrackAction(object): # forse ci va il goal
             center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
 
             # only proceed if the radius meets a minimum size
-            if radius > 10:
+            if self.radius > 10:
                 # draw the circle and centroid on the frame,
                 # then update the list of tracked points
-                cv2.circle(image_np, (int(x), int(y)), int(radius), (0, 255, 255), 2)
+                cv2.circle(image_np, (int(x), int(y)), int(self.radius), (0, 255, 255), 2)
                 cv2.circle(image_np, center, 5, (0, 0, 255), -1)
-                #cv2.imshow('image',image_np)
-                #cv2.waitkey(2)
-                        # Setting the velocities to be applied to the robot
+                
+                # Setting the velocities to be applied to the robot
                 vel = Twist()
-                        # 400 is the center of the image 
+                # 400 is the center of the image 
                 vel.angular.z = -0.002*(center[0]-400)
-                        # 150 is the radius that we want see in the image, which represent the desired disatance from the object 
+                # 150 is the radius that we want see in the image, which represent the desired disatance from the object 
                 vel.linear.x = -0.07*(radius-150)
                 self.vel_publisher.publish(vel)
-
-                if (radius>=148) and abs(center[0]-400)<5: #Condition for considering the ball as reached
+                rospy.loginfo("[trackingBall]: TRACKING ")
+                if (radius>=143) and abs(center[0]-400)<5: #Condition for considering the ball as reached
                     rospy.loginfo("ballDetection --> BALL REACHED")
-                    self.result.x = position_.x
-                    self.result.y = position_.y
+                    self.result.x = self.position.x
+                    self.result.y = self.position.y
                     self.succes = True
 
         else:
             rospy.loginfo("[trackingBall]: BALL NOT FOUND")
             vel = Twist()
-            if self.unfound_ball_counter <= 10:
+            if self.unfound_ball_counter <= 8:
                 rospy.loginfo("[trackingBall]: TURN RIGHT SEARCHING THE BALL")
-                vel.angular.z = 1.5
+                vel.angular.z = 0.5
                 self.vel_publisher.publish(vel)
-            elif self.unfound_ball_counter < 20:
+            elif self.unfound_ball_counter < 17:
                 rospy.loginfo("[trackingBall]: TURN LEFT SEARCHING THE BALL")
                 vel.angular.z = -1.5
                 self.vel_publisher.publish(vel)
-            elif self.unfound_ball_counter == 20:
+            elif self.unfound_ball_counter == 17:
                 rospy.loginfo("[trackingBall]: UNABLE TO FIND BALL")
                 self.unfound_ball_counter = 0
                 #self.act_s.set_preempted()
                 self.abort = True
             self.unfound_ball_counter += 1
 
+    def avoid_obstacle(self, msg):
+        vel = Twist()
+        self.regions = {
+            'right': min(min(msg.ranges[0:143]),10),
+            'fright': min(min(msg.ranges[144:287]),10),
+            'front': min(min(msg.ranges[288:431]),10),
+            'fleft': min(min(msg.ranges[432:575]),10),
+            'left': min(min(msg.ranges[576:713]),10),
+        }
+        thresh = 0.6
+        thresh2 = 0.9
+        if (self.regions['front'] > 0) and (self.regions['front' <= thresh]) and (self.radius < 110):
+            rospy.loginfo("[trackingBall]: DETECTED OBS")
+            if self.regions['fright'] > thresh2:
+                rospy.loginfo("[trackingBall]: TURN RIGHT")
+                vel.angular.z = -0.5
+                self.vel_publisher.publish(vel)
+            elif self.regions['fleft'] > thresh2:
+                rospy.loginfo("[trackingBall]: TURN LEFT")
+                vel.angular.z = -0.5
+                self.vel_publisher.publish(vel)
+            else:
+                rospy.loginfo("[trackingBall]: ABORTED OBS IN FRONT")
+                self.abort = True
+        elif (self.regions['fright'] > 0) and (self.regions['fright' <= thresh]) and (self.radius < 110):
+            rospy.loginfo("[trackingBall]: DETECTED OBS")
+            if self.regions['front'] > thresh2:
+                rospy.loginfo("[trackingBall]: TURN RIGHT")
+                vel.angular.z = -0.5
+                self.vel_publisher.publish(vel)
+            elif self.regions['fleft'] > thresh2:
+                rospy.loginfo("[trackingBall]: TURN LEFT")
+                vel.angular.z = -0.5
+                self.vel_publisher.publish(vel)
+            else:
+                rospy.loginfo("[trackingBall]: ABORTED OBS IN FRONT")
+                self.abort = True
+        elif (self.regions['fleft'] > 0) and (self.regions['fleft' <= thresh]) and (self.radius < 110):
+            rospy.loginfo("[trackingBall]: DETECTED OBS")
+            if self.regions['front'] > thresh2:
+                rospy.loginfo("[trackingBall]: TURN RIGHT")
+                vel.angular.z = -0.5
+                self.vel_publisher.publish(vel)
+            elif self.regions['fleft'] > thresh2:
+                rospy.loginfo("[trackingBall]: TURN LEFT")
+                vel.angular.z = -0.5
+                self.vel_publisher.publish(vel)
+            else:
+                rospy.loginfo("[trackingBall]: ABORTED OBS IN FRONT")
+                self.abort = True
+    
+    
     def track(self, goal):
         self.color = goal.color
         # crate the subscriber to camera1 in order to recive and handle the images
         
-        sub_odom = rospy.Subscriber('odom', Odometry, odom_callback)
+        sub_odom = rospy.Subscriber('odom', Odometry, odom_clbk)
         self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
         camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.go_to_ball, queue_size=1)
+        laser_sub = rospy.Subscriber('/scan', LaserScan, self.avoid_obstacle)
+        
         while not self.succes:
             if self.act_s.is_preempt_requested():
                 rospy.loginfo('[trackingBall]: Goal was preempted')
@@ -163,6 +212,9 @@ class TrackAction(object): # forse ci va il goal
                 break
             elif self.abort == True:
                 rospy.loginfo("[trackingBall]: MISSION ABORTED")
+                vel = Twist()
+                vel.linear.x = 0
+                self.vel_publisher(vel)
                 break
             else:
                 self.feedback.state = "Reaching the ball"
@@ -170,6 +222,7 @@ class TrackAction(object): # forse ci va il goal
         camera_sub.unregister() #unregister from camera topic
         sub_odom.unregister()
         self.vel_publisher.unregister()
+        laser_sub.unregister()
         if not self.abort == True:
             self.act_s.set_succeeded(self.result)
         else:

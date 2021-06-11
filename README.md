@@ -1,12 +1,10 @@
 REOSITORY FOR THE 3RD ASSIGNMENT OF EXPERIMENTAL ROBOTICS LABORATORY COURSE - Andrea Tiranti 4856315
 
-PROBLEMS TO FIX: 
+WORK DONE - TODO for finish:
 
-- handle tracking of more than one object ( track the first detected )
-- Normal state continusly publish random position even outside of the state
-- Change Magenta color range since sometimes the orange walls are detected instead of the ball
-- Fix human interface strange error at hte beginning (?)
-- ADD FIND STATE
+- Documentation
+- Final tuning of navigation parameters
+- Final Test all possible situations
 
 FOR THE REST THE WORK IS NEARLY DONE
 

@@ -109,24 +109,22 @@ class ballDetector():
         #cv2.waitkey(2)
     def startDetection(self):
         self.camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.ball_detection, queue_size=1)
-        rospy.loginfo("camera started")
+        rospy.loginfo("[ballDetection]: CAMERA STARTED")
 
     def stopDetection(self):
         self.camera_sub.unregister()
 
 def detectionState(state, rd):
-    #rd = args[0]
     if state.data:
         rd.startDetection()
-	rospy.loginfo("[roomDetector] start detecting ")
+        rospy.loginfo("[ballDetection]: START DETECTING ")
     else:
         rd.stopDetection()
-	rospy.loginfo("[roomDetector] stop detecting ")
+        rospy.loginfo("[ballDetection]: STOP DETECTING ")
 
 def main(args):
     
     try:
-        #time.sleep(15)#wait for cmdManager.py
         ball_detect = ballDetector()
         cmdSub = rospy.Subscriber("room_detection", Bool, detectionState, ball_detect)
         rospy.spin()
