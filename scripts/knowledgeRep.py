@@ -50,7 +50,7 @@ class Rooms():
 
     def get_color_room(self, name):
         for room in self.ROOMS:
-            if (x == room['x'] and y = == room['y']):
+            if (x == room['x'] and y == room['y']):
                 return room['name']
 
     def random_pos(self):
