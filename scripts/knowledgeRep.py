@@ -48,6 +48,11 @@ class Rooms():
                 return room['name']
         return False    
 
+    def get_color_room(self, name):
+        for room in self.ROOMS:
+            if (x == room['x'] and y = == room['y']):
+                return room['name']
+
     def random_pos(self):
         while True:
             tmpX = random.randint(-5,5)

@@ -107,6 +107,8 @@ class ballDetector():
                     print("[ballDetection]: NEW ROOM DETECTED")
                     self.detectedBalls = "yellow"
                     self.room_pub.publish("yellow")
+        #cv2.imshow('window',image_np)
+        #cv2.waitkey(2)
 
 def main(args):
     

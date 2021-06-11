@@ -73,7 +73,7 @@ def UIcallback(data):
 
 def newRoomDetected(color):
     global NEW_ROOM, COLOR_ROOM, client, rooms
-    if not rooms.room_check(color.data):
+    if (not rooms.room_check(color.data)) and (not PLAY):
         rospy.loginfo("[cmdManager]: NEW BALL DETECTED: %s COLOR", color.data)
         NEW_ROOM = True
         COLOR_ROOM = color.data
@@ -200,6 +200,7 @@ class Play(smach.State):
                         TARGET_ROOM = TARGET_ROOM.strip("GoTo ")
                         position = rooms.get_room_position(TARGET_ROOM)
                         if not position:
+                            PLAY = False 
                             rospy.loginfo("[cmdManager]: ROOM NOT VISITED YET")                   
                             return 'goToFind'
                         else:
@@ -240,7 +241,8 @@ class Track(smach.State):
 
         trackClient = actionlib.SimpleActionClient('trackAction',ballTrackingAction)
         trackClient.wait_for_server()
-        rospy.loginfo("[cmdManager]: CLIENT FOR TRACKING CREATED")
+        NEW_ROOM = False
+        #rospy.loginfo("[cmdManager]: CLIENT FOR TRACKING CREATED")
 
         trackClient.send_goal(goal)
         wait = trackClient.wait_for_result()
@@ -258,17 +260,17 @@ class Track(smach.State):
                 rospy.loginfo("[cmdManager] I'M IN POSITION (%d,%d)",result.x,result.y)
                 rooms.add_new_room(COLOR_ROOM, result.x, result.y)
                 if FIND_MODE == True:
-                    if COLOR_ROOM == NEW_TR:
+                    if COLOR_ROOM == rooms.get_color_room(TARGET_ROOM):
                         FIND_MODE = False
-                        #return 'goToPlay'
-                        'goToPlay'
+                        rospy.loginfo("[cmdManager]: DISCOVERED DESIRED ROOM")
+                        return 'goToPlay'
                     else:
-                        #return 'goToFind'
-                        'goToFind'
+                        rospy.loginfo("[cmdManager]: FOUND NOT THE DESIRED ROOM")
+                        return 'goToFind'
             else: 
                 rospy.loginfo("[cmdManager] NOT ABLE TO FIND PREVIOUS ROOM DETECTED")
             ###### add the new room to the list ######
-            NEW_ROOM = False
+            #NEW_ROOM = False
             return "goToNormal"
 
 class Find(smach.State):
