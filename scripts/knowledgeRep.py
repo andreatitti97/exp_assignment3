@@ -57,7 +57,7 @@ class Rooms():
         while True:
             tmpX = random.randint(-5,5)
             tmpY = random.randint(-8,5)
-            if not (3 > tmpX > 0 and tmpY > 0) or not(tmpX < 0 and tempY < -5)
+            if not (3 > tmpX > 0 and tmpY > 0) or not(tmpX < 0 and tempY < -5):
                 return [tmpX, tmpY]
                 
     def mrange(self, a):
