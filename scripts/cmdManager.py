@@ -265,7 +265,7 @@ class Track(smach.State):
                         return "goToPlay"
                     else:
                         rospy.loginfo("[cmdManager]: FOUND NOT THE DESIRED ROOM")
-                        (ctrl_var["NEW_ROOM_COLOR"] = "None"
+                        ctrl_var["NEW_ROOM_COLOR"] = "None"
                         return "goToFind"
             else: 
                 rospy.loginfo("[cmdManager] NOT ABLE TO FIND PREVIOUS ROOM DETECTED")

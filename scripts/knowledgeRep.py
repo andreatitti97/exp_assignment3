@@ -50,7 +50,7 @@ class Rooms():
                 room['x'] = int(x)
                 room['y'] = int(y)
                 name = str(room['name'])
-		        print("[ROOMS] discovered room:"+name)
+		print("[ROOMS] discovered room:"+name)
  
     def get_name_position(self, x, y):
         for room in self.ROOMS:
@@ -88,7 +88,7 @@ class Rooms():
         while True:
             ok = True
             pos = self.random_pos()
-            for i in self.locationKnown
+            for i in self.locationKnown:
                 if (pos[0] in self.mrange(i[0],1)) and (pos[1] in self.mrange(i[1],1)):
                     ok = False
                     break
