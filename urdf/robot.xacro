@@ -55,7 +55,7 @@
       <joint name="${name}" type="continuous">
         <origin rpy="0 0 0" xyz="${origin_xyz}"/>
         <child link="${child}"/>
-        <parent link="base_link"/>
+        <parent link="link_chassis"/>
         <axis rpy="0 0 0" xyz="0 1 0"/>
         <limit effort="10000" velocity="1000"/>
         <joint_properties damping="1.0" friction="1.0"/>
@@ -64,7 +64,7 @@
 
 <!-- _______________base link____________________  -->
   
-  <link name="base_link">
+  <link name="link_chassis">
     <!-- pose and inertial -->
     <pose>0 0 0.1 0 0 0</pose>
     
@@ -149,7 +149,7 @@
   	<axis xyz="0 0 1"/>
   	<limit effort="1000.0" lower="-3.14" upper="3.14" velocity="0.2"/>
   	<origin rpy="0 0 0" xyz="0.15 0 0.035"/> <!-- half the height of the base link -->
-  	<parent link="base_link"/>
+  	<parent link="link_chassis"/>
   	<child link="neck_link"/>
   </joint>
 
@@ -215,26 +215,6 @@
     <child link="camera_link"/>
   </joint>
 
-<!-- hears definition -->
-
-  <!-- <xacro:link_ear name="link_right_ear" />
-  <xacro:link_ear name="link_left_ear" />
-  <xacro:joint_ear name="joint_right_ear"  child="link_right_ear"  origin_xyz="0 0.08 0.08"  />
-  <xacro:joint_ear name="joint_left_ear"   child="link_left_ear"   origin_xyz="0 -0.08 0.08"  /> -->
-
-<!-- transmission 
-
-<transmission name="head_joint_trans">
-	<type>transmission_interface/SimpleTransmission</type>
-	<joint name="head_joint">
-		<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-	</joint>
-	<actuator name="motor1">
-		<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-		<mechanicalInterface>1</mechanicalInterface>
-	</actuator>
-</transmission> -->
-
 <link name="hokuyo_link">
 	    <collision>
 	      <origin xyz="0 0 0.00125" rpy="0 0 0"/>
@@ -261,7 +241,7 @@
   <joint name="hokuyo_joint" type="fixed">
 	    <axis xyz="0 1 0" />
 	    <origin xyz="0.27 0 0.025" rpy="0 0 0"/>
-	    <parent link="base_link"/>
+	    <parent link="link_chassis"/>
 	    <child link="hokuyo_link"/> 
 	 </joint>
 

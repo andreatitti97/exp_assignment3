@@ -128,7 +128,7 @@ def main(args):
         ball_detect = ballDetector()
         cmdSub = rospy.Subscriber("room_detection", Bool, detectionState, ball_detect)
         rospy.spin()
-    except KeyboardInterrupt:
+    except rospy.ROSInterruptException:
         print ("ROS image module terminated")
     cv2.destroyAllWindows()
 
