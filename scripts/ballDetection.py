@@ -74,13 +74,13 @@ class ballDetector():
                     self.detectedBalls = "red"
                     self.room_pub.publish("red")
 
-        self.ballDetected = self.color_detection(magentaLower, magentaUpper, image_np)
+        '''self.ballDetected = self.color_detection(magentaLower, magentaUpper, image_np)
         if self.ballDetected == True:
             rospy.loginfo("[ballDetection]: DETECTED MAGENTA BALL")
             if "magenta" != self.detectedBalls:
                     print("[ballDetection]: NEW ROOM DETECTED")
                     self.detectedBalls = "magenta"
-                    self.room_pub.publish("magenta")
+                    self.room_pub.publish("magenta")'''
 
         self.ballDetected = self.color_detection(greenLower, greenUpper, image_np)
         if self.ballDetected == True:

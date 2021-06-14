@@ -78,8 +78,8 @@ class TrackAction(object):
             mask = cv2.inRange(hsv, greenLower, greenUpper)
         elif self.color == "blue":
             mask = cv2.inRange(hsv, blueLower, blueUpper)
-        elif self.color == "magenta":
-            mask = cv2.inRange(hsv, magentaLower, magentaUpper)
+        '''elif self.color == "magenta":
+            mask = cv2.inRange(hsv, magentaLower, magentaUpper)'''
 
         mask = cv2.erode(mask, None, iterations=2)
         mask = cv2.dilate(mask, None, iterations=2)
@@ -222,7 +222,7 @@ class TrackAction(object):
             self.act_s.set_succeeded(self.result)
         else:
             self.act_s.set_preempted()
-        self.abort == False
+        self.abort = False
         self.success = False
         rospy.loginfo("[trackingBall] ACTION SERVER CLOSED")		
 
