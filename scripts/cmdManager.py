@@ -31,18 +31,7 @@ import actionlib
 import actionlib.msg
 from exp_assignment3.msg import ballTrackingGoal, ballTrackingAction
 
-ctrl_var = {
-
-    # Flag which notify when the user types 'play'
-    "PLAY" : False,
-
-    # Contains the desired room entered by the user 
-    "TARGET_ROOM" : "None",
-
-    "NEW_ROOM_COLOR" : "None",
-
-    "FIND_MODE" : False
-}
+ctrl_var = {"PLAY" : False, "TARGET_ROOM" : "None", "NEW_ROOM_COLOR" : "None", "FIND_MODE" : False}
 
 ## init move_base client 
 client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
@@ -127,8 +116,9 @@ class Normal(smach.State):
     def execute(self,userdata):
         global ctrl_var, client, rooms, RD_pub
         rospy.loginfo("***************** NORMAL STATE **************")
-        #time.sleep(3)
-        RD_pub.publish(True)
+	#print("WAITING :::")        
+	#time.sleep(6)        
+	RD_pub.publish(True)
         self.counter = 0
         while not rospy.is_shutdown():  
             time.sleep(2)
@@ -187,7 +177,7 @@ class Play(smach.State):
 
         rospy.loginfo("***************** PLAY STATE **************")
         global ctrl_var, rooms
-        time.sleep(1)
+        time.sleep(2)
         ctrl_var["PLAY"] = False
         # Go to the user
         position = rooms.get_room_position("Home")
@@ -241,12 +231,9 @@ class Track(smach.State):
         goal.color = ctrl_var["NEW_ROOM_COLOR"]
 
         trackClient = actionlib.SimpleActionClient('TrackAction',ballTrackingAction)
-        print("prova")
         trackClient.wait_for_server()
-        print("PROVA")
         trackClient.send_goal(goal)
         wait = trackClient.wait_for_result()
-        print("PPPPPP")
         if not wait:
             rospy.logerr("Action server not available!")
             rospy.signal_shutdown("Action server not available!")
@@ -258,13 +245,14 @@ class Track(smach.State):
 
             result = trackClient.get_result()
             if result.x != 0 and result.y != 0:
-                rospy.loginfo("[cmdManager]: NEW ROOM DISCOVERED")
-                rospy.loginfo("[cmdManager] I'M IN POSITION (%d,%d)",result.x,result.y)
+                #rospy.loginfo("[cmdManager]: NEW ROOM DISCOVERED")
+                #rospy.loginfo("[cmdManager] I'M IN POSITION (%d,%d)",result.x,result.y)
                 rooms.add_new_room(ctrl_var["NEW_ROOM_COLOR"], result.x, result.y)
                 if ctrl_var["FIND_MODE"] == True:
                     if ctrl_var["NEW_ROOM_COLOR"] == rooms.get_color_room(ctrl_var["TARGET_ROOM"]):
                         ctrl_var["FIND_MODE"] = False
                         rospy.loginfo("[cmdManager]: DISCOVERED DESIRED ROOM")
+			ctrl_var["NEW_ROOM_COLOR"] = "None"
                         return "goToPlay"
                     else:
                         rospy.loginfo("[cmdManager]: FOUND NOT THE DESIRED ROOM")
@@ -288,7 +276,7 @@ class Find(smach.State):
 
     def execute(self, userdata):
         global rooms, ctrl_var
-        rospy.loginfo("***************** TRACK STATE **************")
+        rospy.loginfo("***************** FIND STATE **************")
         ctrl_var["FIND_MODE"] = True
         RD_pub.publish(True)
         time.sleep(4)

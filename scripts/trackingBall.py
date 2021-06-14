@@ -44,13 +44,7 @@ class TrackAction(object):
         self.act_s.start()
         self.feedback = exp_assignment3.msg.ballTrackingFeedback()
         self.result = exp_assignment3.msg.ballTrackingResult()
-        self.regions = {
-            'right':0,
-            'fright':0,
-            'front':0,
-            'fleft':0,
-            'left':0,
-        }
+        self.regions = {'right':0,'fright':0, 'front':0,'fleft':0,'left':0,}
         #self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
         self.succes = False
         self.unfound_ball_counter = 0
@@ -65,7 +59,6 @@ class TrackAction(object):
         self.position = msg.pose.pose.position
 
     def go_to_ball(self, ros_image):
-
         #### direct conversion to CV2 ####
         ## @param image_np is the image decompressed and converted in OpendCv
         np_arr = np.fromstring(ros_image.data, np.uint8)
@@ -102,7 +95,7 @@ class TrackAction(object):
             # it to compute the minimum enclosing circle and
             # centroid
             c = max(cnts, key=cv2.contourArea)
-            ((x, y), radius) = cv2.minEnclosingCircle(c)
+            ((x, y), self.radius) = cv2.minEnclosingCircle(c)
             M = cv2.moments(c)
             center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
 
@@ -118,10 +111,10 @@ class TrackAction(object):
                 # 400 is the center of the image 
                 vel.angular.z = -0.002*(center[0]-400)
                 # 150 is the radius that we want see in the image, which represent the desired disatance from the object 
-                vel.linear.x = -0.007*(radius-150)
+                vel.linear.x = -0.007*(self.radius-150)
                 self.vel_publisher.publish(vel)
                 rospy.loginfo("[trackingBall]: TRACKING ")
-                if (radius>=143) and abs(center[0]-400)<5: #Condition for considering the ball as reached
+                if (self.radius>=143) and abs(center[0]-400)<5: #Condition for considering the ball as reached
                     rospy.loginfo("ballDetection --> BALL REACHED")
                     self.result.x = self.position.x
                     self.result.y = self.position.y
@@ -198,7 +191,7 @@ class TrackAction(object):
     
     
     def track(self, goal):
-	rospy.loginfo("[trackingBall: Activated]")
+	rospy.loginfo("[trackingBall]: Activated")
         self.color = goal.color
         # crate the subscriber to camera1 in order to recive and handle the images
         
@@ -206,7 +199,6 @@ class TrackAction(object):
         self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
         camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.go_to_ball, queue_size=1)
         laser_sub = rospy.Subscriber('/scan', LaserScan, self.avoid_obstacle)
-        print("PROVA dio cane")
         while not self.succes:
             if self.act_s.is_preempt_requested():
                 rospy.loginfo('[trackingBall]: Goal was preempted')
@@ -216,10 +208,9 @@ class TrackAction(object):
                 rospy.loginfo("[trackingBall]: MISSION ABORTED")
                 vel = Twist()
                 vel.linear.x = 0
-                self.vel_publisher(vel)
+                self.vel_publisher.publish(vel)
                 break
             else:
-                #print("PROVA FEEDBACK")
                 self.feedback.state = "Reaching the ball..."
                 self.act_s.publish_feedback(self.feedback)
         camera_sub.unregister() #unregister from camera topic

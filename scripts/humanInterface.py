@@ -10,8 +10,8 @@ def humanInterface():
     print("Welcome !!!! \n The user can digit the keyword: \n - 'play' -> to switch in play mode \n - 'GoTo roomName' -> to reach that room or to start looking for it (if it hasn't yet been discovered) \n The rooms present are: Entrance(blue), Closet(red), LeavingRoom(green), Kitchen(yellow), BathRoom(orange), BedRoom(black)\n")
 
     while not rospy.is_shutdown():
-	    msg = raw_input("User:")
-        pub.publish(msg)
+	msg = raw_input("User:")
+        publisher.publish(msg)
         rate.sleep()
 
 if __name__ == "__main__":
