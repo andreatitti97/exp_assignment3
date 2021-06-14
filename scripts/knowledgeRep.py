@@ -50,7 +50,7 @@ class Rooms():
                 room['x'] = int(x)
                 room['y'] = int(y)
                 name = str(room['name'])
-		print("[ROOMS] discovered room:"+name)
+                print("[ROOMS] discovered room:"+name)
  
     def get_name_position(self, x, y):
         for room in self.ROOMS:

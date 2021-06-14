@@ -63,7 +63,7 @@ def UIcallback(data):
 
 def newRoomDetected(color):
     global ctrl_var, client, rooms, RD_pub
-    if (not rooms.room_check(color.data)):
+    if not rooms.room_check(color.data):
         rospy.loginfo("[cmdManager]: NEW BALL DETECTED: %s COLOR", color.data)
         RD_pub.publish(False)
         ctrl_var["NEW_ROOM_COLOR"]= color.data
@@ -115,11 +115,8 @@ class Normal(smach.State):
         
     def execute(self,userdata):
         global ctrl_var, client, rooms, RD_pub
-        rospy.loginfo("***************** NORMAL STATE **************")
-	#print("WAITING :::")        
-	#time.sleep(6)        
-	RD_pub.publish(True)
-        self.counter = 0
+        rospy.loginfo("***************** NORMAL STATE **************")   
+        RD_pub.publish(True)
         while not rospy.is_shutdown():  
             time.sleep(2)
             if ctrl_var["PLAY"] == True:
@@ -148,7 +145,7 @@ class Sleep(smach.State):
         smach.State.__init__(self, outcomes=['goToNormal','goToSleep']) 
 
         self.rate = rospy.Rate(200)  # Loop at 200 Hz
-
+        
     def execute(self, userdata): 
         global rooms
         rospy.loginfo("***************** SLEEP STATE **************")
@@ -177,14 +174,13 @@ class Play(smach.State):
 
         rospy.loginfo("***************** PLAY STATE **************")
         global ctrl_var, rooms
-        time.sleep(2)
+        time.sleep(1)
         ctrl_var["PLAY"] = False
         # Go to the user
         position = rooms.get_room_position("Home")
         move_base_go_to(position[0], position[1])	
 
         while not rospy.is_shutdown():
-            #PLAY = False
             if self.counter <= 5:
                 if ctrl_var["TARGET_ROOM"] != "None":
 
@@ -252,7 +248,7 @@ class Track(smach.State):
                     if ctrl_var["NEW_ROOM_COLOR"] == rooms.get_color_room(ctrl_var["TARGET_ROOM"]):
                         ctrl_var["FIND_MODE"] = False
                         rospy.loginfo("[cmdManager]: DISCOVERED DESIRED ROOM")
-			ctrl_var["NEW_ROOM_COLOR"] = "None"
+                        ctrl_var["NEW_ROOM_COLOR"] = "None"
                         return "goToPlay"
                     else:
                         rospy.loginfo("[cmdManager]: FOUND NOT THE DESIRED ROOM")
@@ -288,7 +284,7 @@ class Find(smach.State):
                 return "goToTrack"
             elif self.counter == 5:
                 rospy.loginfo("[cmdManager]: MAXNUMBER OF FIND MODE ITERATIONs")
-                ctrl_var["FIND_MODE"] = True = False
+                ctrl_var["FIND_MODE"] = False
                 RD_pub.publish(False)
                 self.counter = 0
                 return 'goToPlay' 
