@@ -241,12 +241,12 @@ class Track(smach.State):
         goal.color = ctrl_var["NEW_ROOM_COLOR"]
 
         trackClient = actionlib.SimpleActionClient('TrackAction',ballTrackingAction)
-	print("prova")
+        print("prova")
         trackClient.wait_for_server()
-	print("PROVA")
+        print("PROVA")
         trackClient.send_goal(goal)
         wait = trackClient.wait_for_result()
-	print("PPPPPP")
+        print("PPPPPP")
         if not wait:
             rospy.logerr("Action server not available!")
             rospy.signal_shutdown("Action server not available!")

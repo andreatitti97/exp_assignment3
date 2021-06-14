@@ -118,7 +118,7 @@ class TrackAction(object):
                 # 400 is the center of the image 
                 vel.angular.z = -0.002*(center[0]-400)
                 # 150 is the radius that we want see in the image, which represent the desired disatance from the object 
-                vel.linear.x = -0.07*(radius-150)
+                vel.linear.x = -0.007*(radius-150)
                 self.vel_publisher.publish(vel)
                 rospy.loginfo("[trackingBall]: TRACKING ")
                 if (radius>=143) and abs(center[0]-400)<5: #Condition for considering the ball as reached
@@ -219,14 +219,15 @@ class TrackAction(object):
                 self.vel_publisher(vel)
                 break
             else:
-		#print("PROVA FEEDBACK")
+                #print("PROVA FEEDBACK")
                 self.feedback.state = "Reaching the ball..."
                 self.act_s.publish_feedback(self.feedback)
         camera_sub.unregister() #unregister from camera topic
         sub_odom.unregister()
         laser_sub.unregister()
-	self.vel_publisher.unregister()        
-	if not self.abort == True:
+        self.vel_publisher.unregister()
+
+        if not self.abort == True:
             self.act_s.set_succeeded(self.result)
         else:
             self.act_s.set_preempted()
