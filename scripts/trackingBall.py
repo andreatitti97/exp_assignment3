@@ -46,7 +46,7 @@ class TrackAction(object):
         self.result = exp_assignment3.msg.ballTrackingResult()
         self.regions = {'right':0,'fright':0, 'front':0,'fleft':0,'left':0,}
         #self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
-        self.succes = False
+        self.success = False
         self.unfound_ball_counter = 0
         self.abort = False
         self.radius = 0
@@ -118,7 +118,7 @@ class TrackAction(object):
                     rospy.loginfo("ballDetection --> BALL REACHED")
                     self.result.x = self.position.x
                     self.result.y = self.position.y
-                    self.succes = True
+                    self.success = True
 
         else:
             rospy.loginfo("[trackingBall]: BALL NOT FOUND")
@@ -199,7 +199,7 @@ class TrackAction(object):
         self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
         camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.go_to_ball, queue_size=1)
         laser_sub = rospy.Subscriber('/scan', LaserScan, self.avoid_obstacle)
-        while not self.succes:
+        while not self.success:
             if self.act_s.is_preempt_requested():
                 rospy.loginfo('[trackingBall]: Goal was preempted')
                 self.act_s.set_preempted()
