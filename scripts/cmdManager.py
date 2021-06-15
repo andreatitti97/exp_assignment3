@@ -264,7 +264,7 @@ class Find(smach.State):
                 ctrl_var["FIND"] = False
                 RD_pub.publish(False)
                 self.counter = 0
-		        return "goToPlay"
+		return "goToPlay"
             elif self.counter == 5:
                 rospy.loginfo("[cmdManager--FIND]: MAXNUMBER OF FIND MODE ITERATIONs")
                 ctrl_var["FIND"] = False
