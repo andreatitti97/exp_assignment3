@@ -6,31 +6,24 @@
     <material>Gazebo/Orange</material>
   </gazebo>
   <gazebo reference="link_left_wheel">
-    <material>Gazebo/Blue</material>
+    <material>Gazebo/Orange</material>
   </gazebo>
   <gazebo reference="link_right_wheel">
-    <material>Gazebo/Blue</material>
+    <material>Gazebo/Orange</material>
   </gazebo>
 
   <gazebo reference="neck_link">
-    <material>Gazebo/Red</material>
+    <material>Gazebo/Grey</material>
   </gazebo>
   
     <gazebo reference="head_link">
-    <material>Gazebo/Red</material>
+    <material>Gazebo/Orange</material>
   </gazebo>
 
     <gazebo reference="hokuyo_link">
     <material>Gazebo/Green</material>
   </gazebo>		
    
- 
- 
-
-
-  <gazebo reference="head_joint">
-    <provideFeedback>true</provideFeedback>
-</gazebo>
 
   <gazebo>
     <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">

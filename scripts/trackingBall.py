@@ -109,12 +109,12 @@ class TrackAction(object):
                 # Setting the velocities to be applied to the robot
                 vel = Twist()
                 # 400 is the center of the image 
-                vel.angular.z = -0.002*(center[0]-400)
+                vel.angular.z = -0.001*(center[0]-400)
                 # 150 is the radius that we want see in the image, which represent the desired disatance from the object 
-                vel.linear.x = -0.007*(self.radius-150)
+                vel.linear.x = -0.002*(self.radius-130)
                 self.vel_publisher.publish(vel)
                 rospy.loginfo("[trackingBall]: TRACKING ")
-                if (self.radius>=143) and abs(center[0]-400)<5: #Condition for considering the ball as reached
+                if (self.radius>=120) and (abs(center[0]-400)<5): #Condition for considering the ball as reached
                     rospy.loginfo("ballDetection --> BALL REACHED")
                     self.result.x = self.position.x
                     self.result.y = self.position.y
@@ -216,7 +216,7 @@ class TrackAction(object):
         camera_sub.unregister() #unregister from camera topic
         sub_odom.unregister()
         laser_sub.unregister()
-        self.vel_publisher.unregister()
+        #self.vel_publisher.unregister()
 
         if not self.abort == True:
             self.act_s.set_succeeded(self.result)

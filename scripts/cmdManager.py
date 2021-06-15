@@ -185,7 +185,7 @@ class Play(smach.State):
                 if ctrl_var["TARGET_ROOM"] != "None":
 
                     if ctrl_var["TARGET_ROOM"].startswith("GoTo"):
-                        ctrl_var["TRGET_ROOM"] = ctrl_var["TARGET_ROOM"].strip("GoTo ")
+                        ctrl_var["TARGET_ROOM"] = ctrl_var["TARGET_ROOM"].strip("GoTo ")
                         position = rooms.get_room_position(ctrl_var["TARGET_ROOM"])
                         if not position:
                             rospy.loginfo("[cmdManager]: ROOM NOT VISITED YET")                   
@@ -280,8 +280,13 @@ class Find(smach.State):
         while not rospy.is_shutdown():  
 
             if ctrl_var["NEW_ROOM_COLOR"] != "None":
-                rooms.cancel_room()
+                #rooms.cancel_room()
                 return "goToTrack"
+	    elif ctrl_var["PLAY"] == True:
+		ctrl_var["FIND_MODE"] = False
+                RD_pub.publish(False)
+                self.counter = 0
+		return "goToPlay"
             elif self.counter == 5:
                 rospy.loginfo("[cmdManager]: MAXNUMBER OF FIND MODE ITERATIONs")
                 ctrl_var["FIND_MODE"] = False

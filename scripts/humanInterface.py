@@ -15,7 +15,7 @@ def humanInterface():
         rate.sleep()
 
 if __name__ == "__main__":
-    rospy.init_node('Human Interface', anonymous=True)
+    rospy.init_node('Human_Interface', anonymous=True)
     try:
         humanInterface()
     except rospy.ROSInterruptException:
