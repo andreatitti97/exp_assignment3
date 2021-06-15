@@ -34,25 +34,27 @@ blueUpper = (130, 255, 255)
 magentaLower = (125, 50, 50)
 magentaUpper = (150, 255, 255)
 
-class TrackAction(object):
+class Tracking(object):
 
     ## Publisher to move the robot 
 
     def __init__(self, name):
         self.action_name = name
-        self.act_s = actionlib.SimpleActionServer('TrackAction', exp_assignment3.msg.ballTrackingAction, self.track, auto_start=False)
+        self.act_s = actionlib.SimpleActionServer('Tracking', exp_assignment3.msg.ballTrackingAction, self.track, auto_start=False)
         self.act_s.start()
         self.feedback = exp_assignment3.msg.ballTrackingFeedback()
         self.result = exp_assignment3.msg.ballTrackingResult()
-        self.regions = {'right':0,'fright':0, 'front':0,'fleft':0,'left':0,}
+        self.lidar_regions = {'r':0,'fr':0, 'f':0,'fl':0,'l':0,}
         #self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
-        self.success = False
-        self.unfound_ball_counter = 0
-        self.abort = False
+        self.ACK_POSITIVO = False
+        self.lost_ball_counter = 0
+        self.stop = False
         self.radius = 0
         self.vel_publisher = 0
         self.position = Point()
         self.pose = Pose()
+        self.sigmaLinear = 0.001 #parameters for correct velocity during tracking for achieve smooth movements
+        self.sigmaAngular = 0.002
     
     def odom_clbk(self, msg):
         self.pose = msg.pose.pose
@@ -109,128 +111,127 @@ class TrackAction(object):
                 # Setting the velocities to be applied to the robot
                 vel = Twist()
                 # 400 is the center of the image 
-                vel.angular.z = -0.001*(center[0]-400)
+                vel.angular.z = -self.sigmaAngular*(center[0]-400)
                 # 150 is the radius that we want see in the image, which represent the desired disatance from the object 
-                vel.linear.x = -0.002*(self.radius-130)
+                vel.linear.x = -self.sigmaLinear*(self.radius-130)
                 self.vel_publisher.publish(vel)
                 rospy.loginfo("[trackingBall]: TRACKING ")
                 if (self.radius>=120) and (abs(center[0]-400)<5): #Condition for considering the ball as reached
                     rospy.loginfo("ballDetection --> BALL REACHED")
                     self.result.x = self.position.x
                     self.result.y = self.position.y
-                    self.success = True
+                    self.ACK_POSITIVO = True
 
         else:
             rospy.loginfo("[trackingBall]: BALL NOT FOUND")
             vel = Twist()
-            if self.unfound_ball_counter <= 8:
+            if self.lost_ball_counter <= 8:
                 rospy.loginfo("[trackingBall]: TURN RIGHT SEARCHING THE BALL")
                 vel.angular.z = 0.5
                 self.vel_publisher.publish(vel)
-            elif self.unfound_ball_counter < 17:
+            elif self.lost_ball_counter < 17:
                 rospy.loginfo("[trackingBall]: TURN LEFT SEARCHING THE BALL")
                 vel.angular.z = -0.5
                 self.vel_publisher.publish(vel)
-            elif self.unfound_ball_counter == 17:
+            elif self.lost_ball_counter == 17:
                 rospy.loginfo("[trackingBall]: UNABLE TO FIND BALL")
-                self.unfound_ball_counter = 0
+                self.lost_ball_counter = 0
                 #self.act_s.set_preempted()
-                self.abort = True
-            self.unfound_ball_counter += 1
+                self.stop = True
+            self.lost_ball_counter += 1
 
     def avoid_obstacle(self, msg):
         vel = Twist()
-        self.regions = {
-            'right': min(min(msg.ranges[0:143]),10),
-            'fright': min(min(msg.ranges[144:287]),10),
-            'front': min(min(msg.ranges[288:431]),10),
-            'fleft': min(min(msg.ranges[432:575]),10),
-            'left': min(min(msg.ranges[576:713]),10),
+        self.lidar_regions = {
+            'r': min(min(msg.ranges[0:143]),10),
+            'fr': min(min(msg.ranges[144:287]),10),
+            'f': min(min(msg.ranges[288:431]),10),
+            'fl': min(min(msg.ranges[432:575]),10),
+            'l': min(min(msg.ranges[576:713]),10),
         }
         thresh = 0.6
         thresh2 = 0.9
-        if (self.regions['front'] > 0) and (self.regions['front'] <= thresh) and (self.radius < 110):
+        if (self.lidar_regions['f'] > 0) and (self.lidar_regions['f'] <= thresh) and (self.radius < 110):
             rospy.loginfo("[trackingBall]: DETECTED OBS")
-            if self.regions['fright'] > thresh2:
+            if self.lidar_regions['fr'] > thresh2:
                 rospy.loginfo("[trackingBall]: TURN RIGHT")
                 vel.angular.z = -0.5
                 self.vel_publisher.publish(vel)
-            elif self.regions['fleft'] > thresh2:
+            elif self.lidar_regions['fl'] > thresh2:
                 rospy.loginfo("[trackingBall]: TURN LEFT")
                 vel.angular.z = 0.5
                 self.vel_publisher.publish(vel)
             else:
-                rospy.loginfo("[trackingBall]: ABORTED OBS IN FRONT")
-                self.abort = True
-        elif (self.regions['fright'] > 0) and (self.regions['fright'] <= thresh) and (self.radius < 110):
+                rospy.loginfo("[trackingBall]: STOPPED OBS IN FRONT")
+                self.stop = True
+        elif (self.lidar_regions['fr'] > 0) and (self.lidar_regions['fr'] <= thresh) and (self.radius < 110):
             rospy.loginfo("[trackingBall]: DETECTED OBS")
-            if self.regions['front'] > thresh2:
+            if self.lidar_regions['f'] > thresh2:
                 rospy.loginfo("[trackingBall]: TURN RIGHT")
                 vel.angular.z = 0.5
                 self.vel_publisher.publish(vel)
-            elif self.regions['fleft'] > thresh2:
+            elif self.lidar_regions['fl'] > thresh2:
                 rospy.loginfo("[trackingBall]: TURN LEFT")
                 vel.angular.z = 0.5
                 self.vel_publisher.publish(vel)
             else:
-                rospy.loginfo("[trackingBall]: ABORTED OBS IN FRONT")
-                self.abort = True
-        elif (self.regions['fleft'] > 0) and (self.regions['fleft'] <= thresh) and (self.radius < 110):
+                rospy.loginfo("[trackingBall]: STOPPED OBS IN FRONT")
+                self.stop = True
+        elif (self.lidar_regions['fl'] > 0) and (self.lidar_regions['fl'] <= thresh) and (self.radius < 110):
             rospy.loginfo("[trackingBall]: DETECTED OBS")
-            if self.regions['front'] > thresh2:
+            if self.lidar_regions['f'] > thresh2:
                 rospy.loginfo("[trackingBall]: TURN RIGHT")
                 vel.angular.z = -0.5
                 self.vel_publisher.publish(vel)
-            elif self.regions['fleft'] > thresh2:
+            elif self.lidar_regions['fl'] > thresh2:
                 rospy.loginfo("[trackingBall]: TURN LEFT")
                 vel.angular.z = -0.5
                 self.vel_publisher.publish(vel)
             else:
-                rospy.loginfo("[trackingBall]: ABORTED OBS IN FRONT")
-                self.abort = True
+                rospy.loginfo("[trackingBall]: STOPPED OBS IN FRONT")
+                self.stop = True
     
     
     def track(self, goal):
-	rospy.loginfo("[trackingBall]: Activated")
+        rospy.loginfo("[trackingBall]: ACTIVATED")
         self.color = goal.color
         # crate the subscriber to camera1 in order to recive and handle the images
-        
+
         sub_odom = rospy.Subscriber('odom', Odometry, self.odom_clbk)
         self.vel_publisher = rospy.Publisher("cmd_vel",Twist, queue_size=1)
         camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.go_to_ball, queue_size=1)
         laser_sub = rospy.Subscriber('/scan', LaserScan, self.avoid_obstacle)
-        while not self.success:
+        while not self.ACK_POSITIVO:
             if self.act_s.is_preempt_requested():
-                rospy.loginfo('[trackingBall]: Goal was preempted')
+                rospy.loginfo('[trackingBall]: GOAL WAS PREEMPTED')
                 self.act_s.set_preempted()
                 break
-            elif self.abort == True:
-                rospy.loginfo("[trackingBall]: MISSION ABORTED")
+            elif self.stop == True:
+                rospy.loginfo("[trackingBall]: MISSION STOPPED")
                 vel = Twist()
                 vel.linear.x = 0
                 self.vel_publisher.publish(vel)
                 break
             else:
-                self.feedback.state = "Reaching the ball..."
+                self.feedback.state = "REACHING THE BALL"
                 self.act_s.publish_feedback(self.feedback)
-        camera_sub.unregister() #unregister from camera topic
+        camera_sub.unregister()
         sub_odom.unregister()
         laser_sub.unregister()
-        #self.vel_publisher.unregister()
 
-        if not self.abort == True:
+        if not self.stop == True:
             self.act_s.set_succeeded(self.result)
         else:
             self.act_s.set_preempted()
-        self.abort = False
-        self.success = False
+        self.stop = False
+        self.ACK_POSITIVO = False
         rospy.loginfo("[trackingBall] ACTION SERVER CLOSED")		
 
 
 def main():
     try:
-        rospy.init_node('Track')
-        track = TrackAction('TrackAction')
+        rospy.init_node('Track_Node')
+        track = Tracking('Tracking')
         rate = rospy.Rate(20)
         while not rospy.is_shutdown():
             rate.sleep()

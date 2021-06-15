@@ -2,7 +2,6 @@
 import actionlib
 import rospy 
 import random
-
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
 class Rooms():
@@ -29,36 +28,29 @@ class Rooms():
                     return True
         return False
     
-    def get_room_position(self, target_room):
+    def room_position(self, target_room):
         for room in self.ROOMS:
             if target_room == room['name']:
                 if room['detected'] == True:
                     return [room["x"], room["y"]]
         return False
 
-    def visited(seld):
-        v_rooms = []
-        for room in self.ROOMS:
-            if room['detected'] == True:
-                v_rooms.append(room['name'])
-        return v_rooms
-
-    def add_new_room(self, color, x, y):
+    def new_room(self, color, x, y):
         for room in self.ROOMS:
             if color == room['color']:
                 room['detected'] = True
                 room['x'] = int(x)
                 room['y'] = int(y)
                 name = str(room['name'])
-                print("[ROOMS] discovered room:"+name)
+                print("[knowledgRep]: *****DISCOVERED ROOM:"+name+"*****")
  
-    def get_name_position(self, x, y):
+    def room_name(self, x, y):
         for room in self.ROOMS:
             if (x == room['x'] and y == room['y']):
                 return room['name']
         return False    
 
-    def get_color_room(self, name):
+    def room_color(self, name):
         for room in self.ROOMS:
             if name == room['name']:
                 return room['color']

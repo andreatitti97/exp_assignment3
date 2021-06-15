@@ -15,7 +15,7 @@ from std_msgs.msg import Bool, String
 class ballDetector():
     def __init__(self):
         ''' INITIALIZE ROS NODE '''
-        rospy.init_node('ball_detection', anonymous=True)
+        rospy.init_node('Ball_Detection_Node', anonymous=True)
         self.detectedBalls = 'None'
         # Initialize the subscriber to the camera topic with the raw image
         #self.camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.ball_detection, queue_size=1)
@@ -60,17 +60,17 @@ class ballDetector():
         # Color tests
         self.ballDetected = self.color_detection(blackLower, blackUpper, image_np)
         if self.ballDetected == True:
-            rospy.loginfo("[ballDetection]: DETECTED BLACK BALL")
+            #rospy.loginfo("[ballDetection]: DETECTED BLACK BALL")
             if "black" != self.detectedBalls:
-                    print("[ballDetection]: NEW ROOM DETECTED")
+                    #print("[ballDetection]: NEW ROOM DETECTED")
                     self.detectedBalls = "black"
                     self.room_pub.publish("black")
 
         self.ballDetected = self.color_detection(redLower, redUpper, image_np)
         if self.ballDetected == True:
-            rospy.loginfo("[ballDetection]: DETECTED RED BALL")
+            #rospy.loginfo("[ballDetection]: DETECTED RED BALL")
             if "red" != self.detectedBalls:
-                    print("[ballDetection]: NEW ROOM DETECTED")
+                    #print("[ballDetection]: NEW ROOM DETECTED")
                     self.detectedBalls = "red"
                     self.room_pub.publish("red")
 
@@ -84,32 +84,31 @@ class ballDetector():
 
         self.ballDetected = self.color_detection(greenLower, greenUpper, image_np)
         if self.ballDetected == True:
-            rospy.loginfo("[ballDetection]: DETECTED GREEN BALL")
+            #rospy.loginfo("[ballDetection]: DETECTED GREEN BALL")
             if "green" != self.detectedBalls:
-                    print("[ballDetection]: NEW ROOM DETECTED")
+                    #print("[ballDetection]: NEW ROOM DETECTED")
                     self.detectedBalls = "green"
                     self.room_pub.publish("green")
 
         self.ballDetected = self.color_detection(blueLower, blueUpper, image_np)
         if self.ballDetected == True:
-            rospy.loginfo("[ballDetection]: DETECTED BLUE BALL")
+            #rospy.loginfo("[ballDetection]: DETECTED BLUE BALL")
             if "blue" != self.detectedBalls:
-                    print("[ballDetection]: NEW ROOM DETECTED")
+                    #print("[ballDetection]: NEW ROOM DETECTED")
                     self.detectedBalls = "blue"
                     self.room_pub.publish("blue")
 
         self.ballDetected = self.color_detection(yellowLower, yellowUpper, image_np)
         if self.ballDetected == True:
-            rospy.loginfo("[ballDetection]: DETECTED YELLOW BALL")
+            #rospy.loginfo("[ballDetection]: DETECTED YELLOW BALL")
             if "yellow" != self.detectedBalls:
-                    print("[ballDetection]: NEW ROOM DETECTED")
+                    #print("[ballDetection]: NEW ROOM DETECTED")
                     self.detectedBalls = "yellow"
                     self.room_pub.publish("yellow")
-        #cv2.imshow('window',image_np)
-        #cv2.waitkey(2)
+
     def startDetection(self):
         self.camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.ball_detection, queue_size=1)
-        rospy.loginfo("[ballDetection]: CAMERA STARTED")
+        #rospy.loginfo("[ballDetection]: CAMERA STARTED")
 
     def stopDetection(self):
         self.camera_sub.unregister()
@@ -117,10 +116,10 @@ class ballDetector():
 def detectionState(state, rd):
     if state.data:
         rd.startDetection()
-        rospy.loginfo("[ballDetection]: START DETECTING ")
+        #rospy.loginfo("[ballDetection]: START DETECTING ")
     else:
         rd.stopDetection()
-        rospy.loginfo("[ballDetection]: STOP DETECTING ")
+        #rospy.loginfo("[ballDetection]: STOP DETECTING ")
 
 def main(args):
     
