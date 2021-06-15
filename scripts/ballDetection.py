@@ -17,8 +17,6 @@ class ballDetector():
         ''' INITIALIZE ROS NODE '''
         rospy.init_node('Ball_Detection_Node', anonymous=True)
         self.detectedBalls = 'None'
-        # Initialize the subscriber to the camera topic with the raw image
-        #self.camera_sub = rospy.Subscriber("camera1/image_raw/compressed", CompressedImage, self.ball_detection, queue_size=1)
         self.room_pub = rospy.Publisher('new_room_found', String, queue_size=10)
         self.rate = rospy.Rate(1)
         self.ballDetected = False
@@ -125,7 +123,7 @@ def main(args):
     
     try:
         ball_detect = ballDetector()
-        cmdSub = rospy.Subscriber("room_detection", Bool, detectionState, ball_detect)
+        rd_sub = rospy.Subscriber("room_detection", Bool, detectionState, ball_detect)
         rospy.spin()
     except rospy.ROSInterruptException:
         print ("ROS image module terminated")

@@ -18,9 +18,8 @@ class Rooms():
         ]
         self.prevXpos = 0
         self.prevYpos = 0
-        self.locationKnown = [[-5,7]]
-    
-# check if the room contained in msg is already visited, if so then the robot will move to that position 
+        self.locationKnown = [[-5,7]] #initialize with only the home position known a-priori
+         
     def room_check(self, color):
         for room in self.ROOMS:
             if color == room['color']:

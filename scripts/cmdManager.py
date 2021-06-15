@@ -17,7 +17,7 @@ import smach_msgs.msg
 import actionlib
 import actionlib.msg
 from exp_assignment3.msg import ballTrackingGoal, ballTrackingAction
-# GLOBAL VARIABLES
+# GLOBAL VARIABLES inside a DICTIONARY
 ctrl_var = {"PLAY" : False, "TARGET_ROOM" : "None", "NEW_COLOR" : "None", "FIND" : False}
 
 ## init move_base client 
@@ -150,12 +150,11 @@ class Play(smach.State):
 
 
     def execute(self, userdata):
-
-        rospy.loginfo("***************** PLAY STATE **************")
         global ctrl_var, rooms
-        time.sleep(1)
+        rospy.loginfo("***************** PLAY STATE **************")
         ctrl_var["PLAY"] = False
-        # Go to the user
+        #time.sleep(1)
+        # Go to HOME
         position = rooms.room_position("Home")
         go_to(position[0], position[1])	
 
