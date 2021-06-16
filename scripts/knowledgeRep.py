@@ -1,9 +1,18 @@
 #!/usr/bin/env python
-import actionlib
-import rospy 
+## @file knowledgRep.py
+# This python file contain the class Rooms() over which the knowledg is build, in fact is inside this script where the color of the balls,
+# the rooms and their positions are releated. It also implement some useful function for handling room detection. 
+
+# Python Libraries
 import random
+# Ros Libraries
+import rospy 
+# Action Server
+import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
+## Class which contain the knowledg representation, for each room name we have a releated color, position and a boolean which notify
+# if the rooms has been detected or not.
 class Rooms():
 
     def __init__(self):
@@ -20,20 +29,21 @@ class Rooms():
         self.prevYpos = 0
         self.locationKnown = [[-5,7]] #initialize with only the home position known a-priori
          
+    ## Function that check if the input color (associated to a particular rooms) was already detected.
     def room_check(self, color):
         for room in self.ROOMS:
             if color == room['color']:
                 if room['detected'] == True:
                     return True
         return False
-    
+    ## Function that returns the position of the given input room.
     def room_position(self, target_room):
         for room in self.ROOMS:
             if target_room == room['name']:
                 if room['detected'] == True:
                     return [room["x"], room["y"]]
         return False
-
+    ## Function that check and inform the user if a new room is detected, now the room has a position and the robot know it.
     def new_room(self, color, x, y):
         for room in self.ROOMS:
             if color == room['color']:
@@ -42,19 +52,20 @@ class Rooms():
                 room['y'] = int(y)
                 name = str(room['name'])
                 print("[knowledgRep]: *****DISCOVERED ROOM:"+name+"*****")
- 
+
+    ## Function that return the room name given an input position.
     def room_name(self, x, y):
         for room in self.ROOMS:
             if (x == room['x'] and y == room['y']):
                 return room['name']
         return False    
-
+    ## Function that return the room color given an input room name
     def room_color(self, name):
         for room in self.ROOMS:
             if name == room['name']:
                 return room['color']
         return False
-
+    ## Function that generate random positions (inside our house)
     def random_pos(self):
         while True:
             tmpX = random.randint(-6,6)
@@ -64,7 +75,11 @@ class Rooms():
                     self.prevXpos = tmpX
                     self.prevYpos = tmpY
                     return [tmpX, tmpY]
-                
+    
+    ## Returns a array which contains a neighborhood of a given number. For instance if a = 1 and l = 2 it'll return [-1, 0, 1, 2, 3]. 
+    # This method guaranties, that given a point (x,y), to return a 2lX2l area around the point.
+    # @param a number that correspond to a coordinate of a point.
+    # @param l is half of the neighborhood that will be generated.
     def mrange(self, a, l):
         minA = a - l
         r = []
@@ -72,9 +87,9 @@ class Rooms():
             r.append(minA + i)
         return r
 
-    def cancel_room(self):
-        self.locationKnown.pop()
-
+    ## Explore function that returns a random position away from the rooms already visited and the position reached during the FIND mode. 
+    # Basically it generate a random position and check if it belongs 
+    # in the neighborhood of each detected room (or position), if so it will reach such location. See the README for more details. 
     def explore(self):
         while True:
             ok = True
