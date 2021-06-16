@@ -1,0 +1,81 @@
+\hypertarget{classcmdManager_1_1Normal}{}\section{cmd\+Manager.\+Normal Class Reference}
+\label{classcmdManager_1_1Normal}\index{cmd\+Manager.\+Normal@{cmd\+Manager.\+Normal}}
+
+
+Inheritance diagram for cmd\+Manager.\+Normal\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{classcmdManager_1_1Normal__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for cmd\+Manager.\+Normal\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{classcmdManager_1_1Normal__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classcmdManager_1_1Normal_ab492c9d6b86cabc1673e7d128d554c17}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\item 
+def \hyperlink{classcmdManager_1_1Normal_a3290ae1ca5346a38bd735b24ed20d359}{execute} (self, userdata)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcmdManager_1_1Normal_ade28669287e8fccab0b4c5cffcc81d35}{rate}
+\item 
+\hyperlink{classcmdManager_1_1Normal_a83ff274729c38598e1a51d9ffa2871d8}{counter}
+\begin{DoxyCompactList}\small\item\em Counter variable to check the number of iteration of the N\+O\+R\+M\+AL state in order to move to S\+L\+E\+EP state after a certain number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}This class defines the NORMAL state of the FSM. In this state random positions are sended to the robot while the PLAY flag
+is monitored since if we receive a PLAY command from the user we have to switch state. Moreover it's checked each iteration if 
+a new color is detected for switching to TRACK state and also after a predefined number of iteration switch to SLEEP state\end{DoxyVerb}
+ 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{cmd\+Manager\+::\+Normal@{cmd\+Manager\+::\+Normal}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!cmd\+Manager\+::\+Normal@{cmd\+Manager\+::\+Normal}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self)}{__init__(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def cmd\+Manager.\+Normal.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classcmdManager_1_1Normal_ab492c9d6b86cabc1673e7d128d554c17}{}\label{classcmdManager_1_1Normal_ab492c9d6b86cabc1673e7d128d554c17}
+
+
+\subsection{Member Function Documentation}
+\index{cmd\+Manager\+::\+Normal@{cmd\+Manager\+::\+Normal}!execute@{execute}}
+\index{execute@{execute}!cmd\+Manager\+::\+Normal@{cmd\+Manager\+::\+Normal}}
+\subsubsection[{\texorpdfstring{execute(self, userdata)}{execute(self, userdata)}}]{\setlength{\rightskip}{0pt plus 5cm}def cmd\+Manager.\+Normal.\+execute (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{userdata}
+\end{DoxyParamCaption}
+)}\hypertarget{classcmdManager_1_1Normal_a3290ae1ca5346a38bd735b24ed20d359}{}\label{classcmdManager_1_1Normal_a3290ae1ca5346a38bd735b24ed20d359}
+
+
+\subsection{Member Data Documentation}
+\index{cmd\+Manager\+::\+Normal@{cmd\+Manager\+::\+Normal}!counter@{counter}}
+\index{counter@{counter}!cmd\+Manager\+::\+Normal@{cmd\+Manager\+::\+Normal}}
+\subsubsection[{\texorpdfstring{counter}{counter}}]{\setlength{\rightskip}{0pt plus 5cm}cmd\+Manager.\+Normal.\+counter}\hypertarget{classcmdManager_1_1Normal_a83ff274729c38598e1a51d9ffa2871d8}{}\label{classcmdManager_1_1Normal_a83ff274729c38598e1a51d9ffa2871d8}
+
+
+Counter variable to check the number of iteration of the N\+O\+R\+M\+AL state in order to move to S\+L\+E\+EP state after a certain number. 
+
+\index{cmd\+Manager\+::\+Normal@{cmd\+Manager\+::\+Normal}!rate@{rate}}
+\index{rate@{rate}!cmd\+Manager\+::\+Normal@{cmd\+Manager\+::\+Normal}}
+\subsubsection[{\texorpdfstring{rate}{rate}}]{\setlength{\rightskip}{0pt plus 5cm}cmd\+Manager.\+Normal.\+rate}\hypertarget{classcmdManager_1_1Normal_ade28669287e8fccab0b4c5cffcc81d35}{}\label{classcmdManager_1_1Normal_ade28669287e8fccab0b4c5cffcc81d35}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/root/\+Desktop/catkin\+\_\+ws/src/exp\+\_\+assignment3/scripts/\hyperlink{cmdManager_8py}{cmd\+Manager.\+py}\end{DoxyCompactItemize}

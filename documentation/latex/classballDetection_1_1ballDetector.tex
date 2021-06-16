@@ -1,0 +1,150 @@
+\hypertarget{classballDetection_1_1ballDetector}{}\section{ball\+Detection.\+ball\+Detector Class Reference}
+\label{classballDetection_1_1ballDetector}\index{ball\+Detection.\+ball\+Detector@{ball\+Detection.\+ball\+Detector}}
+
+
+Class which define the color detection algorithm used which run in a node on his own.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classballDetection_1_1ballDetector_ac87f218abdb03da0143f113695dca5d5}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\item 
+def \hyperlink{classballDetection_1_1ballDetector_ada73fa6d070ed2c2be489e7c89c1b6c0}{color\+\_\+detection} (self, hsv\+\_\+min, hsv\+\_\+max, image\+\_\+np)
+\begin{DoxyCompactList}\small\item\em Simple color detection, this function return true when a contour of the given input color is founded in the input image. \end{DoxyCompactList}\item 
+def \hyperlink{classballDetection_1_1ballDetector_a62a5e77b3c5af1b96c70b2e5037ce4c6}{ball\+\_\+detection} (self, ros\+\_\+image)
+\begin{DoxyCompactList}\small\item\em This function implement the ball detection algorithm, given an input image different mask are applied for detect the color of our knowledge representation. \end{DoxyCompactList}\item 
+def \hyperlink{classballDetection_1_1ballDetector_a852941442c83f3160bb2cac307f495dc}{start\+Detection} (self)
+\begin{DoxyCompactList}\small\item\em Function that start the detection subscribing to the camera topic. \end{DoxyCompactList}\item 
+def \hyperlink{classballDetection_1_1ballDetector_ab146dd9d22b2b5eea5103e56181e51c4}{stop\+Detection} (self)
+\begin{DoxyCompactList}\small\item\em Function that stop the detection unregistering the camera topic. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classballDetection_1_1ballDetector_ae7c6db80d37aa2d3f22b0ea9331823d2}{detected\+Balls}
+\begin{DoxyCompactList}\small\item\em List for store already detected colors. \end{DoxyCompactList}\item 
+\hyperlink{classballDetection_1_1ballDetector_ab09c82e74e052ab38cbfb5ae32c281ac}{ball\+\_\+detection\+\_\+pub}
+\begin{DoxyCompactList}\small\item\em The publisher send strings for transfer the new color founded (associated to a room). \end{DoxyCompactList}\item 
+\hyperlink{classballDetection_1_1ballDetector_a2078441c3a3cc044e914c90656a9a5e0}{rate}
+\item 
+\hyperlink{classballDetection_1_1ballDetector_a7e34212f61e96cbdfabe9db9b7c95e16}{ball\+Detected}
+\item 
+\hyperlink{classballDetection_1_1ballDetector_a80579e1cc221f9c74eafb6cf5a24e132}{camera\+\_\+sub}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class which define the color detection algorithm used which run in a node on his own. 
+
+Receive in input compressed images from the camera and then apply a mask of different colors to detect if at least one colored ball is in the scene. It\textquotesingle{}s important to highlight that colors can be detected only once, so after the first detection of the black ball the algorithm is not able to detect other black balls. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self)}{__init__(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def ball\+Detection.\+ball\+Detector.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classballDetection_1_1ballDetector_ac87f218abdb03da0143f113695dca5d5}{}\label{classballDetection_1_1ballDetector_ac87f218abdb03da0143f113695dca5d5}
+\begin{DoxyVerb}INITIALIZE ROS NODE and PUBLISHER \end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\index{ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}!ball\+\_\+detection@{ball\+\_\+detection}}
+\index{ball\+\_\+detection@{ball\+\_\+detection}!ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}}
+\subsubsection[{\texorpdfstring{ball\+\_\+detection(self, ros\+\_\+image)}{ball_detection(self, ros_image)}}]{\setlength{\rightskip}{0pt plus 5cm}def ball\+Detection.\+ball\+Detector.\+ball\+\_\+detection (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{ros\+\_\+image}
+\end{DoxyParamCaption}
+)}\hypertarget{classballDetection_1_1ballDetector_a62a5e77b3c5af1b96c70b2e5037ce4c6}{}\label{classballDetection_1_1ballDetector_a62a5e77b3c5af1b96c70b2e5037ce4c6}
+
+
+This function implement the ball detection algorithm, given an input image different mask are applied for detect the color of our knowledge representation. 
+
+It\textquotesingle{}s the callback of the subscriber to the camera topic, so each time a new image is available is called. 
+\begin{DoxyParams}{Parameters}
+{\em image\+\_\+np} & is the decompressed image and converted in Open\+Cv \\
+\hline
+\end{DoxyParams}
+\index{ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}!color\+\_\+detection@{color\+\_\+detection}}
+\index{color\+\_\+detection@{color\+\_\+detection}!ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}}
+\subsubsection[{\texorpdfstring{color\+\_\+detection(self, hsv\+\_\+min, hsv\+\_\+max, image\+\_\+np)}{color_detection(self, hsv_min, hsv_max, image_np)}}]{\setlength{\rightskip}{0pt plus 5cm}def ball\+Detection.\+ball\+Detector.\+color\+\_\+detection (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{hsv\+\_\+min, }
+\item[{}]{hsv\+\_\+max, }
+\item[{}]{image\+\_\+np}
+\end{DoxyParamCaption}
+)}\hypertarget{classballDetection_1_1ballDetector_ada73fa6d070ed2c2be489e7c89c1b6c0}{}\label{classballDetection_1_1ballDetector_ada73fa6d070ed2c2be489e7c89c1b6c0}
+
+
+Simple color detection, this function return true when a contour of the given input color is founded in the input image. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hsv\+\_\+min} & minimum threshold of the input color expressed in hsv scale. \\
+\hline
+{\em hsv\+\_\+max} & maximum threshold of the input color expressed in hsv scale. \\
+\hline
+{\em image\+\_\+np} & image stored in a numpy array. \\
+\hline
+\end{DoxyParams}
+\index{ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}!start\+Detection@{start\+Detection}}
+\index{start\+Detection@{start\+Detection}!ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}}
+\subsubsection[{\texorpdfstring{start\+Detection(self)}{startDetection(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def ball\+Detection.\+ball\+Detector.\+start\+Detection (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classballDetection_1_1ballDetector_a852941442c83f3160bb2cac307f495dc}{}\label{classballDetection_1_1ballDetector_a852941442c83f3160bb2cac307f495dc}
+
+
+Function that start the detection subscribing to the camera topic. 
+
+\index{ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}!stop\+Detection@{stop\+Detection}}
+\index{stop\+Detection@{stop\+Detection}!ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}}
+\subsubsection[{\texorpdfstring{stop\+Detection(self)}{stopDetection(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def ball\+Detection.\+ball\+Detector.\+stop\+Detection (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classballDetection_1_1ballDetector_ab146dd9d22b2b5eea5103e56181e51c4}{}\label{classballDetection_1_1ballDetector_ab146dd9d22b2b5eea5103e56181e51c4}
+
+
+Function that stop the detection unregistering the camera topic. 
+
+
+
+\subsection{Member Data Documentation}
+\index{ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}!ball\+\_\+detection\+\_\+pub@{ball\+\_\+detection\+\_\+pub}}
+\index{ball\+\_\+detection\+\_\+pub@{ball\+\_\+detection\+\_\+pub}!ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}}
+\subsubsection[{\texorpdfstring{ball\+\_\+detection\+\_\+pub}{ball_detection_pub}}]{\setlength{\rightskip}{0pt plus 5cm}ball\+Detection.\+ball\+Detector.\+ball\+\_\+detection\+\_\+pub}\hypertarget{classballDetection_1_1ballDetector_ab09c82e74e052ab38cbfb5ae32c281ac}{}\label{classballDetection_1_1ballDetector_ab09c82e74e052ab38cbfb5ae32c281ac}
+
+
+The publisher send strings for transfer the new color founded (associated to a room). 
+
+\index{ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}!ball\+Detected@{ball\+Detected}}
+\index{ball\+Detected@{ball\+Detected}!ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}}
+\subsubsection[{\texorpdfstring{ball\+Detected}{ballDetected}}]{\setlength{\rightskip}{0pt plus 5cm}ball\+Detection.\+ball\+Detector.\+ball\+Detected}\hypertarget{classballDetection_1_1ballDetector_a7e34212f61e96cbdfabe9db9b7c95e16}{}\label{classballDetection_1_1ballDetector_a7e34212f61e96cbdfabe9db9b7c95e16}
+
+\begin{DoxyParams}{Parameters}
+{\em image\+\_\+np} & is the decompressed image and converted in Open\+Cv \\
+\hline
+\end{DoxyParams}
+\index{ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}!camera\+\_\+sub@{camera\+\_\+sub}}
+\index{camera\+\_\+sub@{camera\+\_\+sub}!ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}}
+\subsubsection[{\texorpdfstring{camera\+\_\+sub}{camera_sub}}]{\setlength{\rightskip}{0pt plus 5cm}ball\+Detection.\+ball\+Detector.\+camera\+\_\+sub}\hypertarget{classballDetection_1_1ballDetector_a80579e1cc221f9c74eafb6cf5a24e132}{}\label{classballDetection_1_1ballDetector_a80579e1cc221f9c74eafb6cf5a24e132}
+\index{ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}!detected\+Balls@{detected\+Balls}}
+\index{detected\+Balls@{detected\+Balls}!ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}}
+\subsubsection[{\texorpdfstring{detected\+Balls}{detectedBalls}}]{\setlength{\rightskip}{0pt plus 5cm}ball\+Detection.\+ball\+Detector.\+detected\+Balls}\hypertarget{classballDetection_1_1ballDetector_ae7c6db80d37aa2d3f22b0ea9331823d2}{}\label{classballDetection_1_1ballDetector_ae7c6db80d37aa2d3f22b0ea9331823d2}
+
+
+List for store already detected colors. 
+
+\index{ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}!rate@{rate}}
+\index{rate@{rate}!ball\+Detection\+::ball\+Detector@{ball\+Detection\+::ball\+Detector}}
+\subsubsection[{\texorpdfstring{rate}{rate}}]{\setlength{\rightskip}{0pt plus 5cm}ball\+Detection.\+ball\+Detector.\+rate}\hypertarget{classballDetection_1_1ballDetector_a2078441c3a3cc044e914c90656a9a5e0}{}\label{classballDetection_1_1ballDetector_a2078441c3a3cc044e914c90656a9a5e0}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/root/\+Desktop/catkin\+\_\+ws/src/exp\+\_\+assignment3/scripts/\hyperlink{ballDetection_8py}{ball\+Detection.\+py}\end{DoxyCompactItemize}

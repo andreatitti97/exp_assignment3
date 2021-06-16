@@ -1,0 +1,182 @@
+\hypertarget{classknowledgeRep_1_1Rooms}{}\section{knowledge\+Rep.\+Rooms Class Reference}
+\label{classknowledgeRep_1_1Rooms}\index{knowledge\+Rep.\+Rooms@{knowledge\+Rep.\+Rooms}}
+
+
+Class which contain the knowledg representation, for each room name we have a releated color, position and a boolean which notify if the rooms has been detected or not.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classknowledgeRep_1_1Rooms_a8b37414da9d2cc9ee820ec306c0b03bf}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\item 
+def \hyperlink{classknowledgeRep_1_1Rooms_a834289a5ae57e48cf90087e7f68faba2}{room\+\_\+check} (self, color)
+\begin{DoxyCompactList}\small\item\em Function that check if the input color (associated to a particular rooms) was already detected. \end{DoxyCompactList}\item 
+def \hyperlink{classknowledgeRep_1_1Rooms_a072ab03a9621d2abd8067817a0583547}{room\+\_\+position} (self, target\+\_\+room)
+\begin{DoxyCompactList}\small\item\em Function that returns the position of the given input room. \end{DoxyCompactList}\item 
+def \hyperlink{classknowledgeRep_1_1Rooms_a4bdc60738dc11ec176223fe4fb046b2f}{new\+\_\+room} (self, color, x, y)
+\begin{DoxyCompactList}\small\item\em Function that check and inform the user if a new room is detected, now the room has a position and the robot know it. \end{DoxyCompactList}\item 
+def \hyperlink{classknowledgeRep_1_1Rooms_aaa1ca874182c72929cdd69f5d801ca2e}{room\+\_\+name} (self, x, y)
+\begin{DoxyCompactList}\small\item\em Function that return the room name given an input position. \end{DoxyCompactList}\item 
+def \hyperlink{classknowledgeRep_1_1Rooms_a41f6960d862a174fce8200ea1c7e003f}{room\+\_\+color} (self, name)
+\begin{DoxyCompactList}\small\item\em Function that return the room color given an input room name. \end{DoxyCompactList}\item 
+def \hyperlink{classknowledgeRep_1_1Rooms_ae666c5c43dcaa315e41d7e8de7ae88a2}{random\+\_\+pos} (self)
+\begin{DoxyCompactList}\small\item\em Function that generate random positions (inside our house) \end{DoxyCompactList}\item 
+def \hyperlink{classknowledgeRep_1_1Rooms_a76e0ae78dfe758ff25dd132ce74192e6}{mrange} (self, a, l)
+\begin{DoxyCompactList}\small\item\em Returns a array which contains a neighborhood of a given number. \end{DoxyCompactList}\item 
+def \hyperlink{classknowledgeRep_1_1Rooms_accce73bac346a3d2944e9d58c16dd738}{explore} (self)
+\begin{DoxyCompactList}\small\item\em Explore function that returns a random position away from the rooms already visited and the position reached during the F\+I\+ND mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classknowledgeRep_1_1Rooms_ae173d3ce96883c1e1cbcd3c67e045605}{R\+O\+O\+MS}
+\item 
+\hyperlink{classknowledgeRep_1_1Rooms_a41d3fe644e24332f8d5ce1ea1fd3d036}{prev\+Xpos}
+\item 
+\hyperlink{classknowledgeRep_1_1Rooms_abca079e9384306484df7407762e2c1cc}{prev\+Ypos}
+\item 
+\hyperlink{classknowledgeRep_1_1Rooms_ab43e8f7de2083bf7da36585822931688}{location\+Known}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class which contain the knowledg representation, for each room name we have a releated color, position and a boolean which notify if the rooms has been detected or not. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self)}{__init__(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classknowledgeRep_1_1Rooms_a8b37414da9d2cc9ee820ec306c0b03bf}{}\label{classknowledgeRep_1_1Rooms_a8b37414da9d2cc9ee820ec306c0b03bf}
+
+
+\subsection{Member Function Documentation}
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!explore@{explore}}
+\index{explore@{explore}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{explore(self)}{explore(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+explore (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classknowledgeRep_1_1Rooms_accce73bac346a3d2944e9d58c16dd738}{}\label{classknowledgeRep_1_1Rooms_accce73bac346a3d2944e9d58c16dd738}
+
+
+Explore function that returns a random position away from the rooms already visited and the position reached during the F\+I\+ND mode. 
+
+Basically it generate a random position and check if it belongs in the neighborhood of each detected room (or position), if so it will reach such location. See the R\+E\+A\+D\+ME for more details. \index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!mrange@{mrange}}
+\index{mrange@{mrange}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{mrange(self, a, l)}{mrange(self, a, l)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+mrange (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{a, }
+\item[{}]{l}
+\end{DoxyParamCaption}
+)}\hypertarget{classknowledgeRep_1_1Rooms_a76e0ae78dfe758ff25dd132ce74192e6}{}\label{classknowledgeRep_1_1Rooms_a76e0ae78dfe758ff25dd132ce74192e6}
+
+
+Returns a array which contains a neighborhood of a given number. 
+
+For instance if a = 1 and l = 2 it\textquotesingle{}ll return \mbox{[}-\/1, 0, 1, 2, 3\mbox{]}. This method guaranties, that given a point (x,y), to return a 2l\+X2l area around the point. 
+\begin{DoxyParams}{Parameters}
+{\em a} & number that correspond to a coordinate of a point. \\
+\hline
+{\em l} & is half of the neighborhood that will be generated. \\
+\hline
+\end{DoxyParams}
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!new\+\_\+room@{new\+\_\+room}}
+\index{new\+\_\+room@{new\+\_\+room}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{new\+\_\+room(self, color, x, y)}{new_room(self, color, x, y)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+new\+\_\+room (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{color, }
+\item[{}]{x, }
+\item[{}]{y}
+\end{DoxyParamCaption}
+)}\hypertarget{classknowledgeRep_1_1Rooms_a4bdc60738dc11ec176223fe4fb046b2f}{}\label{classknowledgeRep_1_1Rooms_a4bdc60738dc11ec176223fe4fb046b2f}
+
+
+Function that check and inform the user if a new room is detected, now the room has a position and the robot know it. 
+
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!random\+\_\+pos@{random\+\_\+pos}}
+\index{random\+\_\+pos@{random\+\_\+pos}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{random\+\_\+pos(self)}{random_pos(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+random\+\_\+pos (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classknowledgeRep_1_1Rooms_ae666c5c43dcaa315e41d7e8de7ae88a2}{}\label{classknowledgeRep_1_1Rooms_ae666c5c43dcaa315e41d7e8de7ae88a2}
+
+
+Function that generate random positions (inside our house) 
+
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!room\+\_\+check@{room\+\_\+check}}
+\index{room\+\_\+check@{room\+\_\+check}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{room\+\_\+check(self, color)}{room_check(self, color)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+room\+\_\+check (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{color}
+\end{DoxyParamCaption}
+)}\hypertarget{classknowledgeRep_1_1Rooms_a834289a5ae57e48cf90087e7f68faba2}{}\label{classknowledgeRep_1_1Rooms_a834289a5ae57e48cf90087e7f68faba2}
+
+
+Function that check if the input color (associated to a particular rooms) was already detected. 
+
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!room\+\_\+color@{room\+\_\+color}}
+\index{room\+\_\+color@{room\+\_\+color}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{room\+\_\+color(self, name)}{room_color(self, name)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+room\+\_\+color (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{name}
+\end{DoxyParamCaption}
+)}\hypertarget{classknowledgeRep_1_1Rooms_a41f6960d862a174fce8200ea1c7e003f}{}\label{classknowledgeRep_1_1Rooms_a41f6960d862a174fce8200ea1c7e003f}
+
+
+Function that return the room color given an input room name. 
+
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!room\+\_\+name@{room\+\_\+name}}
+\index{room\+\_\+name@{room\+\_\+name}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{room\+\_\+name(self, x, y)}{room_name(self, x, y)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+room\+\_\+name (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{x, }
+\item[{}]{y}
+\end{DoxyParamCaption}
+)}\hypertarget{classknowledgeRep_1_1Rooms_aaa1ca874182c72929cdd69f5d801ca2e}{}\label{classknowledgeRep_1_1Rooms_aaa1ca874182c72929cdd69f5d801ca2e}
+
+
+Function that return the room name given an input position. 
+
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!room\+\_\+position@{room\+\_\+position}}
+\index{room\+\_\+position@{room\+\_\+position}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{room\+\_\+position(self, target\+\_\+room)}{room_position(self, target_room)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+room\+\_\+position (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{target\+\_\+room}
+\end{DoxyParamCaption}
+)}\hypertarget{classknowledgeRep_1_1Rooms_a072ab03a9621d2abd8067817a0583547}{}\label{classknowledgeRep_1_1Rooms_a072ab03a9621d2abd8067817a0583547}
+
+
+Function that returns the position of the given input room. 
+
+
+
+\subsection{Member Data Documentation}
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!location\+Known@{location\+Known}}
+\index{location\+Known@{location\+Known}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{location\+Known}{locationKnown}}]{\setlength{\rightskip}{0pt plus 5cm}knowledge\+Rep.\+Rooms.\+location\+Known}\hypertarget{classknowledgeRep_1_1Rooms_ab43e8f7de2083bf7da36585822931688}{}\label{classknowledgeRep_1_1Rooms_ab43e8f7de2083bf7da36585822931688}
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!prev\+Xpos@{prev\+Xpos}}
+\index{prev\+Xpos@{prev\+Xpos}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{prev\+Xpos}{prevXpos}}]{\setlength{\rightskip}{0pt plus 5cm}knowledge\+Rep.\+Rooms.\+prev\+Xpos}\hypertarget{classknowledgeRep_1_1Rooms_a41d3fe644e24332f8d5ce1ea1fd3d036}{}\label{classknowledgeRep_1_1Rooms_a41d3fe644e24332f8d5ce1ea1fd3d036}
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!prev\+Ypos@{prev\+Ypos}}
+\index{prev\+Ypos@{prev\+Ypos}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{prev\+Ypos}{prevYpos}}]{\setlength{\rightskip}{0pt plus 5cm}knowledge\+Rep.\+Rooms.\+prev\+Ypos}\hypertarget{classknowledgeRep_1_1Rooms_abca079e9384306484df7407762e2c1cc}{}\label{classknowledgeRep_1_1Rooms_abca079e9384306484df7407762e2c1cc}
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!R\+O\+O\+MS@{R\+O\+O\+MS}}
+\index{R\+O\+O\+MS@{R\+O\+O\+MS}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{R\+O\+O\+MS}{ROOMS}}]{\setlength{\rightskip}{0pt plus 5cm}knowledge\+Rep.\+Rooms.\+R\+O\+O\+MS}\hypertarget{classknowledgeRep_1_1Rooms_ae173d3ce96883c1e1cbcd3c67e045605}{}\label{classknowledgeRep_1_1Rooms_ae173d3ce96883c1e1cbcd3c67e045605}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/root/\+Desktop/catkin\+\_\+ws/src/exp\+\_\+assignment3/scripts/\hyperlink{knowledgeRep_8py}{knowledge\+Rep.\+py}\end{DoxyCompactItemize}

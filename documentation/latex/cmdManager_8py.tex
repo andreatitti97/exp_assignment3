@@ -1,0 +1,42 @@
+\hypertarget{cmdManager_8py}{}\section{/root/\+Desktop/catkin\+\_\+ws/src/exp\+\_\+assignment3/scripts/cmd\+Manager.py File Reference}
+\label{cmdManager_8py}\index{/root/\+Desktop/catkin\+\_\+ws/src/exp\+\_\+assignment3/scripts/cmd\+Manager.\+py@{/root/\+Desktop/catkin\+\_\+ws/src/exp\+\_\+assignment3/scripts/cmd\+Manager.\+py}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classcmdManager_1_1Normal}{cmd\+Manager.\+Normal}
+\item 
+class \hyperlink{classcmdManager_1_1Sleep}{cmd\+Manager.\+Sleep}
+\item 
+class \hyperlink{classcmdManager_1_1Play}{cmd\+Manager.\+Play}
+\item 
+class \hyperlink{classcmdManager_1_1Find}{cmd\+Manager.\+Find}
+\item 
+class \hyperlink{classcmdManager_1_1Track}{cmd\+Manager.\+Track}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecmdManager}{cmd\+Manager}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespacecmdManager_a62a68181d751176538db8063d7b11987}{cmd\+Manager.\+detection\+\_\+routine} (color)
+\begin{DoxyCompactList}\small\item\em Callback of the ball\+\_\+detection\+\_\+subscriber, is called any time a new colored ball is found, precisely a new color is given in input and then the function check if the color was already detected, if not the move\+\_\+base client is stopped for start the tracking. \end{DoxyCompactList}\item 
+def \hyperlink{namespacecmdManager_a50ab72ebc575eb7032c50d17a6d592c6}{cmd\+Manager.\+U\+Icallback} (data)
+\begin{DoxyCompactList}\small\item\em Callback of the human interface, each time a user command is received the function change the P\+L\+AY flag and the message is parsed. \end{DoxyCompactList}\item 
+def \hyperlink{namespacecmdManager_ac53d2d1248b660039d5a90768ff3bd5e}{cmd\+Manager.\+go\+\_\+to} (x, y)
+\begin{DoxyCompactList}\small\item\em Function which implement the navigation to given input position using the move\+\_\+base action server. \end{DoxyCompactList}\item 
+def \hyperlink{namespacecmdManager_a3e64a5e295736776673178e6ff94d1e5}{cmd\+Manager.\+main} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacecmdManager_ad1967c9cd71b2174a9b4c56d32f08fcc}{cmd\+Manager.\+client} = actionlib.\+Simple\+Action\+Client(\textquotesingle{}move\+\_\+base\textquotesingle{},Move\+Base\+Action)
+\begin{DoxyCompactList}\small\item\em Initialized the client to the move\+\_\+base action server for moving the robot. \end{DoxyCompactList}\item 
+\hyperlink{namespacecmdManager_a5f10b08efaeaad88cf34e075895f4d9d}{cmd\+Manager.\+R\+D\+\_\+pub} = rospy.\+Publisher(\textquotesingle{}detection\+\_\+state\textquotesingle{}, Bool, queue\+\_\+size=10)
+\begin{DoxyCompactList}\small\item\em Initialized publisher of the detection state which is a boolean (active or not). \end{DoxyCompactList}\item 
+\hyperlink{namespacecmdManager_a783b0ef84682af39dc9f2b8e828c4ad9}{cmd\+Manager.\+rooms} = Rooms()
+\begin{DoxyCompactList}\small\item\em Initialized object of the class Rooms() for use the knowledge representation defined in \hyperlink{knowledgeRep_8py}{knowledge\+Rep.\+py}. \end{DoxyCompactList}\item 
+dictionary \hyperlink{namespacecmdManager_a927e4211865b745599afe42e9e8d7c8e}{cmd\+Manager.\+ctrl\+\_\+var} = \{\char`\"{}P\+L\+AY\char`\"{} \+: False, \char`\"{}T\+A\+R\+G\+E\+T\+\_\+\+R\+O\+OM\char`\"{} \+: \char`\"{}None\char`\"{}, \char`\"{}N\+E\+W\+\_\+\+C\+O\+L\+OR\char`\"{} \+: \char`\"{}None\char`\"{}, \char`\"{}F\+I\+ND\char`\"{} \+: False\}
+\begin{DoxyCompactList}\small\item\em Dictionary that store important control variables and flags. \end{DoxyCompactList}\end{DoxyCompactItemize}

@@ -1,0 +1,258 @@
+\hypertarget{classtrackingBall_1_1Tracking}{}\section{tracking\+Ball.\+Tracking Class Reference}
+\label{classtrackingBall_1_1Tracking}\index{tracking\+Ball.\+Tracking@{tracking\+Ball.\+Tracking}}
+
+
+Class used for tracking the balls detected by ball\+Detect.\+py.  
+
+
+
+
+Inheritance diagram for tracking\+Ball.\+Tracking\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=195pt]{classtrackingBall_1_1Tracking__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for tracking\+Ball.\+Tracking\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=195pt]{classtrackingBall_1_1Tracking__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classtrackingBall_1_1Tracking_afac83c606a2539723c13ed9d08385729}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, name)
+\item 
+def \hyperlink{classtrackingBall_1_1Tracking_ae942d974bcf15ea113ddbdb845b93914}{odom\+\_\+clbk} (self, msg)
+\begin{DoxyCompactList}\small\item\em Callbak to the /odom subscriber (update pose and position of the robot) \end{DoxyCompactList}\item 
+def \hyperlink{classtrackingBall_1_1Tracking_a1d98727a3d632e7e5ae973cb3417837a}{go\+\_\+to\+\_\+ball} (self, ros\+\_\+image)
+\begin{DoxyCompactList}\small\item\em Callback of the \char`\"{}camera1/image\+\_\+raw/compressed\char`\"{} subscriber, allows the robot to move towards the ball. \end{DoxyCompactList}\item 
+def \hyperlink{classtrackingBall_1_1Tracking_aa69933a4bd0f18dd53c4d2db71c0d691}{avoid\+\_\+obstacle} (self, msg)
+\begin{DoxyCompactList}\small\item\em Callback of the subscriber to the laser scan, is used for implement a simple bug algorithm for obstacle avoidance during tracking. \end{DoxyCompactList}\item 
+def \hyperlink{classtrackingBall_1_1Tracking_aab79d6fd3ebcc645ac180b827ab8a4ad}{track} (self, goal)
+\begin{DoxyCompactList}\small\item\em A\+C\+T\+I\+ON S\+E\+R\+V\+ER F\+U\+N\+C\+T\+I\+ON. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtrackingBall_1_1Tracking_a6b17306fa008c6665ff8a5798ee27ba8}{action\+\_\+name}
+\begin{DoxyCompactList}\small\item\em N\+A\+ME OF T\+HE S\+E\+R\+V\+ER. \end{DoxyCompactList}\item 
+\hyperlink{classtrackingBall_1_1Tracking_a46586a7a898c757afcff8d89a7b55d77}{act\+\_\+s}
+\item 
+\hyperlink{classtrackingBall_1_1Tracking_a9d40ea04aba08e244a8edf175d659229}{feedback}
+\item 
+\hyperlink{classtrackingBall_1_1Tracking_abe3eb1a78c5f9464274125a664c694b9}{result}
+\item 
+\hyperlink{classtrackingBall_1_1Tracking_af4673dff355192ccd7cbd4e3676ef618}{lidar\+\_\+regions}
+\begin{DoxyCompactList}\small\item\em D\+I\+CT F\+OR O\+B\+S\+T\+A\+C\+LE A\+V\+O\+I\+D\+A\+N\+CE A\+L\+G\+O\+R\+I\+T\+HM (store the regions of the lidar for be able to localize the obstacle w.\+r.\+t. \end{DoxyCompactList}\item 
+\hyperlink{classtrackingBall_1_1Tracking_aadfc96c3a6be143bb62858a7ac2fc840}{A\+C\+K\+\_\+\+P\+O\+S\+I\+T\+I\+VO}
+\begin{DoxyCompactList}\small\item\em B\+O\+O\+L\+E\+AN OF A\+C\+K\+N\+O\+W\+L\+E\+D\+G\+M\+E\+NT P\+O\+S\+I\+T\+I\+VO IF T\+HE M\+I\+S\+S\+I\+ON IS F\+I\+N\+I\+SH C\+O\+R\+R\+E\+C\+T\+LY. \end{DoxyCompactList}\item 
+\hyperlink{classtrackingBall_1_1Tracking_a89db2b56bfd79bbbac1fd1af937e25f8}{lost\+\_\+ball\+\_\+counter}
+\begin{DoxyCompactList}\small\item\em C\+O\+U\+N\+T\+ER F\+OR M\+O\+N\+I\+T\+OR T\+HE T\+R\+A\+C\+K\+I\+NG W\+H\+I\+LE T\+HE B\+A\+LL IS L\+O\+ST. \end{DoxyCompactList}\item 
+\hyperlink{classtrackingBall_1_1Tracking_a7ce6a966db6cba83ba1ade3c1e7408a1}{A\+C\+K\+\_\+\+N\+E\+G\+A\+T\+I\+VO}
+\begin{DoxyCompactList}\small\item\em Subscriber to camera topic, after receiving image start the tracking. \end{DoxyCompactList}\item 
+\hyperlink{classtrackingBall_1_1Tracking_a9216a69022a6756b653d59834bb46de3}{radius}
+\begin{DoxyCompactList}\small\item\em R\+A\+D\+I\+US OF T\+HE B\+A\+LL IN T\+HE I\+M\+A\+GE. \end{DoxyCompactList}\item 
+\hyperlink{classtrackingBall_1_1Tracking_aec612c6502c0a334f67d8b32e7b77b62}{vel\+\_\+publisher}
+\begin{DoxyCompactList}\small\item\em I\+N\+I\+T\+I\+A\+L\+I\+Z\+A\+T\+I\+ON OF T\+HE V\+E\+L\+O\+C\+I\+TY P\+U\+B\+L\+I\+S\+H\+ER TO T\+HE W\+H\+E\+E\+LS. \end{DoxyCompactList}\item 
+\hyperlink{classtrackingBall_1_1Tracking_a8698f440e6e3e4b1b785cab162794b61}{position}
+\begin{DoxyCompactList}\small\item\em I\+N\+IT R\+O\+B\+OT P\+O\+S\+I\+T\+I\+ON. \end{DoxyCompactList}\item 
+\hyperlink{classtrackingBall_1_1Tracking_af3d46e4a3b61c4cc2841cfdd6e02c459}{pose}
+\begin{DoxyCompactList}\small\item\em I\+N\+IT R\+O\+B\+OT P\+O\+SE. \end{DoxyCompactList}\item 
+\hyperlink{classtrackingBall_1_1Tracking_a684292f4752cf04f4aeb3baf84e0b155}{sigma\+Linear}
+\begin{DoxyCompactList}\small\item\em P\+A\+R\+A\+M\+E\+T\+ER F\+OR C\+O\+R\+R\+E\+CT L\+I\+N\+E\+AR V\+E\+L\+O\+C\+I\+TY D\+U\+R\+I\+NG T\+R\+A\+C\+K\+I\+NG (for smooth movements) \end{DoxyCompactList}\item 
+\hyperlink{classtrackingBall_1_1Tracking_abcf19d205ec149c4f87a2c3b43fa242e}{sigma\+Angular}
+\begin{DoxyCompactList}\small\item\em P\+A\+R\+A\+M\+E\+T\+ER F\+OR C\+O\+R\+R\+E\+CT A\+N\+G\+U\+L\+AR V\+E\+L\+O\+C\+I\+TY D\+U\+R\+I\+NG T\+R\+A\+C\+K\+I\+NG (for smooth movements) \end{DoxyCompactList}\item 
+\hyperlink{classtrackingBall_1_1Tracking_aa5264f9fd30dcb6818c64175c9aa9a88}{color}
+\begin{DoxyCompactList}\small\item\em Reduce noise. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class used for tracking the balls detected by ball\+Detect.\+py. 
+
+After receiving the request from the client (Cmd\+\_\+\+Manager\+\_\+\+Node) the script start to track the ball of the color sended by the client. It also save the robot position subscribing to /odom topic for store the room position. Sice during the tracking the move\+\_\+base action is aborted, it\textquotesingle{}s also implemented a simple obstacle avoidance using the \char`\"{}bug algorithm\char`\"{} for prevent the robot collide with obstacle during the approaching to the ball. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, name)}{__init__(self, name)}}]{\setlength{\rightskip}{0pt plus 5cm}def tracking\+Ball.\+Tracking.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{name}
+\end{DoxyParamCaption}
+)}\hypertarget{classtrackingBall_1_1Tracking_afac83c606a2539723c13ed9d08385729}{}\label{classtrackingBall_1_1Tracking_afac83c606a2539723c13ed9d08385729}
+
+
+\subsection{Member Function Documentation}
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!avoid\+\_\+obstacle@{avoid\+\_\+obstacle}}
+\index{avoid\+\_\+obstacle@{avoid\+\_\+obstacle}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{avoid\+\_\+obstacle(self, msg)}{avoid_obstacle(self, msg)}}]{\setlength{\rightskip}{0pt plus 5cm}def tracking\+Ball.\+Tracking.\+avoid\+\_\+obstacle (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{msg}
+\end{DoxyParamCaption}
+)}\hypertarget{classtrackingBall_1_1Tracking_aa69933a4bd0f18dd53c4d2db71c0d691}{}\label{classtrackingBall_1_1Tracking_aa69933a4bd0f18dd53c4d2db71c0d691}
+
+
+Callback of the subscriber to the laser scan, is used for implement a simple bug algorithm for obstacle avoidance during tracking. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & Laser\+Scan message --$>$ distance from the obstacle \\
+\hline
+\end{DoxyParams}
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!go\+\_\+to\+\_\+ball@{go\+\_\+to\+\_\+ball}}
+\index{go\+\_\+to\+\_\+ball@{go\+\_\+to\+\_\+ball}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{go\+\_\+to\+\_\+ball(self, ros\+\_\+image)}{go_to_ball(self, ros_image)}}]{\setlength{\rightskip}{0pt plus 5cm}def tracking\+Ball.\+Tracking.\+go\+\_\+to\+\_\+ball (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{ros\+\_\+image}
+\end{DoxyParamCaption}
+)}\hypertarget{classtrackingBall_1_1Tracking_a1d98727a3d632e7e5ae973cb3417837a}{}\label{classtrackingBall_1_1Tracking_a1d98727a3d632e7e5ae973cb3417837a}
+
+
+Callback of the \char`\"{}camera1/image\+\_\+raw/compressed\char`\"{} subscriber, allows the robot to move towards the ball. 
+
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!odom\+\_\+clbk@{odom\+\_\+clbk}}
+\index{odom\+\_\+clbk@{odom\+\_\+clbk}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{odom\+\_\+clbk(self, msg)}{odom_clbk(self, msg)}}]{\setlength{\rightskip}{0pt plus 5cm}def tracking\+Ball.\+Tracking.\+odom\+\_\+clbk (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{msg}
+\end{DoxyParamCaption}
+)}\hypertarget{classtrackingBall_1_1Tracking_ae942d974bcf15ea113ddbdb845b93914}{}\label{classtrackingBall_1_1Tracking_ae942d974bcf15ea113ddbdb845b93914}
+
+
+Callbak to the /odom subscriber (update pose and position of the robot) 
+
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!track@{track}}
+\index{track@{track}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{track(self, goal)}{track(self, goal)}}]{\setlength{\rightskip}{0pt plus 5cm}def tracking\+Ball.\+Tracking.\+track (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{goal}
+\end{DoxyParamCaption}
+)}\hypertarget{classtrackingBall_1_1Tracking_aab79d6fd3ebcc645ac180b827ab8a4ad}{}\label{classtrackingBall_1_1Tracking_aab79d6fd3ebcc645ac180b827ab8a4ad}
+
+
+A\+C\+T\+I\+ON S\+E\+R\+V\+ER F\+U\+N\+C\+T\+I\+ON. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em goal} & contain the color of the ball to track. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!A\+C\+K\+\_\+\+N\+E\+G\+A\+T\+I\+VO@{A\+C\+K\+\_\+\+N\+E\+G\+A\+T\+I\+VO}}
+\index{A\+C\+K\+\_\+\+N\+E\+G\+A\+T\+I\+VO@{A\+C\+K\+\_\+\+N\+E\+G\+A\+T\+I\+VO}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{A\+C\+K\+\_\+\+N\+E\+G\+A\+T\+I\+VO}{ACK_NEGATIVO}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+A\+C\+K\+\_\+\+N\+E\+G\+A\+T\+I\+VO}\hypertarget{classtrackingBall_1_1Tracking_a7ce6a966db6cba83ba1ade3c1e7408a1}{}\label{classtrackingBall_1_1Tracking_a7ce6a966db6cba83ba1ade3c1e7408a1}
+
+
+Subscriber to camera topic, after receiving image start the tracking. 
+
+Subscriber to Laser Scan topic, for implement ostacle avoidance. \index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!A\+C\+K\+\_\+\+P\+O\+S\+I\+T\+I\+VO@{A\+C\+K\+\_\+\+P\+O\+S\+I\+T\+I\+VO}}
+\index{A\+C\+K\+\_\+\+P\+O\+S\+I\+T\+I\+VO@{A\+C\+K\+\_\+\+P\+O\+S\+I\+T\+I\+VO}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{A\+C\+K\+\_\+\+P\+O\+S\+I\+T\+I\+VO}{ACK_POSITIVO}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+A\+C\+K\+\_\+\+P\+O\+S\+I\+T\+I\+VO}\hypertarget{classtrackingBall_1_1Tracking_aadfc96c3a6be143bb62858a7ac2fc840}{}\label{classtrackingBall_1_1Tracking_aadfc96c3a6be143bb62858a7ac2fc840}
+
+
+B\+O\+O\+L\+E\+AN OF A\+C\+K\+N\+O\+W\+L\+E\+D\+G\+M\+E\+NT P\+O\+S\+I\+T\+I\+VO IF T\+HE M\+I\+S\+S\+I\+ON IS F\+I\+N\+I\+SH C\+O\+R\+R\+E\+C\+T\+LY. 
+
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!act\+\_\+s@{act\+\_\+s}}
+\index{act\+\_\+s@{act\+\_\+s}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{act\+\_\+s}{act_s}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+act\+\_\+s}\hypertarget{classtrackingBall_1_1Tracking_a46586a7a898c757afcff8d89a7b55d77}{}\label{classtrackingBall_1_1Tracking_a46586a7a898c757afcff8d89a7b55d77}
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!action\+\_\+name@{action\+\_\+name}}
+\index{action\+\_\+name@{action\+\_\+name}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{action\+\_\+name}{action_name}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+action\+\_\+name}\hypertarget{classtrackingBall_1_1Tracking_a6b17306fa008c6665ff8a5798ee27ba8}{}\label{classtrackingBall_1_1Tracking_a6b17306fa008c6665ff8a5798ee27ba8}
+
+
+N\+A\+ME OF T\+HE S\+E\+R\+V\+ER. 
+
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!color@{color}}
+\index{color@{color}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{color}{color}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+color}\hypertarget{classtrackingBall_1_1Tracking_aa5264f9fd30dcb6818c64175c9aa9a88}{}\label{classtrackingBall_1_1Tracking_aa5264f9fd30dcb6818c64175c9aa9a88}
+
+
+Reduce noise. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em image\+\_\+np} & (decompresed image and converted to C\+V2) Conversion to hsv \\
+\hline
+\end{DoxyParams}
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!feedback@{feedback}}
+\index{feedback@{feedback}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{feedback}{feedback}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+feedback}\hypertarget{classtrackingBall_1_1Tracking_a9d40ea04aba08e244a8edf175d659229}{}\label{classtrackingBall_1_1Tracking_a9d40ea04aba08e244a8edf175d659229}
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!lidar\+\_\+regions@{lidar\+\_\+regions}}
+\index{lidar\+\_\+regions@{lidar\+\_\+regions}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{lidar\+\_\+regions}{lidar_regions}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+lidar\+\_\+regions}\hypertarget{classtrackingBall_1_1Tracking_af4673dff355192ccd7cbd4e3676ef618}{}\label{classtrackingBall_1_1Tracking_af4673dff355192ccd7cbd4e3676ef618}
+
+
+D\+I\+CT F\+OR O\+B\+S\+T\+A\+C\+LE A\+V\+O\+I\+D\+A\+N\+CE A\+L\+G\+O\+R\+I\+T\+HM (store the regions of the lidar for be able to localize the obstacle w.\+r.\+t. 
+
+the robot) \index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!lost\+\_\+ball\+\_\+counter@{lost\+\_\+ball\+\_\+counter}}
+\index{lost\+\_\+ball\+\_\+counter@{lost\+\_\+ball\+\_\+counter}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{lost\+\_\+ball\+\_\+counter}{lost_ball_counter}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+lost\+\_\+ball\+\_\+counter}\hypertarget{classtrackingBall_1_1Tracking_a89db2b56bfd79bbbac1fd1af937e25f8}{}\label{classtrackingBall_1_1Tracking_a89db2b56bfd79bbbac1fd1af937e25f8}
+
+
+C\+O\+U\+N\+T\+ER F\+OR M\+O\+N\+I\+T\+OR T\+HE T\+R\+A\+C\+K\+I\+NG W\+H\+I\+LE T\+HE B\+A\+LL IS L\+O\+ST. 
+
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!pose@{pose}}
+\index{pose@{pose}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{pose}{pose}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+pose}\hypertarget{classtrackingBall_1_1Tracking_af3d46e4a3b61c4cc2841cfdd6e02c459}{}\label{classtrackingBall_1_1Tracking_af3d46e4a3b61c4cc2841cfdd6e02c459}
+
+
+I\+N\+IT R\+O\+B\+OT P\+O\+SE. 
+
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!position@{position}}
+\index{position@{position}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{position}{position}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+position}\hypertarget{classtrackingBall_1_1Tracking_a8698f440e6e3e4b1b785cab162794b61}{}\label{classtrackingBall_1_1Tracking_a8698f440e6e3e4b1b785cab162794b61}
+
+
+I\+N\+IT R\+O\+B\+OT P\+O\+S\+I\+T\+I\+ON. 
+
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!radius@{radius}}
+\index{radius@{radius}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{radius}{radius}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+radius}\hypertarget{classtrackingBall_1_1Tracking_a9216a69022a6756b653d59834bb46de3}{}\label{classtrackingBall_1_1Tracking_a9216a69022a6756b653d59834bb46de3}
+
+
+R\+A\+D\+I\+US OF T\+HE B\+A\+LL IN T\+HE I\+M\+A\+GE. 
+
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!result@{result}}
+\index{result@{result}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{result}{result}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+result}\hypertarget{classtrackingBall_1_1Tracking_abe3eb1a78c5f9464274125a664c694b9}{}\label{classtrackingBall_1_1Tracking_abe3eb1a78c5f9464274125a664c694b9}
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!sigma\+Angular@{sigma\+Angular}}
+\index{sigma\+Angular@{sigma\+Angular}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{sigma\+Angular}{sigmaAngular}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+sigma\+Angular}\hypertarget{classtrackingBall_1_1Tracking_abcf19d205ec149c4f87a2c3b43fa242e}{}\label{classtrackingBall_1_1Tracking_abcf19d205ec149c4f87a2c3b43fa242e}
+
+
+P\+A\+R\+A\+M\+E\+T\+ER F\+OR C\+O\+R\+R\+E\+CT A\+N\+G\+U\+L\+AR V\+E\+L\+O\+C\+I\+TY D\+U\+R\+I\+NG T\+R\+A\+C\+K\+I\+NG (for smooth movements) 
+
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!sigma\+Linear@{sigma\+Linear}}
+\index{sigma\+Linear@{sigma\+Linear}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{sigma\+Linear}{sigmaLinear}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+sigma\+Linear}\hypertarget{classtrackingBall_1_1Tracking_a684292f4752cf04f4aeb3baf84e0b155}{}\label{classtrackingBall_1_1Tracking_a684292f4752cf04f4aeb3baf84e0b155}
+
+
+P\+A\+R\+A\+M\+E\+T\+ER F\+OR C\+O\+R\+R\+E\+CT L\+I\+N\+E\+AR V\+E\+L\+O\+C\+I\+TY D\+U\+R\+I\+NG T\+R\+A\+C\+K\+I\+NG (for smooth movements) 
+
+\index{tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}!vel\+\_\+publisher@{vel\+\_\+publisher}}
+\index{vel\+\_\+publisher@{vel\+\_\+publisher}!tracking\+Ball\+::\+Tracking@{tracking\+Ball\+::\+Tracking}}
+\subsubsection[{\texorpdfstring{vel\+\_\+publisher}{vel_publisher}}]{\setlength{\rightskip}{0pt plus 5cm}tracking\+Ball.\+Tracking.\+vel\+\_\+publisher}\hypertarget{classtrackingBall_1_1Tracking_aec612c6502c0a334f67d8b32e7b77b62}{}\label{classtrackingBall_1_1Tracking_aec612c6502c0a334f67d8b32e7b77b62}
+
+
+I\+N\+I\+T\+I\+A\+L\+I\+Z\+A\+T\+I\+ON OF T\+HE V\+E\+L\+O\+C\+I\+TY P\+U\+B\+L\+I\+S\+H\+ER TO T\+HE W\+H\+E\+E\+LS. 
+
+Subscriber to the odometry of the robot for update pose and position.
+
+Publisher of the velocity commands for the robot. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/root/\+Desktop/catkin\+\_\+ws/src/exp\+\_\+assignment3/scripts/\hyperlink{trackingBall_8py}{tracking\+Ball.\+py}\end{DoxyCompactItemize}

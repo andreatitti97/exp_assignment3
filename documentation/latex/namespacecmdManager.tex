@@ -1,0 +1,135 @@
+\hypertarget{namespacecmdManager}{}\section{cmd\+Manager Namespace Reference}
+\label{namespacecmdManager}\index{cmd\+Manager@{cmd\+Manager}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classcmdManager_1_1Find}{Find}
+\item 
+class \hyperlink{classcmdManager_1_1Normal}{Normal}
+\item 
+class \hyperlink{classcmdManager_1_1Play}{Play}
+\item 
+class \hyperlink{classcmdManager_1_1Sleep}{Sleep}
+\item 
+class \hyperlink{classcmdManager_1_1Track}{Track}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespacecmdManager_a62a68181d751176538db8063d7b11987}{detection\+\_\+routine} (color)
+\begin{DoxyCompactList}\small\item\em Callback of the ball\+\_\+detection\+\_\+subscriber, is called any time a new colored ball is found, precisely a new color is given in input and then the function check if the color was already detected, if not the move\+\_\+base client is stopped for start the tracking. \end{DoxyCompactList}\item 
+def \hyperlink{namespacecmdManager_a50ab72ebc575eb7032c50d17a6d592c6}{U\+Icallback} (data)
+\begin{DoxyCompactList}\small\item\em Callback of the human interface, each time a user command is received the function change the P\+L\+AY flag and the message is parsed. \end{DoxyCompactList}\item 
+def \hyperlink{namespacecmdManager_ac53d2d1248b660039d5a90768ff3bd5e}{go\+\_\+to} (x, y)
+\begin{DoxyCompactList}\small\item\em Function which implement the navigation to given input position using the move\+\_\+base action server. \end{DoxyCompactList}\item 
+def \hyperlink{namespacecmdManager_a3e64a5e295736776673178e6ff94d1e5}{main} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacecmdManager_ad1967c9cd71b2174a9b4c56d32f08fcc}{client} = actionlib.\+Simple\+Action\+Client(\textquotesingle{}move\+\_\+base\textquotesingle{},Move\+Base\+Action)
+\begin{DoxyCompactList}\small\item\em Initialized the client to the move\+\_\+base action server for moving the robot. \end{DoxyCompactList}\item 
+\hyperlink{namespacecmdManager_a5f10b08efaeaad88cf34e075895f4d9d}{R\+D\+\_\+pub} = rospy.\+Publisher(\textquotesingle{}detection\+\_\+state\textquotesingle{}, Bool, queue\+\_\+size=10)
+\begin{DoxyCompactList}\small\item\em Initialized publisher of the detection state which is a boolean (active or not). \end{DoxyCompactList}\item 
+\hyperlink{namespacecmdManager_a783b0ef84682af39dc9f2b8e828c4ad9}{rooms} = \hyperlink{classknowledgeRep_1_1Rooms}{Rooms}()
+\begin{DoxyCompactList}\small\item\em Initialized object of the class Rooms() for use the knowledge representation defined in \hyperlink{knowledgeRep_8py}{knowledge\+Rep.\+py}. \end{DoxyCompactList}\item 
+dictionary \hyperlink{namespacecmdManager_a927e4211865b745599afe42e9e8d7c8e}{ctrl\+\_\+var} = \{\char`\"{}P\+L\+AY\char`\"{} \+: False, \char`\"{}T\+A\+R\+G\+E\+T\+\_\+\+R\+O\+OM\char`\"{} \+: \char`\"{}None\char`\"{}, \char`\"{}N\+E\+W\+\_\+\+C\+O\+L\+OR\char`\"{} \+: \char`\"{}None\char`\"{}, \char`\"{}F\+I\+ND\char`\"{} \+: False\}
+\begin{DoxyCompactList}\small\item\em Dictionary that store important control variables and flags. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{cmd\+Manager@{cmd\+Manager}!detection\+\_\+routine@{detection\+\_\+routine}}
+\index{detection\+\_\+routine@{detection\+\_\+routine}!cmd\+Manager@{cmd\+Manager}}
+\subsubsection[{\texorpdfstring{detection\+\_\+routine(color)}{detection_routine(color)}}]{\setlength{\rightskip}{0pt plus 5cm}def cmd\+Manager.\+detection\+\_\+routine (
+\begin{DoxyParamCaption}
+\item[{}]{color}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacecmdManager_a62a68181d751176538db8063d7b11987}{}\label{namespacecmdManager_a62a68181d751176538db8063d7b11987}
+
+
+Callback of the ball\+\_\+detection\+\_\+subscriber, is called any time a new colored ball is found, precisely a new color is given in input and then the function check if the color was already detected, if not the move\+\_\+base client is stopped for start the tracking. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em color} & is the color detected (string) by the detection algorithm. \\
+\hline
+\end{DoxyParams}
+\index{cmd\+Manager@{cmd\+Manager}!go\+\_\+to@{go\+\_\+to}}
+\index{go\+\_\+to@{go\+\_\+to}!cmd\+Manager@{cmd\+Manager}}
+\subsubsection[{\texorpdfstring{go\+\_\+to(x, y)}{go_to(x, y)}}]{\setlength{\rightskip}{0pt plus 5cm}def cmd\+Manager.\+go\+\_\+to (
+\begin{DoxyParamCaption}
+\item[{}]{x, }
+\item[{}]{y}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacecmdManager_ac53d2d1248b660039d5a90768ff3bd5e}{}\label{namespacecmdManager_ac53d2d1248b660039d5a90768ff3bd5e}
+
+
+Function which implement the navigation to given input position using the move\+\_\+base action server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & X goal position. \\
+\hline
+{\em y} & Y goal position. \\
+\hline
+\end{DoxyParams}
+\index{cmd\+Manager@{cmd\+Manager}!main@{main}}
+\index{main@{main}!cmd\+Manager@{cmd\+Manager}}
+\subsubsection[{\texorpdfstring{main()}{main()}}]{\setlength{\rightskip}{0pt plus 5cm}def cmd\+Manager.\+main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacecmdManager_a3e64a5e295736776673178e6ff94d1e5}{}\label{namespacecmdManager_a3e64a5e295736776673178e6ff94d1e5}
+\index{cmd\+Manager@{cmd\+Manager}!U\+Icallback@{U\+Icallback}}
+\index{U\+Icallback@{U\+Icallback}!cmd\+Manager@{cmd\+Manager}}
+\subsubsection[{\texorpdfstring{U\+Icallback(data)}{UIcallback(data)}}]{\setlength{\rightskip}{0pt plus 5cm}def cmd\+Manager.\+U\+Icallback (
+\begin{DoxyParamCaption}
+\item[{}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacecmdManager_a50ab72ebc575eb7032c50d17a6d592c6}{}\label{namespacecmdManager_a50ab72ebc575eb7032c50d17a6d592c6}
+
+
+Callback of the human interface, each time a user command is received the function change the P\+L\+AY flag and the message is parsed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & is the message (string). \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Variable Documentation}
+\index{cmd\+Manager@{cmd\+Manager}!client@{client}}
+\index{client@{client}!cmd\+Manager@{cmd\+Manager}}
+\subsubsection[{\texorpdfstring{client}{client}}]{\setlength{\rightskip}{0pt plus 5cm}cmd\+Manager.\+client = actionlib.\+Simple\+Action\+Client(\textquotesingle{}move\+\_\+base\textquotesingle{},Move\+Base\+Action)}\hypertarget{namespacecmdManager_ad1967c9cd71b2174a9b4c56d32f08fcc}{}\label{namespacecmdManager_ad1967c9cd71b2174a9b4c56d32f08fcc}
+
+
+Initialized the client to the move\+\_\+base action server for moving the robot. 
+
+\index{cmd\+Manager@{cmd\+Manager}!ctrl\+\_\+var@{ctrl\+\_\+var}}
+\index{ctrl\+\_\+var@{ctrl\+\_\+var}!cmd\+Manager@{cmd\+Manager}}
+\subsubsection[{\texorpdfstring{ctrl\+\_\+var}{ctrl_var}}]{\setlength{\rightskip}{0pt plus 5cm}dictionary cmd\+Manager.\+ctrl\+\_\+var = \{\char`\"{}P\+L\+AY\char`\"{} \+: False, \char`\"{}T\+A\+R\+G\+E\+T\+\_\+\+R\+O\+OM\char`\"{} \+: \char`\"{}None\char`\"{}, \char`\"{}N\+E\+W\+\_\+\+C\+O\+L\+OR\char`\"{} \+: \char`\"{}None\char`\"{}, \char`\"{}F\+I\+ND\char`\"{} \+: False\}}\hypertarget{namespacecmdManager_a927e4211865b745599afe42e9e8d7c8e}{}\label{namespacecmdManager_a927e4211865b745599afe42e9e8d7c8e}
+
+
+Dictionary that store important control variables and flags. 
+
+
+\begin{DoxyItemize}
+\item P\+L\+AY\+: Flag which notify if there is a P\+L\+AY request
+\item T\+A\+R\+G\+E\+T\+\_\+\+R\+O\+OM\+: Control variable which contain the desired room given by the user
+\item N\+E\+W\+\_\+\+C\+O\+L\+OR\+: Control variable which contatin a color corresponding to the las detected ball.
+\item F\+I\+ND\+: Flag which notify if we are in F\+I\+ND state or not. 
+\end{DoxyItemize}\index{cmd\+Manager@{cmd\+Manager}!R\+D\+\_\+pub@{R\+D\+\_\+pub}}
+\index{R\+D\+\_\+pub@{R\+D\+\_\+pub}!cmd\+Manager@{cmd\+Manager}}
+\subsubsection[{\texorpdfstring{R\+D\+\_\+pub}{RD_pub}}]{\setlength{\rightskip}{0pt plus 5cm}cmd\+Manager.\+R\+D\+\_\+pub = rospy.\+Publisher(\textquotesingle{}detection\+\_\+state\textquotesingle{}, Bool, queue\+\_\+size=10)}\hypertarget{namespacecmdManager_a5f10b08efaeaad88cf34e075895f4d9d}{}\label{namespacecmdManager_a5f10b08efaeaad88cf34e075895f4d9d}
+
+
+Initialized publisher of the detection state which is a boolean (active or not). 
+
+\index{cmd\+Manager@{cmd\+Manager}!rooms@{rooms}}
+\index{rooms@{rooms}!cmd\+Manager@{cmd\+Manager}}
+\subsubsection[{\texorpdfstring{rooms}{rooms}}]{\setlength{\rightskip}{0pt plus 5cm}cmd\+Manager.\+rooms = {\bf Rooms}()}\hypertarget{namespacecmdManager_a783b0ef84682af39dc9f2b8e828c4ad9}{}\label{namespacecmdManager_a783b0ef84682af39dc9f2b8e828c4ad9}
+
+
+Initialized object of the class Rooms() for use the knowledge representation defined in \hyperlink{knowledgeRep_8py}{knowledge\+Rep.\+py}. 
+
