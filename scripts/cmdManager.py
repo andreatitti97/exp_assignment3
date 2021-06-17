@@ -240,7 +240,7 @@ class Find(smach.State):
                 return 'goToPlay' 
             else:
                 rospy.loginfo("[cmdManager--FIND]: EXPLORATION")
-                pos = rooms.explore()
+                pos = rooms.room_explore()
                 go_to(pos[0], pos[1])
                 self.rate.sleep()
                 self.counter += 1

@@ -59,7 +59,7 @@ class Rooms():
             if (x == room['x'] and y == room['y']):
                 return room['name']
         return False    
-    ## Function that return the room color given an input room name
+    ## Function that return the room color given of an input room name
     def room_color(self, name):
         for room in self.ROOMS:
             if name == room['name']:
@@ -71,41 +71,39 @@ class Rooms():
             tmpX = random.randint(-6,6)
             tmpY = random.randint(-8,5)
             if tmpX != self.prevXpos and tmpY != self.prevYpos:
-                if not (3 > tmpX > 0 and tmpY > 0) or not(tmpX < 0 and tempY < -5):
+                if not (3 > tmpX > 0 and tmpY > 0) or not(tmpX < 0 and tmpY < -5):
                     self.prevXpos = tmpX
                     self.prevYpos = tmpY
                     return [tmpX, tmpY]
     
-    ## Returns a array which contains a neighborhood of a given number. For instance if a = 1 and l = 2 it'll return [-1, 0, 1, 2, 3]. 
-    # This method guaranties, that given a point (x,y), to return a 2lX2l area around the point.
-    # @param a number that correspond to a coordinate of a point.
-    # @param l is half of the neighborhood that will be generated.
-    def mrange(self, a, l):
-        minA = a - l
-        r = []
-        for i in range(0,l*2+1):
-            r.append(minA + i)
-        return r
+    ## This function receive as input a coordinate and a scalar "l", returns an array of "l-neighborhood" of the given coordinate. 
+    # @param a number. Coordinate of a position
+    # @param l number. Dimension of the neighborhood we want.
+    def room_range(self, a, l):
+        least_area = a - l
+        neighborhood = []
+        area = l*2+1
+        for i in range(0,area):
+            neighborhood.append(least_area + i)
+        return neighborhood
 
-    ## Explore function that returns a random position away from the rooms already visited and the position reached during the FIND mode. 
-    # Basically it generate a random position and check if it belongs 
-    # in the neighborhood of each detected room (or position), if so it will reach such location. See the README for more details. 
-    def explore(self):
+    ## This function implement the exploration for the state FIND. Returns random positions NOT NEAR already discoverd rooms, so simply apply a condition, using "room_range", to the random position generated which are discarde if inside the neighborhood of discovered rooms.
+    def room_explore(self):
         while True:
-            ok = True
-            pos = self.random_pos()
+            bool = True
+            position = self.random_pos()
             for i in self.locationKnown:
-                if (pos[0] in self.mrange(i[0],1)) and (pos[1] in self.mrange(i[1],1)):
-                    ok = False
+                if (position[0] in self.room_range(i[0],1)) and (position[1] in self.room_range(i[1],1)):
+                    bool = False
                     break
-            if ok:
+            if bool:
                 for room in self.ROOMS:
                     if room['detected'] == True:
-                        rx = self.mrange(room['x'], 2)
-                        ry = self.mrange(room['y'], 2)
-                        if (pos[0] in rx and pos[1] in ry):
-                            ok = False
+                        range_x = self.room_range(room['x'], 2)
+                        range_y = self.room_range(room['y'], 2)
+                        if (position[0] in range_x and position[1] in range_y):
+                            bool = False
                             break
-            if ok:
-                self.locationKnown.append(pos)
-                return pos
+            if bool:
+                self.locationKnown.append(position)
+                return position
