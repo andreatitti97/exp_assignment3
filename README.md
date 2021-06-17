@@ -17,6 +17,12 @@ The scope of the assignment is to equipe the robot with sensors and design an ap
 - Interact with the human.
 - Detect and avoid obstacles.
 More precisely the logic of the program should have different states to handle various possible behaviours of the robot that can happend during the interaction with the environment or the human.
+### Robot Model
+The model used is a simple mobile robot (implemented in the previous assignments of the course) but now the possibility of move the head has been set aside since it was a problem for safety and movements, so the head is fixed. In the figure below we can see the robot, is a differential drive robot with two fixed wheels and equipped with:
+- LIDAR SENSOR: Best choice for use SLAM pkg and gmapping pks for autonomous navigation.
+- RGB CAMERA: Fundamental for color detection and ball tracking.
+
+![Robot](https://github.com/andreatitti97/exp_assignment3/tree/main/documentation/figures/robot.jpg)
 
 ## __Knoweldege Representation__
 Before moving to the logic and the architecture of the program we must introduce the concept of knowledge representation, how to represent information with high level of abstraction and connect them in a way that the robot can have a knowledge of the environment surrounding him. The base idea is to assign to each colored ball a room of the house, in particularly in the project the correspondences are the following:
@@ -31,8 +37,8 @@ Before moving to the logic and the architecture of the program we must introduce
         {'name':"Bedroom",'color':"black","x":0,"y":0, 'detected':False},
         {'name':"Home",'color':"","x": -5,"y":7, 'detected':True}
         ]
-``` ]
-
+]
+```
 In the project it's used a python class inside the script "knowledgeRep.py" for connect the each ball to a specific room which has associated a specific position not yet known a-priori. So if the robot detect a colored ball reached it and save the position, for adding the room to the knowledge and be able to reach the room again after discovered it. The idea is that after discovered all colored balls the robot has a knowledge of the environment knowing each room position.
 
 ## __Finite State Machine__
@@ -52,18 +58,13 @@ The software architecture of the project is made up by two main parts, the "navi
 ![FSM](https://github.com/andreatitti97/exp_assignment3/tree/main/documentation/figures/rosgraph.jpg)
 
 ### Description
-- [cmdManager](https://github.com/andreatitti97/exp_assignment3/tree/main/scripts/cmdManager.py) = is the core of the architecture as in the previous assignments. It takes input from the _UI_ node and the _roomsDetector_ . Based on the state in which it is, this node can make requests to:
-  -  the _move_base_ action server to reach a certain position.
-  -  the _track_ action server to reach a detected room (ball).
-- [ballDetection](https://github.com/andreatitti97/exp_assignment3/tree/main/scripts/ballDetection.py) = is a simple openCV algorithm that analyzes the camera images to detect the balls (rooms). After that this node sends the color of the detected ball to the _commandManager_. Finally it interrupts the subscription to the camera topic. Thus it doesn't process any images until the _commandManager_ awaken it again.
-- [ballTracking](https://github.com/andreatitti97/exp_assignment3/tree/main/scripts/ballTracking.py) = is a action server that tracks a ball of a given color. The algorithm of tracking it's very similar to the _ball_track_ of the previous assignment. When the robot reaches the ball it will read its own position and send it back to the _commandManager_ so that it can store the position of the discovered room. 
-  
-  If for some reason the ball is no longer detected,then the robot will turn on itself in both directions in an attempt to see the ball again. If after some time it has not succeeded, it switches back to the appropriate state.
-
-  Finally, it was implemented a very simple **obstacle_avoidance** algorithm using the laser scan data. It was necessary since when the robot starts to track a ball, the _move_base_ algorithm is deactivated by the _commadManager_ and its integrated obstacle avoidance as well. Basically, this algorithm evaluates the obstacle positions and apply an angular velocity directly to the robot differential motors in order to avoid them. If there are no free spaces to reach the ball, the mission is aborted and the robot returns to the _NORMAL_ state.    
-- [humanInterface](https://github.com/andreatitti97/exp_assignment3/tree/main/scripts/humanInterface.py) = is a very simple user interface that allows the user to switch in the _PLAY_ mode and enter a room to reach.
-Notice that the _move_base_ goal is aborted every time a ball is detected or the play command is typed.
-For more details regarding the scripts, see the doxygen documentation.
+- [cmdManager](https://github.com/andreatitti97/exp_assignment3/tree/main/scripts/cmdManager.py) = This is the core of the architecture, contains the logic of the architecture since implement the FSM. It receive inputs from the human interface and the ball detection nodes and can make request to two server, "the _move_base_ action server" to reach a certain position and the "_track_ action server" to reach a detected ball.
+- [ballDetection](https://github.com/andreatitti97/exp_assignment3/tree/main/scripts/ballDetection.py) = This script implement an OpenCV algorithm for color detection, when it started (subscribing to the camera topic) each image is processed until a ball is detected (at least one contours of the given colors is found). It sends to the command manager the color of the ball detected publishing in the "/color_found" topic. It also subscribe to another topic "/detection_state" in which a boolean is send to start or stop the detection according to the state in which the command manager is. 
+- [ballTracking](https://github.com/andreatitti97/exp_assignment3/tree/main/scripts/ballTracking.py) = This script implement an action server for tracking the previous detected ball. It receive from the command manager a color to track, that is the goal of the action server, then after the detection it starts to send command to the robot for reaching the ball in a smooth way(the node subscribe to "/cmd_vel" topic). This is done using OpenCV (the node subscribe to the camera topic), the idea is that we want to have the ball inside the camera image with a certain radius and centered with the image, we need to apply this two conditions for consider the ball as reached. After reached the ball the position of the robot is saved and assigned to the room just discovered, for doing this it subscribe to the "/odom" topic. 
+There are also optional features added for improve the tracking since during several test some problems arised when the robot approach the ball.
+- The first problem is releated to the possibility that the robot lost the ball while tracking it, this is MAINLY CAUSED by the latency between the image processed and the tracking, can happend that the robot see instantly the ball in few frame and start track it but then lost information about it (a corner, a color detection error, the robot was turning ... I noticed there where different causes for lost the ball). The solution was found implementing a simple algorithm which happend only if the OpenCV algorithm lost the ball and make the robot turn a little bit left and right for found the ball, after a while the track action is aborted and the logic switch to NORMAL STATE.
+- The second main problem  is releated to the fact that during the tracking the move_base server is stopped, so we cannot use all the features of autonomous navigation implemented during the NORMAL STATE for example. Since the safety is important, we need to ensure an obstacle avoidance algorithm to guarantee that during the approach of the ball the robot not collide with people or objects. This is done with a simple "BUG ALGORITHM" [BUG](http://msl.cs.uiuc.edu/~lavalle/cs497_2001/book/uncertain/node3.html#:~:text=The%20BUG%20algorithms%20make%20the,obstacles%20are%20unknown%20and%20nonconvex.&text=This%20allows%20the%20robot%20to,Euclidean%20distance%20to%20the%20goal.) using the lidar. The node subscribe to the /LaserScan topic, the data from the lidar are split between five possible regions: front, front-right, right, front-left, left; then if an obstacle is detected inside one of the regions the node publish to the /cmd_vel topic an appropiate angular velocity for not collide.
+- [humanInterface](https://github.com/andreatitti97/exp_assignment3/tree/main/scripts/humanInterface.py) = This script implement the human interface, it allows the user to interact with the robot entering the PLAY STATE when the user digit "PLAY" in the shell. The node simply wait for an user digit, if is "PLAY" the logic of the architecture switch to PLAY STATE; if is "GoTo <room_name>" the robot reach the room or start the FIND routine, ONLY IF the robot is in PLAY STATE otherwise the command are simply rejected.
 
 ## **Package and File List**
 The final assignment package provides the following directory:
@@ -98,7 +99,7 @@ NB: Remember to source each shell, is preffered to modifying the .bashrc file.
 
 Launch the project:
 ```
-roslaunch final_assignment robot.launch
+roslaunch exp_assignment3 robot.launch
 ```
 Run the human interface:
 ```
