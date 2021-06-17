@@ -91,6 +91,7 @@ def go_to(x, y):
         rospy.signal_shutdown("Action server not available")
     else:
         name = rooms.room_name(x, y)
+	print("PROVA3")
         if ctrl_var["PLAY"] or ctrl_var["NEW_COLOR"]:
             rospy.loginfo("[cmdManager]: MOVEBASE MISSION ABORTED")
         elif not name:
@@ -176,10 +177,11 @@ class Play(smach.State):
         while not rospy.is_shutdown():
             if self.counter <= 5:
                 if ctrl_var["TARGET_ROOM"] != "None":
-
+		    print("PROVA")
                     if ctrl_var["TARGET_ROOM"].startswith("GoTo"):
                         ctrl_var["TARGET_ROOM"] = ctrl_var["TARGET_ROOM"].strip("GoTo ")
                         position = rooms.room_position(ctrl_var["TARGET_ROOM"])
+			print("PROVA2")
                         if not position:
                             rospy.loginfo("[cmdManager--PLAY]: ROOM NOT VISITED YET")                   
                             return 'goToFind'

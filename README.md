@@ -1,11 +1,11 @@
 # __Third Assignment__
 ## **Table Of Contents**
   - [__Introduction__](#introduction)
-    -[*Robot Model*](#robot_model)
+    - [*Robot Model*](#robot_model)
   - [__Knowledge Representation__](#knowledge-representation)
   - [__Finite State Machine__](#finite-state-machine)
   - [__Software Architecture__](#software-architecture)
-    - [Description](#description) 
+    - [*Description*](#description) 
     - [**Ros messages and actions**](#ros-messages-and-actions)
   - [**System's Features**](#systems-features) 
   - [**Move Base and Gmapping settings**](#move-base-and-gmapping-settings)
@@ -24,7 +24,7 @@ The scope of the assignment is to equipe the robot with sensors and design an ap
 - Interact with the human.
 - Detect and avoid obstacles.
 More precisely the logic of the program should have different states to handle various possible behaviours of the robot that can happend during the interaction with the environment or the human.
-### *Robot Model*
+### Robot Model
 The model used is a simple mobile robot (implemented in the previous assignments of the course) but now the possibility of move the head has been set aside since it was a problem for safety and movements, so the head is fixed. In the figure below we can see the robot, is a differential drive robot with two fixed wheels and equipped with:
 - LIDAR SENSOR: Best choice for use SLAM pkg and gmapping pks for autonomous navigation.
 - RGB CAMERA: Fundamental for color detection and ball tracking.
@@ -46,7 +46,7 @@ Before moving to the logic and the architecture of the program we must introduce
         ]
 ]
 ```
-In the project it's used a python class inside the script "knowledgeRep.py" for connect the each ball to a specific room which has associated a specific position not yet known a-priori. So if the robot detect a colored ball reached it and save the position, for adding the room to the knowledge and be able to reach the room again after discovered it. The idea is that after discovered all colored balls the robot has a knowledge of the environment knowing each room position.
+In the project it's used a python class inside the script [knowledgeRep](https://github.com/andreatitti97/exp_assignment3/tree/main/scripts/knowledgeRep.py) for connect the each ball to a specific room which has associated a specific position not yet known a-priori. So if the robot detect a colored ball reached it and save the position, for adding the room to the knowledge and be able to reach the room again after discovered it. The idea is that after discovered all colored balls the robot has a knowledge of the environment knowing each room position.
 
 ## __Finite State Machine__
 The logic of the program is based upon 5 different states in which the robot do different stuff, in the figure we can see the complete FSM.
@@ -70,7 +70,7 @@ The software architecture of the project is made up by two main parts, the "navi
 - [ballTracking](https://github.com/andreatitti97/exp_assignment3/tree/main/scripts/ballTracking.py) = This script implement an action server for tracking the previous detected ball. It receive from the command manager a color to track, that is the goal of the action server, then after the detection it starts to send command to the robot for reaching the ball in a smooth way(the node subscribe to "/cmd_vel" topic). This is done using OpenCV (the node subscribe to the camera topic), the idea is that we want to have the ball inside the camera image with a certain radius and centered with the image, we need to apply this two conditions for consider the ball as reached. After reached the ball the position of the robot is saved and assigned to the room just discovered, for doing this it subscribe to the "/odom" topic. 
 There are also optional features added for improve the tracking since during several test some problems arised when the robot approach the ball.
   - The first problem is releated to the possibility that the robot lost the ball while tracking it, this is MAINLY CAUSED by the latency between the image processed and the tracking, can happend that the robot see instantly the ball in few frame and start track it but then lost information about it (a corner, a color detection error, the robot was turning ... I noticed there where different causes for lost the ball). The solution was found implementing a simple algorithm which happend only if the OpenCV algorithm lost the ball and make the robot turn a little bit left and right for found the ball, after a while the track action is aborted and the logic switch to NORMAL STATE.
-  - The second main problem  is releated to the fact that during the tracking the move_base server is stopped, so we cannot use all the features of autonomous navigation implemented during the NORMAL STATE for example. Since the safety is important, we need to ensure an obstacle avoidance algorithm to guarantee that during the approach of the ball the robot not collide with people or objects. This is done with a simple "BUG ALGORITHM" [BUG](http://msl.cs.uiuc.edu/~lavalle/cs497_2001/book/uncertain/node3.html#:~:text=The%20BUG%20algorithms%20make%20the,obstacles%20are%20unknown%20and%20nonconvex.&text=This%20allows%20the%20robot%20to,Euclidean%20distance%20to%20the%20goal.) using the lidar. The node subscribe to the /LaserScan topic, the data from the lidar are split between five possible regions: front, front-right, right, front-left, left; then if an obstacle is detected inside one of the regions the node publish to the /cmd_vel topic an appropiate angular velocity for not collide.
+  - The second main problem  is releated to the fact that during the tracking the move_base server is stopped, so we cannot use all the features of autonomous navigation implemented during the NORMAL STATE for example. Since the safety is important, we need to ensure an obstacle avoidance algorithm to guarantee that during the approach of the ball the robot not collide with people or objects. This is done with a simple [BUG ALGORITHM](http://msl.cs.uiuc.edu/~lavalle/cs497_2001/book/uncertain/node3.html#:~:text=The%20BUG%20algorithms%20make%20the,obstacles%20are%20unknown%20and%20nonconvex.&text=This%20allows%20the%20robot%20to,Euclidean%20distance%20to%20the%20goal.) using the lidar. The node subscribe to the /LaserScan topic, the data from the lidar are split between five possible regions: front, front-right, right, front-left, left; then if an obstacle is detected inside one of the regions the node publish to the /cmd_vel topic an appropiate angular velocity for not collide.
 - [humanInterface](https://github.com/andreatitti97/exp_assignment3/tree/main/scripts/humanInterface.py) = This script implement the human interface, it allows the user to interact with the robot entering the PLAY STATE when the user digit "PLAY" in the shell. The node simply wait for an user digit, if is "PLAY" the logic of the architecture switch to PLAY STATE; if is "GoTo <room_name>" the robot reach the room or start the FIND routine, ONLY IF the robot is in PLAY STATE otherwise the command are simply rejected.
 - [knowledgeRep](https://github.com/andreatitti97/exp_assignment3/tree/main/scripts/knowledgeRep.py) = Contain the class *Rooms()* over which the knoweldege representation is build see section [__Knowledge Representation__](#knowledge-representation) for more. Here is importan to highlight that contains also importan function used in the command manager:
   - *room_check()* : Check if a detected room (color) was already known.
@@ -113,7 +113,7 @@ The goal of the action server is simply the color to detect, while the results w
 - In the [global_costmap_params.yaml](https://github.com/andreatitti97/exp_assignment3/tree/main/param/global_costmap_params.yaml) were increased the **update_frequency** and **publish_frequency** for a more reactive planner. Also the **inflation_radius** , **cost_scaling_factor** and the **cost_scaling_factor** were tuned to make the robots enter correctly rooms (away from the walls, which are a source of navigation  problems) and to ensure steeper curves near tight corners.
 - In the [base_local_planner_params.yaml](https://github.com/andreatitti97/exp_assignment3/tree/main/param/base_local_planner_params.yaml) the parameters increased are **max_vel_x**, **min_vel_x**, **acc_lim_x** and **acc_lim_theta** for a faster navigation. Also the **sim_time** was increased in order to improve the local planning simulation since sometimes the trajectory choosen seems not to be consistent with the environment and the global path trajectory. 
 - In the [local_cost_map.yaml](https://github.com/andreatitti97/exp_assignment3/tree/main/param/localcostmap_params.yaml) for improving the local mapping the **with** and **height** parameters were increased, also to ad avoid strange trajecoty.
-- In the [costmap_common_params.yaml](https://github.com/andreatitti97/exp_assignment3/tree/main/param/costmap_common_params.yaml) the **obstacle_range** was reduced in order to limit the error described in the [System's limitations](#systems-limitations) (point __a__ ) and **robot_radius** was increased in order to keep the robot away from obstacles (expecially because sometime the robot struggle near corners and entrances).
+- In the [costmap_common_params.yaml](https://github.com/andreatitti97/exp_assignment3/tree/main/param/costmap_common_params.yaml) the **obstacle_range** was reduced in order to limit the error described in the [System's limitations](#systems-limitations) section and **robot_radius** was increased in order to keep the robot away from obstacles (expecially because sometime the robot struggle near corners and entrances).
 
 
 ## **Package and File List**
