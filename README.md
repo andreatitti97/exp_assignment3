@@ -1,11 +1,11 @@
 # __Third Assignment__
 ## **Table Of Contents**
   - [__Introduction__](#introduction)
-    - [*Robot Model*](#robot_model)
+    - [Robot Model](#robot_model)
   - [__Knowledge Representation__](#knowledge-representation)
   - [__Finite State Machine__](#finite-state-machine)
   - [__Software Architecture__](#software-architecture)
-    - [*Description*](#description) 
+    - [Description](#description) 
     - [**Ros messages and actions**](#ros-messages-and-actions)
   - [**System's Features**](#systems-features) 
   - [**Move Base and Gmapping settings**](#move-base-and-gmapping-settings)
