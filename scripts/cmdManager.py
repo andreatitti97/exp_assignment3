@@ -121,6 +121,7 @@ class Normal(smach.State):
                 return 'goToPlay'
             elif self.counter == 5:
                 rospy.loginfo("[cmdManager--NORMAL]: MAX NUMBER OF ITERATION going TO SLEEP")
+                self.counter = 0
                 return 'goToSleep' 
             elif ctrl_var["NEW_COLOR"] != "None":
                 return 'goToTrack'
@@ -177,6 +178,7 @@ class Play(smach.State):
         while not rospy.is_shutdown():
             if self.counter <= 5:
                 if ctrl_var["TARGET_ROOM"] != "None":
+                    print("PROVA ENTRA IN PLAY LOOP")
                     if ctrl_var["TARGET_ROOM"].startswith("GoTo"):
                         ctrl_var["TARGET_ROOM"] = ctrl_var["TARGET_ROOM"].strip("GoTo ")
                         position = rooms.room_position(ctrl_var["TARGET_ROOM"])
@@ -227,11 +229,6 @@ class Find(smach.State):
 
             if ctrl_var["NEW_COLOR"] != "None":
                 return "goToTrack"
-            elif ctrl_var["PLAY"] == True:
-                ctrl_var["FIND"] = False
-                RD_pub.publish(False)
-                self.counter = 0
-                return "goToPlay"
             elif self.counter == 5:
                 rospy.loginfo("[cmdManager--FIND]: MAXNUMBER OF FIND MODE ITERATIONs")
                 ctrl_var["FIND"] = False
