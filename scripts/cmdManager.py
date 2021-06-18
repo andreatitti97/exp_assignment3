@@ -92,7 +92,7 @@ def go_to(x, y):
         rospy.signal_shutdown("Action server not available")
     else:
         name = rooms.room_name(x, y)
-	print("PROVA3")
+        print("PROVA3")
         if ctrl_var["PLAY"] or ctrl_var["NEW_COLOR"]:
             rospy.loginfo("[cmdManager]: MOVEBASE MISSION ABORTED")
         elif not name:
@@ -171,20 +171,20 @@ class Play(smach.State):
     def execute(self, userdata):
         global ctrl_var, rooms
         rospy.loginfo("***************** PLAY STATE **************")
-	time.sleep(1)        
-	ctrl_var["PLAY"] = False
+        time.sleep(1)        
+        ctrl_var["PLAY"] = False
         position = rooms.room_position("Home")
         go_to(position[0], position[1])	
 
         while not rospy.is_shutdown():
-	    print("PROVA1")
+            print("PROVA1")
             if self.counter <= 5:
                 if ctrl_var["TARGET_ROOM"] != "None":
-		    print("PROVA2")
+                    print("PROVA2")
                     if ctrl_var["TARGET_ROOM"].startswith("GoTo"):
                         ctrl_var["TARGET_ROOM"] = ctrl_var["TARGET_ROOM"].strip("GoTo ")
                         position = rooms.room_position(ctrl_var["TARGET_ROOM"])
-			print("PROVA3")
+                        print("PROVA3")
                         if not position:
                             rospy.loginfo("[cmdManager--PLAY]: ROOM NOT VISITED YET")                   
                             return 'goToFind'
@@ -232,11 +232,6 @@ class Find(smach.State):
 
             if ctrl_var["NEW_COLOR"] != "None":
                 return "goToTrack"
-            elif ctrl_var["PLAY"] == True:
-                ctrl_var["FIND"] = False
-                RD_pub.publish(False)
-                self.counter = 0
-                return "goToPlay"
             elif self.counter == 5:
                 rospy.loginfo("[cmdManager--FIND]: MAXNUMBER OF FIND MODE ITERATIONs")
                 ctrl_var["FIND"] = False
@@ -249,6 +244,12 @@ class Find(smach.State):
                 go_to(pos[0], pos[1])
                 self.rate.sleep()
                 self.counter += 1
+                '''elif ctrl_var["PLAY"] == True:
+                ctrl_var["FIND"] = False
+                RD_pub.publish(False)
+                self.counter = 0
+                return "goToPlay"'''
+
 
 class Track(smach.State):
     '''Class which define the TRACK stat of the FSM. Inside this state is initialized the client to the tracking action server
