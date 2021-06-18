@@ -60,6 +60,7 @@ def UIcallback(data):
         time.sleep(3)
     elif data.data.startswith("GoTo"):
         ctrl_var["TARGET_ROOM"] = data.data
+	#print(ctrl_var["TARGET_ROOM"])
         rospy.loginfo("[cmdManager]: DESIRED ROOM RECEIVED")
     else:
         rospy.logerr("[cmdMAnager]: WRONG MESSAGE FORMAT")
@@ -85,7 +86,7 @@ def go_to(x, y):
 
     client.send_goal(goal)
     wait = client.wait_for_result()
-    
+    #print("move_base_done")
     if not wait:
         rospy.logerr("Action server not available")
         rospy.signal_shutdown("Action server not available")
@@ -97,7 +98,7 @@ def go_to(x, y):
             rospy.loginfo("[cmdManager]:REACHED POSITION (%d,%d). WAIT...", x, y)
         else: 
             rospy.loginfo("[cmdManager]: REACHED THE %s . WAIT ...", name)            
-        time.sleep(5)
+        time.sleep(3)
  
 
 class Normal(smach.State):
@@ -178,7 +179,7 @@ class Play(smach.State):
         while not rospy.is_shutdown():
             if self.counter <= 5:
                 if ctrl_var["TARGET_ROOM"] != "None":
-                    print("PROVA ENTRA IN PLAY LOOP")
+                    #print("PROVA ENTRA IN PLAY LOOP")
                     if ctrl_var["TARGET_ROOM"].startswith("GoTo"):
                         ctrl_var["TARGET_ROOM"] = ctrl_var["TARGET_ROOM"].strip("GoTo ")
                         position = rooms.room_position(ctrl_var["TARGET_ROOM"])
