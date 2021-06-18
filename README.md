@@ -162,6 +162,7 @@ rosrun exp_assignment3 human_interface.py
 - The magenta ball for now is removed from the detection since the simple OpenCV algorithm have problems with shade on the walls which are confused with magenta color, a better color detection can be implemented, but for now I preferred to remove the magenta color because wrong tracking can be dangerouse for the safety, for the system logic and the knowledge representation.
 - The obstacle avoidance in TRACK STATE is very simple, BUG algorithm, another better algorithm can be implemented.
 - If sometimes random position are generated near walls or obstacles the robot cannot found a global path. 
+- In general sometimes the *move_base* server has problem in navigation to certain goals and can spend more time than usual to reach this goals. The best way to avoid this is to send a PLAY command for reset the action server.
 
 ## __Future Improvments__
 - The exploration in find state can be improved using the "explore-lite" package. 
@@ -170,7 +171,7 @@ rosrun exp_assignment3 human_interface.py
 - Resolve any problems related to the fact that random positions are produced inside walls or near obstacles.
 - Realize a better human interface, more human friendly with the possibility to have a GUI.
 - Interact with the robot using voice, so equip the robot model with microphones.
-
+- Improve the tuning of the *move_base* action server. I TRIED TO TO THE BEST BUT SINCE I WORKED USING THE GIVEN DOCKER IMAGE USING VNC, THE SIMULATION IS OFTEN LAGGING AND I CANNOT ENSURE A GOOD BEHAVIOR SINCE IS DIFFICULT TO UNDERSTAND THE ROBOT MOVEMENTS.
 ## __Authors and Contacts__
 
 - Author: Andrea Tiranti
