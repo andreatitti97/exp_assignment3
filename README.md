@@ -16,7 +16,7 @@
 
 ## __Introduction__ 
 The project represent the final assignment for the course of Experimental Robotics Laboratory of Robotics Engineering degree of University of Genova. It's an upgrade of previous works done during the course releated to mobile robots and autonomous navigation, with the intent to create an house robot capable of autonomous navigation and interaction with human and the environment surrounding him. The environment is represented by a human and by an house with different colored balls inside each room, check the figure below for having an idea. 
-![World](https://github.com/andreatitti97/exp_assignment3/tree/main/documentation/figures/Immagine.jpg)
+![World](https://github.com/andreatitti97/exp_assignment3/blob/master/exp_assignment3/documentation/figures/Immagine.jpg)
 
 The scope of the assignment is to equipe the robot with sensors and design an appropiate architecture such is can be able to:
 - Navigate autonomously while mapping the area.
