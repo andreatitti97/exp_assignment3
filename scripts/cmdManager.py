@@ -84,8 +84,9 @@ def go_to(x, y):
     rospy.loginfo("[cmdManager]: MOVING TO POS: x = %d y = %d", x, y)
 
     client.send_goal(goal)
+    print("prova move_base")
     wait = client.wait_for_result()
-
+    
     if not wait:
         rospy.logerr("Action server not available")
         rospy.signal_shutdown("Action server not available")
@@ -170,18 +171,20 @@ class Play(smach.State):
     def execute(self, userdata):
         global ctrl_var, rooms
         rospy.loginfo("***************** PLAY STATE **************")
-        ctrl_var["PLAY"] = False
+	time.sleep(1)        
+	ctrl_var["PLAY"] = False
         position = rooms.room_position("Home")
         go_to(position[0], position[1])	
 
         while not rospy.is_shutdown():
+	    print("PROVA1")
             if self.counter <= 5:
                 if ctrl_var["TARGET_ROOM"] != "None":
-		    print("PROVA")
+		    print("PROVA2")
                     if ctrl_var["TARGET_ROOM"].startswith("GoTo"):
                         ctrl_var["TARGET_ROOM"] = ctrl_var["TARGET_ROOM"].strip("GoTo ")
                         position = rooms.room_position(ctrl_var["TARGET_ROOM"])
-			print("PROVA2")
+			print("PROVA3")
                         if not position:
                             rospy.loginfo("[cmdManager--PLAY]: ROOM NOT VISITED YET")                   
                             return 'goToFind'
