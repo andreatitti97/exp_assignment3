@@ -50,7 +50,7 @@ def detection_routine(color):
         client.cancel_all_goals()
 ## Callback of the human interface, each time a user command is received the function change the PLAY flag and the message is parsed.
 # @param data is the message (string).
-def UIcallback(data):
+def interface_clbk(data):
     global ctrl_var, client, rooms, RD_pub
     if data.data == "PLAY" :
         rospy.loginfo("[cmdManager]: RECEIVED PLAY COMMAND!")
@@ -230,6 +230,11 @@ class Find(smach.State):
 
             if ctrl_var["NEW_COLOR"] != "None":
                 return "goToTrack"
+            elif ctrl_var["PLAY"] == True:
+                ctrl_var["FIND_MODE"] = False
+                RD_pub.publish(False)
+                self.counter = 0
+                return "goToPlay"
             elif self.counter == 5:
                 rospy.loginfo("[cmdManager--FIND]: MAXNUMBER OF FIND MODE ITERATIONs")
                 ctrl_var["FIND"] = False
@@ -297,7 +302,7 @@ def main():
         # Init move_base client
         client.wait_for_server()
         ## Subscriber to the human interface topic, receive user commands.
-        UIsubscriber = rospy.Subscriber("Interface_chatter", String, UIcallback) 
+        UIsubscriber = rospy.Subscriber("Interface_chatter", String, interface_clbk) 
         time.sleep(2)
         ## Subscriber to the /color_found topic, in which a detected color (string) is sended to the detection routine.
         ball_detection_subscriber = rospy.Subscriber("color_found", String, detection_routine)
