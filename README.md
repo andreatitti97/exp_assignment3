@@ -16,7 +16,7 @@
 
 ## __Introduction__ 
 The project represent the final assignment for the course of Experimental Robotics Laboratory of Robotics Engineering degree of University of Genova. It's an upgrade of previous works done during the course releated to mobile robots and autonomous navigation, with the intent to create an house robot capable of autonomous navigation and interaction with human and the environment surrounding him. The environment is represented by a human and by an house with different colored balls inside each room, check the figure below for having an idea. 
-![World](https://github.com/andreatitti97/exp_assignment3/tree/main/documentation/figures/Immagine.jpg)
+![World](https://github.com/andreatitti97/exp_assignment3/tree/main/documentation/figures/Immagine.png)
 
 The scope of the assignment is to equipe the robot with sensors and design an appropiate architecture such is can be able to:
 - Navigate autonomously while mapping the area.
@@ -29,7 +29,7 @@ The model used is a simple mobile robot (implemented in the previous assignments
 - LIDAR SENSOR: Best choice for use SLAM pkg and gmapping pks for autonomous navigation.
 - RGB CAMERA: Fundamental for color detection and ball tracking.
 
-![Robot](https://github.com/andreatitti97/exp_assignment3/tree/main/documentation/figures/robot.jpg)
+![Robot](https://github.com/andreatitti97/exp_assignment3/tree/main/documentation/figures/robot.png)
 
 ## __Knoweldege Representation__
 Before moving to the logic and the architecture of the program we must introduce the concept of knowledge representation, how to represent information with high level of abstraction and connect them in a way that the robot can have a knowledge of the environment surrounding him. The base idea is to assign to each colored ball a room of the house, in particularly in the project the correspondences are the following:
@@ -51,7 +51,7 @@ In the project it's used a python class inside the script [knowledgeRep](https:/
 ## __Finite State Machine__
 The logic of the program is based upon 5 different states in which the robot do different stuff, in the figure we can see the complete FSM.
 
-![FSM](https://github.com/andreatitti97/exp_assignment3/tree/main/documentation/figures/FSM.jpg)
+![FSM](https://github.com/andreatitti97/exp_assignment3/tree/main/documentation/figures/FSM.png)
 
 - __NORMAL STATE__: The robot should move randomly in the house, if a new ball is detected switch to TRACK STATE, if a play command is received from the user should switch to PLAY state. After a while without external events that affect the FSM the robot should go to SLEEP STATE.
 - __SLEEP STATE__: The robot should return to the user (fixed position) and wait for a random amount of time before return to NORMAL STATE.
@@ -62,7 +62,7 @@ The logic of the program is based upon 5 different states in which the robot do 
 ## __Software Architeture__
 The software architecture of the project is made up by two main parts, the "navigation architecture" which rely on stable and tested ROS packages such as: move_base, navigation, gmapping, SLAM; and the "control architecture" which control the robot and the logic of the system. In the next figure we can see the entire architecture, below is explained in detail the control part of the architecture designed for the project.   
 
-![FSM](https://github.com/andreatitti97/exp_assignment3/tree/main/documentation/figures/rosgraph.jpg)
+![FSM](https://github.com/andreatitti97/exp_assignment3/tree/main/documentation/figures/rosgraph.png)
 
 ### Description
 - [cmdManager](https://github.com/andreatitti97/exp_assignment3/tree/main/scripts/cmdManager.py) = This is the core of the architecture, contains the logic of the architecture since implement the FSM. It receive inputs from the human interface and the ball detection nodes and can make request to two server, "the _move_base_ action server" to reach a certain position and the "_track_ action server" to reach a detected ball.
