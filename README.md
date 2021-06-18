@@ -1,11 +1,11 @@
 # __Third Assignment__
 ## **Table Of Contents**
   - [__Introduction__](#introduction)
-    - [Robot Model](#robot_model)
+    - [**Robot Model**](#robot_model)
   - [__Knowledge Representation__](#knowledge-representation)
   - [__Finite State Machine__](#finite-state-machine)
   - [__Software Architecture__](#software-architecture)
-    - [Description](#description) 
+    - [**Description**](#description) 
     - [**Ros messages and actions**](#ros-messages-and-actions)
   - [**System's Features**](#systems-features) 
   - [**Move Base and Gmapping settings**](#move-base-and-gmapping-settings)
@@ -171,7 +171,7 @@ rosrun exp_assignment3 human_interface.py
 - Resolve any problems related to the fact that random positions are produced inside walls or near obstacles.
 - Realize a better human interface, more human friendly with the possibility to have a GUI.
 - Interact with the robot using voice, so equip the robot model with microphones.
-- Improve the tuning of the *move_base* action server. I TRIED TO TO THE BEST BUT SINCE I WORKED USING THE GIVEN DOCKER IMAGE USING VNC, THE SIMULATION IS OFTEN LAGGING AND I CANNOT ENSURE A GOOD BEHAVIOR SINCE IS DIFFICULT TO UNDERSTAND THE ROBOT MOVEMENTS.
+- Improve the tuning of the *move_base* action server. I TRIED TO DO THE BEST BUT SINCE I WORKED USING THE GIVEN DOCKER IMAGE USING VNC, THE SIMULATION IS OFTEN LAGGING AND I CANNOT ENSURE A GOOD BEHAVIOR SINCE IS DIFFICULT TO UNDERSTAND THE ROBOT MOVEMENTS.
 ## __Authors and Contacts__
 
 - Author: Andrea Tiranti
