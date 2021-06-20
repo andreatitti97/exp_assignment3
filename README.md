@@ -7,9 +7,12 @@
   - [__Software Architecture__](#software-architeture)
     - [**Description**](#description) 
     - [**Ros messages and actions**](#ros-messages-and-actions)
-  - [**System's Features**](#systems-features) 
-  - [**Move Base and Gmapping settings**](#move-base-and-gmapping-settings)
-  - [**Package and File List**](#package-and-file-list)
+  - [__System's Features__](#systems-features) 
+    - [**Move Base and Gmapping settings**](#move-base-and-gmapping-settings)
+    - [**Package and File List**](#package-and-file-list)
+  - [__Installation__](#installation)
+    - [**Packages**](#packages)
+  - [__Run the Project__](#run-the-project)
   - [__System Limitations__](#system-limitations)
   - [__Future Improvements__](#future-improvements)
   - [__Authors and Contacts__](#authors-and-contacts)
@@ -103,7 +106,7 @@ string state
 ```
 The goal of the action server is simply the color to detect, while the results which are sended back to che command manager are simply the X and Y position of the robot.
 
-## **System's Features** 
+## __System's Features__
 ### **Move Base and Gmapping settings**
 - The **_gmapping_** parameters, contained in the [gmapping.launch](https://github.com/andreatitti97/exp_assignment3/tree/main/launch/gmapping.launch) file, are tuned for a better mapping, below the changes done:
   - The **maxUrange** parameterwas increased for extend the range of the laser in order to map deeper the environment, this was done expecially for the big rooms where the robot can't detect any wall and localization errors are obviously introduced. 
@@ -117,17 +120,17 @@ The goal of the action server is simply the color to detect, while the results w
   - In the [costmap_common_params.yaml](https://github.com/andreatitti97/exp_assignment3/tree/main/param/costmap_common_params.yaml) the **robot_radius** was increased in order to keep the robot away from obstacles (expecially because sometime the robot struggle near corners and entrances).
 
 
-## **Package and File List**
+### **Package and File List**
 The package of the third assignment (exp_assignment3) provides the following directories:
 - **action** = contain the definition of the tracking action server
 - **config** = contain the Rviz configuration file, it can be modified as needed.
-- **launch** = contain launch files of the project, see the [**Run the Project**](#run) section for more.
+- **launch** = contain launch files of the project, see the [__Run the Project__](#run-the-project) section for more.
 - **param** = contain configuration files for the parameters of move_base pkg, gmapping pkg, navigation pkg, SLAM pkg (see [**Move Base and Gmapping settings**](#move-base-and-gmapping-settings)).
 - **scripts** = contains all the developed code (see [__Software Architecture__](#software-architeture)).
 - **urdf** = contains the urdf models files of the robot and the human.
 - **world** = contains the world used in Gazebo.
 
-## **Installation**
+## __Installation__
 Tested on ubuntu 16.04 and ros-kinetic. 
 
 ### **Packages** 
@@ -147,7 +150,7 @@ catkin_make
 ```
 NB: Remember to source each shell, is preferable modifying the .bashrc file.
 
-## **Run the Project**
+## __Run the Project__
 
 Launch the project:
 ```
