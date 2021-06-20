@@ -1,16 +1,16 @@
 # __Third Assignment__
 ## **Table Of Contents**
   - [__Introduction__](#introduction)
-    - [**Robot Model**](#robot_model)
+    - [**Robot Model**](#robot-model)
   - [__Knowledge Representation__](#knowledge-representation)
   - [__Finite State Machine__](#finite-state-machine)
-  - [__Software Architecture__](#software-architecture)
+  - [__Software Architecture__](#software-architeture)
     - [**Description**](#description) 
     - [**Ros messages and actions**](#ros-messages-and-actions)
   - [**System's Features**](#systems-features) 
   - [**Move Base and Gmapping settings**](#move-base-and-gmapping-settings)
   - [**Package and File List**](#package-and-file-list)
-  - [__System's Limitation__](#systems-limitations)
+  - [__System Limitations__](#system-limitations)
   - [__Future Improvements__](#future-improvements)
   - [__Authors and Contacts__](#authors-and-contacts)
 
@@ -31,7 +31,7 @@ The model used is a simple mobile robot (implemented in the previous assignments
 
 ![Robot](https://github.com/andreatitti97/exp_assignment3/tree/main/documentation/figures/robot.png)
 
-## __Knoweldege Representation__
+## __Knowledge Representation__
 Before moving to the logic and the architecture of the program we must introduce the concept of knowledge representation, how to represent information with high level of abstraction and connect them in a way that the robot can have a knowledge of the environment surrounding him. The base idea is to assign to each colored ball a room of the house, in particularly in the project the correspondences are the following:
 
  ```
@@ -164,7 +164,7 @@ rosrun exp_assignment3 human_interface.py
 - If sometimes random position are generated near walls or obstacles the robot cannot found a global path. 
 - In general sometimes the *move_base* server has problem in navigation to certain goals and can spend more time than usual to reach this goals. The best way to avoid this is to send a PLAY command for reset the action server.
 
-## __Future Improvments__
+## __Future Improvements__
 - The exploration in find state can be improved using the "explore-lite" package. 
 - Reduce the latency between the image processing and the tracking for achieve better results.
 - Improve the obstacle avoidance in TRACK STATE.
