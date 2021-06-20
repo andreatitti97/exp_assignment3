@@ -121,9 +121,9 @@ The goal of the action server is simply the color to detect, while the results w
 The package of the third assignment (exp_assignment3) provides the following directories:
 - **action** = contain the definition of the tracking action server
 - **config** = contain the Rviz configuration file, it can be modified as needed.
-- **launch** = contain launch files of the project, see the [Run the Project](#run) section for more.
-- **param** = contain configuration files for the parameters of move_base pkg, gmapping pkg, navigation pkg, SLAM pkg (see [Navigation settings](#navigation-settings)).
-- **scripts** = contains all the developed code (see [Software Architecture](#software-architecture)).
+- **launch** = contain launch files of the project, see the [**Run the Project**](#run) section for more.
+- **param** = contain configuration files for the parameters of move_base pkg, gmapping pkg, navigation pkg, SLAM pkg (see [**Move Base and Gmapping settings**](#move-base-and-gmapping-settings)).
+- **scripts** = contains all the developed code (see [__Software Architecture__](#software-architeture)).
 - **urdf** = contains the urdf models files of the robot and the human.
 - **world** = contains the world used in Gazebo.
 
@@ -145,7 +145,7 @@ Then build the workspace.
 ```
 catkin_make
 ```
-NB: Remember to source each shell, is preffered to modifying the .bashrc file.
+NB: Remember to source each shell, is preferable modifying the .bashrc file.
 
 ## **Run the Project**
 
