@@ -156,6 +156,10 @@ Launch the project:
 ```
 roslaunch exp_assignment3 robot.launch
 ```
+Optionally also RVIZ can be started
+```
+roslaunch exp_assignment3 robot.launch rviz:=true
+```
 Run the human interface:
 ```
 rosrun exp_assignment3 human_interface.py
