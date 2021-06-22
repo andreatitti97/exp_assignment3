@@ -154,16 +154,18 @@ NB: Remember to source each shell, is preferable modifying the .bashrc file.
 
 Launch the project:
 ```
-roslaunch exp_assignment3 robot.launch
+roslaunch exp_assignment3 project.launch
 ```
 Optionally also RVIZ can be started
 ```
-roslaunch exp_assignment3 robot.launch rviz:=true
+roslaunch exp_assignment3 project.launch rviz:=true
 ```
 Run the human interface:
 ```
 rosrun exp_assignment3 human_interface.py
 ```
+Then type **PLAY** for interact with the robot and after type **GoTo <rooom_name>** for send a target room.
+*NB:After the first iteration in PLAY state THE GoTo <room_name> command for interact with the robot **MUST BE SEND AFTER THE ROBOT REACH THE HOME POSITION**. A more flexible way of interaction can be implemented. (during the first iteraction the GoTo command is accepted also before reaching the home)*
 
 ## __System Limitations__
 - Limited exploration in FIND STATE, it works but can happend that new room isn't found if the position produced are in between the rooms or near the walls and also the algorithm couldn't work with possible different environmnets.
@@ -171,6 +173,7 @@ rosrun exp_assignment3 human_interface.py
 - The obstacle avoidance in TRACK STATE is very simple, BUG algorithm, another better algorithm can be implemented.
 - If sometimes random position are generated near walls or obstacles the robot cannot found a global path. 
 - In general sometimes the *move_base* server has problem in navigation to certain goals and can spend more time than usual to reach this goals. The best way to avoid this is to send a PLAY command for reset the action server.
+- After the first iteration in PLAY state THE GoTo <room_name> command for interact with the robot **MUST BE SEND AFTER THE ROBOT REACH THE HOME POSITION**. A more flexible way of interaction can be implemented. (during the first iteraction the GoTo command is accepted also before reaching the home) 
 
 ## __Future Improvements__
 - The exploration in find state can be improved using the "explore-lite" package. 

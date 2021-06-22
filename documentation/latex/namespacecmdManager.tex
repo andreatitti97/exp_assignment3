@@ -29,7 +29,7 @@ def \hyperlink{namespacecmdManager_a3e64a5e295736776673178e6ff94d1e5}{main} ()
 \item 
 \hyperlink{namespacecmdManager_ad1967c9cd71b2174a9b4c56d32f08fcc}{client} = actionlib.\+Simple\+Action\+Client(\textquotesingle{}move\+\_\+base\textquotesingle{},Move\+Base\+Action)
 \begin{DoxyCompactList}\small\item\em Initialized the client to the move\+\_\+base action server for moving the robot. \end{DoxyCompactList}\item 
-\hyperlink{namespacecmdManager_a5f10b08efaeaad88cf34e075895f4d9d}{R\+D\+\_\+pub} = rospy.\+Publisher(\textquotesingle{}detection\+\_\+state\textquotesingle{}, Bool, queue\+\_\+size=10)
+\hyperlink{namespacecmdManager_a441b40512edb5f87f3aede896640f5b4}{detection\+\_\+state\+\_\+pub} = rospy.\+Publisher(\textquotesingle{}detection\+\_\+state\textquotesingle{}, Bool, queue\+\_\+size=10)
 \begin{DoxyCompactList}\small\item\em Initialized publisher of the detection state which is a boolean (active or not). \end{DoxyCompactList}\item 
 \hyperlink{namespacecmdManager_a783b0ef84682af39dc9f2b8e828c4ad9}{rooms} = \hyperlink{classknowledgeRep_1_1Rooms}{Rooms}()
 \begin{DoxyCompactList}\small\item\em Initialized object of the class Rooms() for use the knowledge representation defined in \hyperlink{knowledgeRep_8py}{knowledge\+Rep.\+py}. \end{DoxyCompactList}\item 
@@ -119,9 +119,9 @@ Dictionary that store important control variables and flags.
 \item T\+A\+R\+G\+E\+T\+\_\+\+R\+O\+OM\+: Control variable which contain the desired room given by the user
 \item N\+E\+W\+\_\+\+C\+O\+L\+OR\+: Control variable which contatin a color corresponding to the las detected ball.
 \item F\+I\+ND\+: Flag which notify if we are in F\+I\+ND state or not. 
-\end{DoxyItemize}\index{cmd\+Manager@{cmd\+Manager}!R\+D\+\_\+pub@{R\+D\+\_\+pub}}
-\index{R\+D\+\_\+pub@{R\+D\+\_\+pub}!cmd\+Manager@{cmd\+Manager}}
-\subsubsection[{\texorpdfstring{R\+D\+\_\+pub}{RD_pub}}]{\setlength{\rightskip}{0pt plus 5cm}cmd\+Manager.\+R\+D\+\_\+pub = rospy.\+Publisher(\textquotesingle{}detection\+\_\+state\textquotesingle{}, Bool, queue\+\_\+size=10)}\hypertarget{namespacecmdManager_a5f10b08efaeaad88cf34e075895f4d9d}{}\label{namespacecmdManager_a5f10b08efaeaad88cf34e075895f4d9d}
+\end{DoxyItemize}\index{cmd\+Manager@{cmd\+Manager}!detection\+\_\+state\+\_\+pub@{detection\+\_\+state\+\_\+pub}}
+\index{detection\+\_\+state\+\_\+pub@{detection\+\_\+state\+\_\+pub}!cmd\+Manager@{cmd\+Manager}}
+\subsubsection[{\texorpdfstring{detection\+\_\+state\+\_\+pub}{detection_state_pub}}]{\setlength{\rightskip}{0pt plus 5cm}cmd\+Manager.\+detection\+\_\+state\+\_\+pub = rospy.\+Publisher(\textquotesingle{}detection\+\_\+state\textquotesingle{}, Bool, queue\+\_\+size=10)}\hypertarget{namespacecmdManager_a441b40512edb5f87f3aede896640f5b4}{}\label{namespacecmdManager_a441b40512edb5f87f3aede896640f5b4}
 
 
 Initialized publisher of the detection state which is a boolean (active or not). 

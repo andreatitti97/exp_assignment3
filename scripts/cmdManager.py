@@ -28,7 +28,7 @@ from exp_assignment3.msg import ballTrackingGoal, ballTrackingAction
 ## Initialized the client to the move_base action server for moving the robot.
 client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
 ## Initialized publisher of the detection state which is a boolean (active or not).
-RD_pub = rospy.Publisher('detection_state', Bool, queue_size=10) 
+detection_state_pub = rospy.Publisher('detection_state', Bool, queue_size=10) 
 ## Initialized object of the class Rooms() for use the knowledge representation defined in knowledgeRep.py
 rooms = Rooms()
 ## Dictionary that store important control variables and flags.
@@ -42,21 +42,21 @@ ctrl_var = {"PLAY" : False, "TARGET_ROOM" : "None", "NEW_COLOR" : "None", "FIND"
 # and then the function check if the color was already detected, if not the move_base client is stopped for start the tracking.
 # @param color is the color detected (string) by the detection algorithm.
 def detection_routine(color):
-    global ctrl_var, client, rooms, RD_pub
+    global ctrl_var, client, rooms, detection_state_pub
     if not rooms.room_check(color.data):
         rospy.loginfo("[cmdManager]: NEW BALL DETECTED: %s COLOR", color.data)
-        RD_pub.publish(False)
+        detection_state_pub.publish(False)
         ctrl_var["NEW_COLOR"]= color.data
         client.cancel_all_goals()
 ## Callback of the human interface, each time a user command is received the function change the PLAY flag and the message is parsed.
 # @param data is the message (string).
 def interface_clbk(data):
-    global ctrl_var, client, rooms, RD_pub
+    global ctrl_var, client, rooms, detection_state_pub
     if data.data == "PLAY" :
         rospy.loginfo("[cmdManager]: RECEIVED PLAY COMMAND!")
         ctrl_var["PLAY"] = True
         client.cancel_all_goals() #cancel all move_base goals
-        RD_pub.publish(False)
+        detection_state_pub.publish(False)
         time.sleep(3)
     elif data.data.startswith("GoTo"):
         ctrl_var["TARGET_ROOM"] = data.data
@@ -113,9 +113,9 @@ class Normal(smach.State):
         self.counter = 0
         
     def execute(self,userdata):
-        global ctrl_var, client, rooms, RD_pub
+        global ctrl_var, client, rooms, detection_state_pub
         rospy.loginfo("***************** NORMAL STATE **************")   
-        RD_pub.publish(True)
+        detection_state_pub.publish(True)
         while not rospy.is_shutdown():  
             time.sleep(2)
             if ctrl_var["PLAY"] == True:
@@ -223,7 +223,7 @@ class Find(smach.State):
         global rooms, ctrl_var
         rospy.loginfo("***************** FIND STATE **************")
         ctrl_var["FIND"] = True
-        RD_pub.publish(True)
+        detection_state_pub.publish(True)
         time.sleep(4)
         
         while not rospy.is_shutdown():  
@@ -232,13 +232,13 @@ class Find(smach.State):
                 return "goToTrack"
             elif ctrl_var["PLAY"] == True:
                 ctrl_var["FIND_MODE"] = False
-                RD_pub.publish(False)
+                detection_state_pub.publish(False)
                 self.counter = 0
                 return "goToPlay"
             elif self.counter == 5:
                 rospy.loginfo("[cmdManager--FIND]: MAXNUMBER OF FIND MODE ITERATIONs")
                 ctrl_var["FIND"] = False
-                RD_pub.publish(False)
+                detection_state_pub.publish(False)
                 self.counter = 0
                 return 'goToPlay' 
             else:
