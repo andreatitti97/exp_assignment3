@@ -165,7 +165,8 @@ Run the human interface:
 rosrun exp_assignment3 human_interface.py
 ```
 Then type **PLAY** for interact with the robot and after type **GoTo <rooom_name>** for send a target room.
-*NB:After the first iteration in PLAY state THE GoTo <room_name> command for interact with the robot **MUST BE SEND AFTER THE ROBOT REACH THE HOME POSITION**. A more flexible way of interaction can be implemented. (during the first iteraction the GoTo command is accepted also before reaching the home)*
+
+**NB**:After the first iteration in PLAY state THE GoTo <room_name> command for interact with the robot **MUST BE SEND AFTER THE ROBOT REACH THE HOME POSITION**. A more flexible way of interaction can be implemented. (during the first iteraction the GoTo command is accepted also before reaching the home).
 
 ## __System Limitations__
 - Limited exploration in FIND STATE, it works but can happend that new room isn't found if the position produced are in between the rooms or near the walls and also the algorithm couldn't work with possible different environmnets.
