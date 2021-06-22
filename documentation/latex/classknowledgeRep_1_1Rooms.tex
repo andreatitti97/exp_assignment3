@@ -19,13 +19,13 @@ def \hyperlink{classknowledgeRep_1_1Rooms_a4bdc60738dc11ec176223fe4fb046b2f}{new
 def \hyperlink{classknowledgeRep_1_1Rooms_aaa1ca874182c72929cdd69f5d801ca2e}{room\+\_\+name} (self, x, y)
 \begin{DoxyCompactList}\small\item\em Function that return the room name given an input position. \end{DoxyCompactList}\item 
 def \hyperlink{classknowledgeRep_1_1Rooms_a41f6960d862a174fce8200ea1c7e003f}{room\+\_\+color} (self, name)
-\begin{DoxyCompactList}\small\item\em Function that return the room color given an input room name. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Function that return the room color given of an input room name. \end{DoxyCompactList}\item 
 def \hyperlink{classknowledgeRep_1_1Rooms_ae666c5c43dcaa315e41d7e8de7ae88a2}{random\+\_\+pos} (self)
 \begin{DoxyCompactList}\small\item\em Function that generate random positions (inside our house) \end{DoxyCompactList}\item 
-def \hyperlink{classknowledgeRep_1_1Rooms_a76e0ae78dfe758ff25dd132ce74192e6}{mrange} (self, a, l)
-\begin{DoxyCompactList}\small\item\em Returns a array which contains a neighborhood of a given number. \end{DoxyCompactList}\item 
-def \hyperlink{classknowledgeRep_1_1Rooms_accce73bac346a3d2944e9d58c16dd738}{explore} (self)
-\begin{DoxyCompactList}\small\item\em Explore function that returns a random position away from the rooms already visited and the position reached during the F\+I\+ND mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+def \hyperlink{classknowledgeRep_1_1Rooms_a68eb5ab6fe7ee4edb42c499c14a915c0}{room\+\_\+range} (self, a, l)
+\begin{DoxyCompactList}\small\item\em This function receive as input a coordinate and a scalar \char`\"{}l\char`\"{}, returns an array of \char`\"{}l-\/neighborhood\char`\"{} of the given coordinate. \end{DoxyCompactList}\item 
+def \hyperlink{classknowledgeRep_1_1Rooms_a01836676d94fb144206866604cd089c6}{room\+\_\+explore} (self)
+\begin{DoxyCompactList}\small\item\em This function implement the exploration for the state F\+I\+ND. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -55,37 +55,6 @@ Class which contain the knowledg representation, for each room name we have a re
 
 
 \subsection{Member Function Documentation}
-\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!explore@{explore}}
-\index{explore@{explore}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
-\subsubsection[{\texorpdfstring{explore(self)}{explore(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+explore (
-\begin{DoxyParamCaption}
-\item[{}]{self}
-\end{DoxyParamCaption}
-)}\hypertarget{classknowledgeRep_1_1Rooms_accce73bac346a3d2944e9d58c16dd738}{}\label{classknowledgeRep_1_1Rooms_accce73bac346a3d2944e9d58c16dd738}
-
-
-Explore function that returns a random position away from the rooms already visited and the position reached during the F\+I\+ND mode. 
-
-Basically it generate a random position and check if it belongs in the neighborhood of each detected room (or position), if so it will reach such location. See the R\+E\+A\+D\+ME for more details. \index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!mrange@{mrange}}
-\index{mrange@{mrange}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
-\subsubsection[{\texorpdfstring{mrange(self, a, l)}{mrange(self, a, l)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+mrange (
-\begin{DoxyParamCaption}
-\item[{}]{self, }
-\item[{}]{a, }
-\item[{}]{l}
-\end{DoxyParamCaption}
-)}\hypertarget{classknowledgeRep_1_1Rooms_a76e0ae78dfe758ff25dd132ce74192e6}{}\label{classknowledgeRep_1_1Rooms_a76e0ae78dfe758ff25dd132ce74192e6}
-
-
-Returns a array which contains a neighborhood of a given number. 
-
-For instance if a = 1 and l = 2 it\textquotesingle{}ll return \mbox{[}-\/1, 0, 1, 2, 3\mbox{]}. This method guaranties, that given a point (x,y), to return a 2l\+X2l area around the point. 
-\begin{DoxyParams}{Parameters}
-{\em a} & number that correspond to a coordinate of a point. \\
-\hline
-{\em l} & is half of the neighborhood that will be generated. \\
-\hline
-\end{DoxyParams}
 \index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!new\+\_\+room@{new\+\_\+room}}
 \index{new\+\_\+room@{new\+\_\+room}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
 \subsubsection[{\texorpdfstring{new\+\_\+room(self, color, x, y)}{new_room(self, color, x, y)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+new\+\_\+room (
@@ -133,9 +102,20 @@ Function that check if the input color (associated to a particular rooms) was al
 )}\hypertarget{classknowledgeRep_1_1Rooms_a41f6960d862a174fce8200ea1c7e003f}{}\label{classknowledgeRep_1_1Rooms_a41f6960d862a174fce8200ea1c7e003f}
 
 
-Function that return the room color given an input room name. 
+Function that return the room color given of an input room name. 
 
-\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!room\+\_\+name@{room\+\_\+name}}
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!room\+\_\+explore@{room\+\_\+explore}}
+\index{room\+\_\+explore@{room\+\_\+explore}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{room\+\_\+explore(self)}{room_explore(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+room\+\_\+explore (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classknowledgeRep_1_1Rooms_a01836676d94fb144206866604cd089c6}{}\label{classknowledgeRep_1_1Rooms_a01836676d94fb144206866604cd089c6}
+
+
+This function implement the exploration for the state F\+I\+ND. 
+
+Returns random positions N\+OT N\+E\+AR already discoverd rooms, so simply apply a condition, using \char`\"{}room\+\_\+range\char`\"{}, to the random position generated which are discarde if inside the neighborhood of discovered rooms. \index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!room\+\_\+name@{room\+\_\+name}}
 \index{room\+\_\+name@{room\+\_\+name}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
 \subsubsection[{\texorpdfstring{room\+\_\+name(self, x, y)}{room_name(self, x, y)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+room\+\_\+name (
 \begin{DoxyParamCaption}
@@ -160,6 +140,26 @@ Function that return the room name given an input position.
 
 Function that returns the position of the given input room. 
 
+\index{knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}!room\+\_\+range@{room\+\_\+range}}
+\index{room\+\_\+range@{room\+\_\+range}!knowledge\+Rep\+::\+Rooms@{knowledge\+Rep\+::\+Rooms}}
+\subsubsection[{\texorpdfstring{room\+\_\+range(self, a, l)}{room_range(self, a, l)}}]{\setlength{\rightskip}{0pt plus 5cm}def knowledge\+Rep.\+Rooms.\+room\+\_\+range (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{a, }
+\item[{}]{l}
+\end{DoxyParamCaption}
+)}\hypertarget{classknowledgeRep_1_1Rooms_a68eb5ab6fe7ee4edb42c499c14a915c0}{}\label{classknowledgeRep_1_1Rooms_a68eb5ab6fe7ee4edb42c499c14a915c0}
+
+
+This function receive as input a coordinate and a scalar \char`\"{}l\char`\"{}, returns an array of \char`\"{}l-\/neighborhood\char`\"{} of the given coordinate. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & number. Coordinate of a position \\
+\hline
+{\em l} & number. Dimension of the neighborhood we want. \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Member Data Documentation}

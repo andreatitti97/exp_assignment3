@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['track',['track',['../classtrackingBall_1_1Tracking.html#aab79d6fd3ebcc645ac180b827ab8a4ad',1,'trackingBall::Tracking']]]
+  ['startdetection',['startDetection',['../classballDetection_1_1ballDetector.html#a852941442c83f3160bb2cac307f495dc',1,'ballDetection::ballDetector']]],
+  ['stopdetection',['stopDetection',['../classballDetection_1_1ballDetector.html#ab146dd9d22b2b5eea5103e56181e51c4',1,'ballDetection::ballDetector']]]
 ];

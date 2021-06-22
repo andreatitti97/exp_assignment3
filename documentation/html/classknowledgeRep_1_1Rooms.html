@@ -117,17 +117,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aaa1ca874182c72929cdd69f5d801ca2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that return the room name given an input position.  <a href="#aaa1ca874182c72929cdd69f5d801ca2e">More...</a><br /></td></tr>
 <tr class="separator:aaa1ca874182c72929cdd69f5d801ca2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41f6960d862a174fce8200ea1c7e003f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknowledgeRep_1_1Rooms.html#a41f6960d862a174fce8200ea1c7e003f">room_color</a> (self, name)</td></tr>
-<tr class="memdesc:a41f6960d862a174fce8200ea1c7e003f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that return the room color given an input room name.  <a href="#a41f6960d862a174fce8200ea1c7e003f">More...</a><br /></td></tr>
+<tr class="memdesc:a41f6960d862a174fce8200ea1c7e003f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that return the room color given of an input room name.  <a href="#a41f6960d862a174fce8200ea1c7e003f">More...</a><br /></td></tr>
 <tr class="separator:a41f6960d862a174fce8200ea1c7e003f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae666c5c43dcaa315e41d7e8de7ae88a2"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknowledgeRep_1_1Rooms.html#ae666c5c43dcaa315e41d7e8de7ae88a2">random_pos</a> (self)</td></tr>
 <tr class="memdesc:ae666c5c43dcaa315e41d7e8de7ae88a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that generate random positions (inside our house)  <a href="#ae666c5c43dcaa315e41d7e8de7ae88a2">More...</a><br /></td></tr>
 <tr class="separator:ae666c5c43dcaa315e41d7e8de7ae88a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76e0ae78dfe758ff25dd132ce74192e6"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknowledgeRep_1_1Rooms.html#a76e0ae78dfe758ff25dd132ce74192e6">mrange</a> (self, a, l)</td></tr>
-<tr class="memdesc:a76e0ae78dfe758ff25dd132ce74192e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a array which contains a neighborhood of a given number.  <a href="#a76e0ae78dfe758ff25dd132ce74192e6">More...</a><br /></td></tr>
-<tr class="separator:a76e0ae78dfe758ff25dd132ce74192e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accce73bac346a3d2944e9d58c16dd738"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknowledgeRep_1_1Rooms.html#accce73bac346a3d2944e9d58c16dd738">explore</a> (self)</td></tr>
-<tr class="memdesc:accce73bac346a3d2944e9d58c16dd738"><td class="mdescLeft">&#160;</td><td class="mdescRight">Explore function that returns a random position away from the rooms already visited and the position reached during the FIND mode.  <a href="#accce73bac346a3d2944e9d58c16dd738">More...</a><br /></td></tr>
-<tr class="separator:accce73bac346a3d2944e9d58c16dd738"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68eb5ab6fe7ee4edb42c499c14a915c0"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknowledgeRep_1_1Rooms.html#a68eb5ab6fe7ee4edb42c499c14a915c0">room_range</a> (self, a, l)</td></tr>
+<tr class="memdesc:a68eb5ab6fe7ee4edb42c499c14a915c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function receive as input a coordinate and a scalar "l", returns an array of "l-neighborhood" of the given coordinate.  <a href="#a68eb5ab6fe7ee4edb42c499c14a915c0">More...</a><br /></td></tr>
+<tr class="separator:a68eb5ab6fe7ee4edb42c499c14a915c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01836676d94fb144206866604cd089c6"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknowledgeRep_1_1Rooms.html#a01836676d94fb144206866604cd089c6">room_explore</a> (self)</td></tr>
+<tr class="memdesc:a01836676d94fb144206866604cd089c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function implement the exploration for the state FIND.  <a href="#a01836676d94fb144206866604cd089c6">More...</a><br /></td></tr>
+<tr class="separator:a01836676d94fb144206866604cd089c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -160,66 +160,6 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="accce73bac346a3d2944e9d58c16dd738"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def knowledgeRep.Rooms.explore </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Explore function that returns a random position away from the rooms already visited and the position reached during the FIND mode. </p>
-<p>Basically it generate a random position and check if it belongs in the neighborhood of each detected room (or position), if so it will reach such location. See the README for more details. </p>
-
-</div>
-</div>
-<a class="anchor" id="a76e0ae78dfe758ff25dd132ce74192e6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def knowledgeRep.Rooms.mrange </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>a</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>l</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns a array which contains a neighborhood of a given number. </p>
-<p>For instance if a = 1 and l = 2 it'll return [-1, 0, 1, 2, 3]. This method guaranties, that given a point (x,y), to return a 2lX2l area around the point. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">a</td><td>number that correspond to a coordinate of a point. </td></tr>
-    <tr><td class="paramname">l</td><td>is half of the neighborhood that will be generated. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a class="anchor" id="a4bdc60738dc11ec176223fe4fb046b2f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -330,7 +270,26 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function that return the room color given an input room name. </p>
+<p>Function that return the room color given of an input room name. </p>
+
+</div>
+</div>
+<a class="anchor" id="a01836676d94fb144206866604cd089c6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def knowledgeRep.Rooms.room_explore </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function implement the exploration for the state FIND. </p>
+<p>Returns random positions NOT NEAR already discoverd rooms, so simply apply a condition, using "room_range", to the random position generated which are discarde if inside the neighborhood of discovered rooms. </p>
 
 </div>
 </div>
@@ -393,6 +352,47 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Function that returns the position of the given input room. </p>
+
+</div>
+</div>
+<a class="anchor" id="a68eb5ab6fe7ee4edb42c499c14a915c0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def knowledgeRep.Rooms.room_range </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>l</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function receive as input a coordinate and a scalar "l", returns an array of "l-neighborhood" of the given coordinate. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a</td><td>number. Coordinate of a position </td></tr>
+    <tr><td class="paramname">l</td><td>number. Dimension of the neighborhood we want. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

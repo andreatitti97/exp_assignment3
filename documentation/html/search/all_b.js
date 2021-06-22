@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['magentalower',['magentaLower',['../namespaceballDetection.html#ac513c92adbc3a5f8325877d042cf28fb',1,'ballDetection.magentaLower()'],['../namespacetrackingBall.html#ae34afbda2818a5105a51c3f883315b6e',1,'trackingBall.magentaLower()']]],
-  ['magentaupper',['magentaUpper',['../namespaceballDetection.html#a3d5c34f17eec8c6b35c650d34409cf6e',1,'ballDetection.magentaUpper()'],['../namespacetrackingBall.html#aa7fc4609467db9724ea81aa2d6442a41',1,'trackingBall.magentaUpper()']]],
-  ['main',['main',['../namespaceballDetection.html#a8193b8aef394c20f60fadbaeacdafdc0',1,'ballDetection.main()'],['../namespacecmdManager.html#a3e64a5e295736776673178e6ff94d1e5',1,'cmdManager.main()'],['../namespacetrackingBall.html#a598e946cfc8046154c148b5a4cc59c85',1,'trackingBall.main()']]],
-  ['mrange',['mrange',['../classknowledgeRep_1_1Rooms.html#a76e0ae78dfe758ff25dd132ce74192e6',1,'knowledgeRep::Rooms']]]
+  ['lidar_5fregions',['lidar_regions',['../classtrackingBall_1_1Tracking.html#af4673dff355192ccd7cbd4e3676ef618',1,'trackingBall::Tracking']]],
+  ['locationknown',['locationKnown',['../classknowledgeRep_1_1Rooms.html#ab43e8f7de2083bf7da36585822931688',1,'knowledgeRep::Rooms']]],
+  ['lost_5fball_5fcounter',['lost_ball_counter',['../classtrackingBall_1_1Tracking.html#a89db2b56bfd79bbbac1fd1af937e25f8',1,'trackingBall::Tracking']]]
 ];

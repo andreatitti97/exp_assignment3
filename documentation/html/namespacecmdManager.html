@@ -109,9 +109,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a62a68181d751176538db8063d7b11987"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecmdManager.html#a62a68181d751176538db8063d7b11987">detection_routine</a> (color)</td></tr>
 <tr class="memdesc:a62a68181d751176538db8063d7b11987"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback of the ball_detection_subscriber, is called any time a new colored ball is found, precisely a new color is given in input and then the function check if the color was already detected, if not the move_base client is stopped for start the tracking.  <a href="#a62a68181d751176538db8063d7b11987">More...</a><br /></td></tr>
 <tr class="separator:a62a68181d751176538db8063d7b11987"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50ab72ebc575eb7032c50d17a6d592c6"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecmdManager.html#a50ab72ebc575eb7032c50d17a6d592c6">UIcallback</a> (data)</td></tr>
-<tr class="memdesc:a50ab72ebc575eb7032c50d17a6d592c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback of the human interface, each time a user command is received the function change the PLAY flag and the message is parsed.  <a href="#a50ab72ebc575eb7032c50d17a6d592c6">More...</a><br /></td></tr>
-<tr class="separator:a50ab72ebc575eb7032c50d17a6d592c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7325e00047ae8c035e9d090f51b255e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecmdManager.html#ab7325e00047ae8c035e9d090f51b255e">interface_clbk</a> (data)</td></tr>
+<tr class="memdesc:ab7325e00047ae8c035e9d090f51b255e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback of the human interface, each time a user command is received the function change the PLAY flag and the message is parsed.  <a href="#ab7325e00047ae8c035e9d090f51b255e">More...</a><br /></td></tr>
+<tr class="separator:ab7325e00047ae8c035e9d090f51b255e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac53d2d1248b660039d5a90768ff3bd5e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecmdManager.html#ac53d2d1248b660039d5a90768ff3bd5e">go_to</a> (x, y)</td></tr>
 <tr class="memdesc:ac53d2d1248b660039d5a90768ff3bd5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function which implement the navigation to given input position using the move_base action server.  <a href="#ac53d2d1248b660039d5a90768ff3bd5e">More...</a><br /></td></tr>
 <tr class="separator:ac53d2d1248b660039d5a90768ff3bd5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -193,27 +193,12 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a3e64a5e295736776673178e6ff94d1e5"></a>
+<a class="anchor" id="ab7325e00047ae8c035e9d090f51b255e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cmdManager.main </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a50ab72ebc575eb7032c50d17a6d592c6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def cmdManager.UIcallback </td>
+          <td class="memname">def cmdManager.interface_clbk </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -229,6 +214,21 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a3e64a5e295736776673178e6ff94d1e5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def cmdManager.main </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

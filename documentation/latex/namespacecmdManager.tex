@@ -18,7 +18,7 @@ class \hyperlink{classcmdManager_1_1Track}{Track}
 \item 
 def \hyperlink{namespacecmdManager_a62a68181d751176538db8063d7b11987}{detection\+\_\+routine} (color)
 \begin{DoxyCompactList}\small\item\em Callback of the ball\+\_\+detection\+\_\+subscriber, is called any time a new colored ball is found, precisely a new color is given in input and then the function check if the color was already detected, if not the move\+\_\+base client is stopped for start the tracking. \end{DoxyCompactList}\item 
-def \hyperlink{namespacecmdManager_a50ab72ebc575eb7032c50d17a6d592c6}{U\+Icallback} (data)
+def \hyperlink{namespacecmdManager_ab7325e00047ae8c035e9d090f51b255e}{interface\+\_\+clbk} (data)
 \begin{DoxyCompactList}\small\item\em Callback of the human interface, each time a user command is received the function change the P\+L\+AY flag and the message is parsed. \end{DoxyCompactList}\item 
 def \hyperlink{namespacecmdManager_ac53d2d1248b660039d5a90768ff3bd5e}{go\+\_\+to} (x, y)
 \begin{DoxyCompactList}\small\item\em Function which implement the navigation to given input position using the move\+\_\+base action server. \end{DoxyCompactList}\item 
@@ -73,20 +73,13 @@ Function which implement the navigation to given input position using the move\+
 {\em y} & Y goal position. \\
 \hline
 \end{DoxyParams}
-\index{cmd\+Manager@{cmd\+Manager}!main@{main}}
-\index{main@{main}!cmd\+Manager@{cmd\+Manager}}
-\subsubsection[{\texorpdfstring{main()}{main()}}]{\setlength{\rightskip}{0pt plus 5cm}def cmd\+Manager.\+main (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacecmdManager_a3e64a5e295736776673178e6ff94d1e5}{}\label{namespacecmdManager_a3e64a5e295736776673178e6ff94d1e5}
-\index{cmd\+Manager@{cmd\+Manager}!U\+Icallback@{U\+Icallback}}
-\index{U\+Icallback@{U\+Icallback}!cmd\+Manager@{cmd\+Manager}}
-\subsubsection[{\texorpdfstring{U\+Icallback(data)}{UIcallback(data)}}]{\setlength{\rightskip}{0pt plus 5cm}def cmd\+Manager.\+U\+Icallback (
+\index{cmd\+Manager@{cmd\+Manager}!interface\+\_\+clbk@{interface\+\_\+clbk}}
+\index{interface\+\_\+clbk@{interface\+\_\+clbk}!cmd\+Manager@{cmd\+Manager}}
+\subsubsection[{\texorpdfstring{interface\+\_\+clbk(data)}{interface_clbk(data)}}]{\setlength{\rightskip}{0pt plus 5cm}def cmd\+Manager.\+interface\+\_\+clbk (
 \begin{DoxyParamCaption}
 \item[{}]{data}
 \end{DoxyParamCaption}
-)}\hypertarget{namespacecmdManager_a50ab72ebc575eb7032c50d17a6d592c6}{}\label{namespacecmdManager_a50ab72ebc575eb7032c50d17a6d592c6}
+)}\hypertarget{namespacecmdManager_ab7325e00047ae8c035e9d090f51b255e}{}\label{namespacecmdManager_ab7325e00047ae8c035e9d090f51b255e}
 
 
 Callback of the human interface, each time a user command is received the function change the P\+L\+AY flag and the message is parsed. 
@@ -96,6 +89,13 @@ Callback of the human interface, each time a user command is received the functi
 {\em data} & is the message (string). \\
 \hline
 \end{DoxyParams}
+\index{cmd\+Manager@{cmd\+Manager}!main@{main}}
+\index{main@{main}!cmd\+Manager@{cmd\+Manager}}
+\subsubsection[{\texorpdfstring{main()}{main()}}]{\setlength{\rightskip}{0pt plus 5cm}def cmd\+Manager.\+main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacecmdManager_a3e64a5e295736776673178e6ff94d1e5}{}\label{namespacecmdManager_a3e64a5e295736776673178e6ff94d1e5}
 
 
 \subsection{Variable Documentation}

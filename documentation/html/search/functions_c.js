@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['startdetection',['startDetection',['../classballDetection_1_1ballDetector.html#a852941442c83f3160bb2cac307f495dc',1,'ballDetection::ballDetector']]],
-  ['stopdetection',['stopDetection',['../classballDetection_1_1ballDetector.html#ab146dd9d22b2b5eea5103e56181e51c4',1,'ballDetection::ballDetector']]]
+  ['random_5fpos',['random_pos',['../classknowledgeRep_1_1Rooms.html#ae666c5c43dcaa315e41d7e8de7ae88a2',1,'knowledgeRep::Rooms']]],
+  ['room_5fcheck',['room_check',['../classknowledgeRep_1_1Rooms.html#a834289a5ae57e48cf90087e7f68faba2',1,'knowledgeRep::Rooms']]],
+  ['room_5fcolor',['room_color',['../classknowledgeRep_1_1Rooms.html#a41f6960d862a174fce8200ea1c7e003f',1,'knowledgeRep::Rooms']]],
+  ['room_5fexplore',['room_explore',['../classknowledgeRep_1_1Rooms.html#a01836676d94fb144206866604cd089c6',1,'knowledgeRep::Rooms']]],
+  ['room_5fname',['room_name',['../classknowledgeRep_1_1Rooms.html#aaa1ca874182c72929cdd69f5d801ca2e',1,'knowledgeRep::Rooms']]],
+  ['room_5fposition',['room_position',['../classknowledgeRep_1_1Rooms.html#a072ab03a9621d2abd8067817a0583547',1,'knowledgeRep::Rooms']]],
+  ['room_5frange',['room_range',['../classknowledgeRep_1_1Rooms.html#a68eb5ab6fe7ee4edb42c499c14a915c0',1,'knowledgeRep::Rooms']]]
 ];
